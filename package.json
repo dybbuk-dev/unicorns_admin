@@ -3,9 +3,9 @@
   "description": "Crypto Unicorns - Backend",
   "version": "0.1.0",
   "engines": {
-    "node": "16.x",
-    "npm": "8.x",
-    "yarn": "1.x"
+    "node": "16.10.0",
+    "npm": "8.15.1",
+    "yarn": "1.22.4"
   },
   "scripts": {
     "start": "nodemon --watch \"src/**/*.ts\" -e ts,json --exec \"ts-node --transpile-only ./src/server.ts\"",
