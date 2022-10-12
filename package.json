@@ -13,7 +13,7 @@
     "build:documentation": "copyfiles --flat ./src/documentation/openapi.json ./dist/documentation/",
     "build": "tsc && npm run build:documentation",
     "db:create": "npm run build && node ./dist/database/migrations/create",
-    "heroku-postbuild": "npm run db:create && cd frontend && yarn && npm run build:production"
+    "heroku-postbuild": "npm run build && cd frontend && yarn && npm run build:production"
   },
   "dependencies": {
     "@google-cloud/storage": "6.0.1",
