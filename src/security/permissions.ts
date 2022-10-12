@@ -55,124 +55,28 @@ class Permissions {
           storage.settingsLogos,
         ],
       },
-      shopImport: {
-        id: 'shopImport',
+      bundleImport: {
+        id: 'bundleImport',
         allowedRoles: [roles.admin],
       },
-      shopCreate: {
-        id: 'shopCreate',
+      bundleCreate: {
+        id: 'bundleCreate',
         allowedRoles: [roles.admin],
       },
-      shopEdit: {
-        id: 'shopEdit',
+      bundleEdit: {
+        id: 'bundleEdit',
         allowedRoles: [roles.admin],
       },
-      shopDestroy: {
-        id: 'shopDestroy',
+      bundleDestroy: {
+        id: 'bundleDestroy',
         allowedRoles: [roles.admin],
       },
-      shopRead: {
-        id: 'shopRead',
+      bundleRead: {
+        id: 'bundleRead',
         allowedRoles: [roles.admin, roles.custom],
       },
-      shopAutocomplete: {
-        id: 'shopAutocomplete',
-        allowedRoles: [roles.admin, roles.custom],
-      },
-      departmentImport: {
-        id: 'departmentImport',
-        allowedRoles: [roles.admin],
-      },
-      departmentCreate: {
-        id: 'departmentCreate',
-        allowedRoles: [roles.admin],
-      },
-      departmentEdit: {
-        id: 'departmentEdit',
-        allowedRoles: [roles.admin],
-      },
-      departmentDestroy: {
-        id: 'departmentDestroy',
-        allowedRoles: [roles.admin],
-      },
-      departmentRead: {
-        id: 'departmentRead',
-        allowedRoles: [roles.admin, roles.custom],
-      },
-      departmentAutocomplete: {
-        id: 'departmentAutocomplete',
-        allowedRoles: [roles.admin, roles.custom],
-      },
-      sectionImport: {
-        id: 'sectionImport',
-        allowedRoles: [roles.admin],
-      },
-      sectionCreate: {
-        id: 'sectionCreate',
-        allowedRoles: [roles.admin],
-      },
-      sectionEdit: {
-        id: 'sectionEdit',
-        allowedRoles: [roles.admin],
-      },
-      sectionDestroy: {
-        id: 'sectionDestroy',
-        allowedRoles: [roles.admin],
-      },
-      sectionRead: {
-        id: 'sectionRead',
-        allowedRoles: [roles.admin, roles.custom],
-      },
-      sectionAutocomplete: {
-        id: 'sectionAutocomplete',
-        allowedRoles: [roles.admin, roles.custom],
-      },
-      shelfImport: {
-        id: 'shelfImport',
-        allowedRoles: [roles.admin],
-      },
-      shelfCreate: {
-        id: 'shelfCreate',
-        allowedRoles: [roles.admin],
-      },
-      shelfEdit: {
-        id: 'shelfEdit',
-        allowedRoles: [roles.admin],
-      },
-      shelfDestroy: {
-        id: 'shelfDestroy',
-        allowedRoles: [roles.admin],
-      },
-      shelfRead: {
-        id: 'shelfRead',
-        allowedRoles: [roles.admin, roles.custom],
-      },
-      shelfAutocomplete: {
-        id: 'shelfAutocomplete',
-        allowedRoles: [roles.admin, roles.custom],
-      },
-      facingImport: {
-        id: 'facingImport',
-        allowedRoles: [roles.admin],
-      },
-      facingCreate: {
-        id: 'facingCreate',
-        allowedRoles: [roles.admin],
-      },
-      facingEdit: {
-        id: 'facingEdit',
-        allowedRoles: [roles.admin],
-      },
-      facingDestroy: {
-        id: 'facingDestroy',
-        allowedRoles: [roles.admin],
-      },
-      facingRead: {
-        id: 'facingRead',
-        allowedRoles: [roles.admin, roles.custom],
-      },
-      facingAutocomplete: {
-        id: 'facingAutocomplete',
+      bundleAutocomplete: {
+        id: 'bundleAutocomplete',
         allowedRoles: [roles.admin, roles.custom],
       },
     };

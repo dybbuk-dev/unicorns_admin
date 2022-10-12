@@ -5,11 +5,7 @@ import User from '../models/user';
 import Tenant from '../models/tenant';
 import Settings from '../models/settings';
 import Error404 from '../../errors/Error404';
-import Shop from '../models/shop';
-import Department from '../models/department';
-import Section from '../models/section';
-import Shelf from '../models/shelf';
-import Facing from '../models/facing';
+import Bundle from '../models/bundle';
 import Error400 from '../../errors/Error400';
 import { v4 as uuid } from 'uuid';
 import { isUserInTenant } from '../utils/userTenantUtils';
@@ -151,27 +147,7 @@ class TenantRepository {
       options,
     );
 
-    await Shop(options.database).deleteMany(
-      { tenant: id },
-      options,
-    );
-
-    await Department(options.database).deleteMany(
-      { Tenant: id },
-      options,
-    );
-
-    await Section(options.database).deleteMany(
-      { tenant: id },
-      options,
-    );
-
-    await Shelf(options.database).deleteMany(
-      { tenant: id },
-      options,
-    );
-
-    await Facing(options.database).deleteMany(
+    await Bundle(options.database).deleteMany(
       { tenant: id },
       options,
     );

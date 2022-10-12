@@ -51,8 +51,28 @@ class Permissions {
           storage.settingsLogos,
         ],
       },
+      bundleImport: {
+        id: 'bundleImport',
+        allowedRoles: [roles.admin, roles.custom],
+      },
+      bundleCreate: {
+        id: 'bundleCreate',
+        allowedRoles: [roles.admin, roles.custom],
+      },
+      bundleEdit: {
+        id: 'bundleEdit',
+        allowedRoles: [roles.admin, roles.custom],
+      },
+      bundleDestroy: {
+        id: 'bundleDestroy',
+        allowedRoles: [roles.admin, roles.custom],
+      },
       bundleRead: {
         id: 'bundleRead',
+        allowedRoles: [roles.admin, roles.custom],
+      },
+      bundleAutocomplete: {
+        id: 'bundleAutocomplete',
         allowedRoles: [roles.admin, roles.custom],
       },
       segmentRead: {

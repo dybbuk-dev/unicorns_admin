@@ -92,38 +92,10 @@ const es = {
   },
 
   entities: {
-    shop: {
+    bundle: {
       errors: {
         unique: {
           name: 'Name must be unique.',
-        },
-      },
-    },
-    department: {
-      errors: {
-        unique: {
-          name: 'Name must be unique.',
-        },
-      },
-    },
-    section: {
-      errors: {
-        unique: {
-          name: 'Name must be unique.',
-        },
-      },
-    },
-    shelf: {
-      errors: {
-        unique: {
-          name: 'Name must be unique.',
-        },
-      },
-    },
-    facing: {
-      errors: {
-        unique: {
-          sn: 'Serial Number must be unique.',
         },
       },
     },

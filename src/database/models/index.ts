@@ -4,11 +4,7 @@ const models = [
   require('./auditLog').default,
   require('./settings').default,
   require('./user').default,
-  require('./shop').default,
-  require('./department').default,
-  require('./section').default,
-  require('./shelf').default,
-  require('./facing').default,
+  require('./bundle').default,
 ];
 
 export default function init(database) {

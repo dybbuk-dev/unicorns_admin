@@ -1,0 +1,30 @@
+export default (app) => {
+  app.post(
+    `/tenant/:tenantId/bundle`,
+    require('./bundleCreate').default,
+  );
+  app.put(
+    `/tenant/:tenantId/bundle/:id`,
+    require('./bundleUpdate').default,
+  );
+  app.post(
+    `/tenant/:tenantId/bundle/import`,
+    require('./bundleImport').default,
+  );
+  app.delete(
+    `/tenant/:tenantId/bundle`,
+    require('./bundleDestroy').default,
+  );
+  app.get(
+    `/tenant/:tenantId/bundle/autocomplete`,
+    require('./bundleAutocomplete').default,
+  );
+  app.get(
+    `/tenant/:tenantId/bundle`,
+    require('./bundleList').default,
+  );
+  app.get(
+    `/tenant/:tenantId/bundle/:id`,
+    require('./bundleFind').default,
+  );
+};
