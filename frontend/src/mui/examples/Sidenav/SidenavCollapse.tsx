@@ -93,6 +93,7 @@ function SidenavCollapse({
               collapseText(theme, {
                 active,
                 noCollapse,
+                miniSidenav,
               })
             }
           />

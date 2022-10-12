@@ -106,7 +106,7 @@ function collapseText(theme: any, ownerState: any) {
     breakpoints,
     functions,
   } = theme;
-  const { active, noCollapse } = ownerState;
+  const { active, noCollapse, miniSidenav } = ownerState;
 
   const { size, fontWeightRegular, fontWeightLight } =
     typography;
@@ -133,7 +133,7 @@ function collapseText(theme: any, ownerState: any) {
       lineHeight: '2rem',
       overflow: 'hidden',
       width: noCollapse ? '135px' : '110px',
-      display: 'block',
+      display: miniSidenav ? 'none' : 'block',
       textOverflow: 'ellipsis',
       textTransform: 'capitalize',
     },

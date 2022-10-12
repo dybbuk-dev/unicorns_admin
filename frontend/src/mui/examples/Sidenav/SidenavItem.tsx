@@ -123,6 +123,7 @@ function SidenavItem({
                 ? collapseText(theme, {
                     active,
                     noCollapse: true,
+                    miniSidenav,
                   })
                 : null
             }
