@@ -9,7 +9,7 @@ const bundleImporterActions = importerActions(
   selectors,
   BundleService.import,
   fields,
-  i18n('entities.bundle.importer.fileName'),
+  i18n('bundle.importer.fileName'),
 );
 
 export default bundleImporterActions;

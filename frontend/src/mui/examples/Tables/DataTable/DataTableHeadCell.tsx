@@ -27,6 +27,7 @@ import { selectMuiSettings } from 'src/modules/mui/muiSelectors';
 
 // Declaring props types for DataTableHeadCell
 interface Props {
+  noBorder?: boolean;
   width?: string | number;
   children: ReactNode;
   sorted?: false | 'none' | 'asce' | 'asc' | 'desc';
@@ -38,6 +39,7 @@ interface Props {
 function DataTableHeadCell({
   width,
   children,
+  noBorder,
   sorted = false,
   align,
   noWrap,
@@ -55,7 +57,9 @@ function DataTableHeadCell({
         palette: { light },
         borders: { borderWidth },
       }: Theme) => ({
-        borderBottom: `${borderWidth[1]} solid ${light.main}`,
+        borderBottom: noBorder
+          ? 'none'
+          : `${borderWidth[1]} solid ${light.main}`,
       })}
     >
       <MDBox

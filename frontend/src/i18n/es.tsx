@@ -28,7 +28,7 @@ const es = {
   },
 
   app: {
-    title: 'Siffron',
+    title: 'Crypto Unicorns',
   },
 
   api: {

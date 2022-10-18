@@ -33,7 +33,7 @@ interface Props {
     | 'light'
     | 'dark';
   size?: 'xs' | 'sm' | 'md' | 'lg';
-  badgeContent: string;
+  badgeContent?: string;
   font?:
     | {
         color: string;

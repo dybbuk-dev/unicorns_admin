@@ -8,9 +8,11 @@ import BundleForm from 'src/view/bundle/form/BundleForm';
 import { getHistory } from 'src/modules/store';
 import Spinner from 'src/view/shared/Spinner';
 import { Grid } from '@mui/material';
+import SpinnerModal from 'src/view/shared/modals/SpinnerModal';
 
 function BundleFormPage(props) {
   const [dispatched, setDispatched] = useState(false);
+  const [progress, setProgress] = useState(false);
   const dispatch = useDispatch();
   const match = useRouteMatch();
 
@@ -24,8 +26,8 @@ function BundleFormPage(props) {
 
   const isEditing = Boolean(match.params.id);
   const title = isEditing
-    ? i18n('entities.bundle.edit.title')
-    : i18n('entities.bundle.new.title');
+    ? i18n('bundle.edit.title')
+    : i18n('bundle.new.title');
 
   useEffect(() => {
     dispatch(actions.doInit(match.params.id));
@@ -33,6 +35,7 @@ function BundleFormPage(props) {
   }, [dispatch, match.params.id]);
 
   const doSubmit = (id, data) => {
+    setProgress(true);
     if (isEditing) {
       dispatch(actions.doUpdate(id, data));
     } else {
@@ -55,10 +58,14 @@ function BundleFormPage(props) {
             record={record}
             title={title}
             onSubmit={doSubmit}
-            onCancel={() => getHistory().push('/bundle')}
+            onCancel={() =>
+              getHistory().push('/bundle/success')
+            }
           />
         )}
       </Grid>
+
+      {progress && <SpinnerModal />}
     </Grid>
   );
 }

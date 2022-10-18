@@ -21,9 +21,12 @@ const en = {
     start: 'Start',
     end: 'End',
     select: 'Select',
+    previous: 'Previous',
     continue: 'Continue',
     filters: 'Filters',
     more: 'More',
+    publish: 'Publish',
+    refresh: 'Refresh',
   },
 
   app: {
@@ -218,21 +221,39 @@ const en = {
     label: 'Bundles',
     menu: 'Bundles',
     create: {
+      title: 'Create Bundle',
       success: 'Bundle successfully saved',
+      description1:
+        'Enter the bundle expiration date, UNIM and RBW tokens to include.',
+      description2:
+        'These are the Unicorns detected in the game Address. Please select the ones to include in this bundle.',
+      description3:
+        'These are the Lands detected in the game Address. Please select the ones to include in this bundle.',
+      description4:
+        'Review the bundle, confirm the price and expiration date.',
+      description5:
+        'The bundle was published successfuly !',
+      balance: 'Wallet balance',
+      selectUnicorns: 'Select Unicorns',
+      selectLands: 'Select Lands',
+      reviewBundle: 'Review Bundle',
+      publish: 'Bundle Published',
     },
     update: {
       success: 'Bundle successfully saved',
     },
     destroy: {
+      title: 'Delete bundle',
       success: 'Bundle successfully deleted',
+      description:
+        'Are you sure you want to delete this bundle?',
     },
     destroyAll: {
       success: 'Bundle(s) successfully deleted',
     },
     edit: {
-      title: 'Bundle Store',
+      title: 'Edit Bundle',
     },
-    fields: {},
     enumerators: {},
     placeholders: {},
     hints: {},
@@ -241,6 +262,21 @@ const en = {
     },
     view: {
       title: 'View Bundle',
+    },
+    importer: {
+      title: 'Import Bundle',
+    },
+    list: {
+      title: 'Manage bundles',
+      product: 'Bundle products',
+      description:
+        'Create bundles that make sense, such as holiday sets or complementary goods combo. Help your costumers to find the best addition to their carts and offer the discount for the bundle.',
+    },
+    fields: {
+      name: 'Name',
+      UNIM: 'UNIM Tokens',
+      RBW: 'RBW Tokens',
+      expiration: 'Expiration Date',
     },
   },
 

@@ -23,7 +23,6 @@ export default (database) => {
       },
       expirationDate: {
         type: Date,
-        required: true,
       },
       UNIM: {
         type: Number,
@@ -35,13 +34,13 @@ export default (database) => {
       },
       unicorns: [
         {
-          type: String,
+          type: Number,
           required: true,
         },
       ],
       lands: [
         {
-          type: String,
+          type: Number,
           required: true,
         },
       ],

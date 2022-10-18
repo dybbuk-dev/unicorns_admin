@@ -28,9 +28,7 @@ const bundleDestroyActions = {
         type: bundleDestroyActions.DESTROY_SUCCESS,
       });
 
-      Message.success(
-        i18n('entities.bundle.destroy.success'),
-      );
+      Message.success(i18n('bundle.destroy.success'));
 
       dispatch(listActions.doFetchCurrentFilter());
 
@@ -63,9 +61,7 @@ const bundleDestroyActions = {
         dispatch(listActions.doFetchCurrentFilter());
       }
 
-      Message.success(
-        i18n('entities.bundle.destroyAll.success'),
-      );
+      Message.success(i18n('bundle.destroyAll.success'));
 
       getHistory().push('/bundle');
     } catch (error) {

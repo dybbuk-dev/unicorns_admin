@@ -1,6 +1,4 @@
-import React from 'react';
 import { i18n } from 'src/i18n';
-import BundleListFilter from 'src/view/bundle/list/BundleListFilter';
 import BundleListTable from 'src/view/bundle/list/BundleListTable';
 import BundleListToolbar from 'src/view/bundle/list/BundleListToolbar';
 import { Card } from '@mui/material';
@@ -12,20 +10,16 @@ function BundleListPage(props) {
     <>
       <Card>
         <MDBox pt={3} px={3}>
-          <MDBox
-            display="flex"
-            justifyContent="space-between"
-            alignItems="flex-start"
-          >
+          <MDBox mb={3}>
             <MDTypography variant="h3">
-              {i18n('entities.bundle.list.title')}
+              {i18n('bundle.list.title')}
             </MDTypography>
-
-            <BundleListToolbar />
           </MDBox>
-          <BundleListFilter />
+          <BundleListToolbar />
         </MDBox>
-        <BundleListTable />
+        <MDBox px={3}>
+          <BundleListTable />
+        </MDBox>
       </Card>
     </>
   );

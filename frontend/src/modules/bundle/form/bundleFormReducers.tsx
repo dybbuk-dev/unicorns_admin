@@ -4,6 +4,7 @@ const initialData = {
   initLoading: false,
   saveLoading: false,
   record: null,
+  status: null,
 };
 
 export default (state = initialData, { type, payload }) => {
@@ -41,6 +42,7 @@ export default (state = initialData, { type, payload }) => {
   if (type === actions.CREATE_SUCCESS) {
     return {
       ...state,
+      status: 'success',
       saveLoading: false,
     };
   }
@@ -48,6 +50,7 @@ export default (state = initialData, { type, payload }) => {
   if (type === actions.CREATE_ERROR) {
     return {
       ...state,
+      status: 'failed',
       saveLoading: false,
     };
   }

@@ -28,7 +28,7 @@ import MDButton from 'src/mui/components/MDButton';
 import FormField from 'src/mui/layouts/applications/wizard/components/FormField';
 
 // Images
-import team2 from 'src/mui/assets/images/team-2.jpg';
+const team2 = '/images/background.svg';
 
 function About(): JSX.Element {
   return (

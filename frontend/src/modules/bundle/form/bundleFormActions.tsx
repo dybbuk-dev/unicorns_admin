@@ -60,17 +60,15 @@ const bundleFormActions = {
         type: bundleFormActions.CREATE_SUCCESS,
       });
 
-      Message.success(
-        i18n('entities.bundle.create.success'),
-      );
-
-      getHistory().push('/bundle');
+      getHistory().push('/bundle/result/success');
     } catch (error) {
       Errors.handle(error);
 
       dispatch({
         type: bundleFormActions.CREATE_ERROR,
       });
+
+      getHistory().push('/bundle/result/failed');
     }
   },
 
@@ -86,9 +84,7 @@ const bundleFormActions = {
         type: bundleFormActions.UPDATE_SUCCESS,
       });
 
-      Message.success(
-        i18n('entities.bundle.update.success'),
-      );
+      Message.success(i18n('bundle.update.success'));
 
       getHistory().push('/bundle');
     } catch (error) {

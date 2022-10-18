@@ -7,6 +7,11 @@ const selectRecord = createSelector(
   (raw) => raw.record,
 );
 
+const selectStatus = createSelector(
+  [selectRaw],
+  (raw) => raw.status,
+);
+
 const selectInitLoading = createSelector(
   [selectRaw],
   (raw) => Boolean(raw.initLoading),
@@ -21,6 +26,7 @@ const bundleFormSelectors = {
   selectInitLoading,
   selectSaveLoading,
   selectRecord,
+  selectStatus,
   selectRaw,
 };
 

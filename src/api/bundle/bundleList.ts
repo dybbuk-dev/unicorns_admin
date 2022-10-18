@@ -8,11 +8,9 @@ export default async (req, res, next) => {
     new PermissionChecker(req).validateHas(
       Permissions.values.bundleRead,
     );
-
     const payload = await new BundleService(
       req,
     ).findAndCountAll(req.query);
-
     await ApiResponseHandler.success(req, res, payload);
   } catch (error) {
     await ApiResponseHandler.error(req, res, error);

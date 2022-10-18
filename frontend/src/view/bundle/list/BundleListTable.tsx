@@ -1,39 +1,42 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Link } from 'react-router-dom';
+import { Link, useRouteMatch } from 'react-router-dom';
 import { i18n } from 'src/i18n';
+import FormWrapper from 'src/view/shared/styles/FormWrapper';
+import { useForm, FormProvider } from 'react-hook-form';
+import SwitchFormItem from 'src/view/shared/form/items/SwitchFormItem';
 import bundleSelectors from 'src/modules/bundle/bundleSelectors';
 import destroyActions from 'src/modules/bundle/destroy/bundleDestroyActions';
 import destroySelectors from 'src/modules/bundle/destroy/bundleDestroySelectors';
 import actions from 'src/modules/bundle/list/bundleListActions';
 import selectors from 'src/modules/bundle/list/bundleListSelectors';
-import ConfirmModal from 'src/view/shared/modals/ConfirmModal';
+import formSelectors from 'src/modules/bundle/form/bundleFormSelectors';
+import DeleteModal from 'src/view/shared/modals/DeleteModal';
+import SuccessModal from 'src/view/shared/modals/SuccessModal';
 import Pagination from 'src/view/shared/table/Pagination';
 import Spinner from 'src/view/shared/Spinner';
-import UserListItem from 'src/view/user/list/UserListItem';
-import {
-  Table,
-  TableRow,
-  Checkbox,
-  TableBody,
-  IconButton,
-  Tooltip,
-  TableContainer,
-} from '@mui/material';
+import { IconButton, Tooltip } from '@mui/material';
 import EditIcon from '@mui/icons-material/Edit';
 import SearchIcon from '@mui/icons-material/Search';
 import DeleteIcon from '@mui/icons-material/Delete';
+import Switch from '@mui/material/Switch';
 import MDBox from 'src/mui/components/MDBox';
-import DataTableHeadCell from 'src/mui/examples/Tables/DataTable/DataTableHeadCell';
-import DataTableBodyCell from 'src/mui/examples/Tables/DataTable/DataTableBodyCell';
 import MDTypography from 'src/mui/components/MDTypography';
-import { selectMuiSettings } from 'src/modules/mui/muiSelectors';
+import form from 'src/mui/layouts/pages/users/new-user/schemas/form';
+import ViewModal from 'src/view/bundle/view/ViewModal';
+
+const bundle = '/images/bundle.svg';
 
 function BundleListTable(props) {
-  const { sidenavColor } = selectMuiSettings();
   const [recordIdToDestroy, setRecordIdToDestroy] =
     useState(null);
+  const [bundleId, setBundleId] = useState(null);
+  const [viewModal, setViewModal] = useState(false);
   const dispatch = useDispatch();
+  const match = useRouteMatch();
+  const [status, setStatus] = match.params.status
+    ? useState(match.params.status)
+    : useState(null);
 
   const findLoading = useSelector(selectors.selectLoading);
 
@@ -44,23 +47,25 @@ function BundleListTable(props) {
   const loading = findLoading || destroyLoading;
 
   const rows = useSelector(selectors.selectRows);
+
+  const formStatus = useSelector(
+    formSelectors.selectStatus,
+  );
   const pagination = useSelector(
     selectors.selectPagination,
   );
-  const selectedKeys = useSelector(
-    selectors.selectSelectedKeys,
-  );
   const hasRows = useSelector(selectors.selectHasRows);
-  const sorter = useSelector(selectors.selectSorter);
-  const isAllSelected = useSelector(
-    selectors.selectIsAllSelected,
-  );
   const hasPermissionToEdit = useSelector(
     bundleSelectors.selectPermissionToEdit,
   );
   const hasPermissionToDestroy = useSelector(
     bundleSelectors.selectPermissionToDestroy,
   );
+
+  useEffect(() => {
+    dispatch(actions.doFetch());
+    // eslint-disable-next-line
+  }, [dispatch]);
 
   const doOpenDestroyConfirmModal = (id) => {
     setRecordIdToDestroy(id);
@@ -70,18 +75,20 @@ function BundleListTable(props) {
     setRecordIdToDestroy(null);
   };
 
-  const doChangeSort = (field) => {
-    const order =
-      sorter.field === field && sorter.order === 'asc'
-        ? 'desc'
-        : 'asc';
+  const doCloseSuccessModal = () => {
+    setStatus(null);
+  };
 
-    dispatch(
-      actions.doChangeSort({
-        field,
-        order,
-      }),
-    );
+  const doCloseViewModal = () => {
+    setViewModal(false);
+  };
+
+  const form = useForm({
+    mode: 'onSubmit',
+  });
+
+  const activeBundle = (values) => {
+    return;
   };
 
   const doChangePagination = (pagination) => {
@@ -94,160 +101,128 @@ function BundleListTable(props) {
     dispatch(destroyActions.doDestroy(id));
   };
 
-  const doToggleAllSelected = () => {
-    dispatch(actions.doToggleAllSelected());
-  };
-
-  const doToggleOneSelected = (id) => {
-    dispatch(actions.doToggleOneSelected(id));
-  };
-
   return (
     <>
-      <TableContainer sx={{ boxShadow: 'none' }}>
-        <Table>
-          <MDBox component="thead">
-            <TableRow>
-              <DataTableHeadCell
-                padding="checkbox"
-                sorted={false}
-              >
-                {hasRows && (
-                  <Checkbox
-                    checked={Boolean(isAllSelected)}
-                    onChange={() => doToggleAllSelected()}
-                    size="small"
-                  />
-                )}
-              </DataTableHeadCell>
-              <DataTableHeadCell sorted={false} width="0">
-                {' '}
-              </DataTableHeadCell>
-              <DataTableHeadCell
-                onClick={() => doChangeSort('name')}
-                sorted={
-                  sorter.field === 'name'
-                    ? sorter.order
-                    : 'none'
-                }
-                noWrap
-              >
-                {i18n('entities.bundle.fields.name')}
-              </DataTableHeadCell>
-              <DataTableHeadCell sorted={false} noWrap>
-                {i18n('entities.bundle.fields.manager')}
-              </DataTableHeadCell>
-            </TableRow>
-          </MDBox>
-          <TableBody>
-            {loading && (
-              <TableRow>
-                <DataTableBodyCell
-                  align="center"
-                  colSpan={100}
-                >
-                  <Spinner />
-                </DataTableBodyCell>
-              </TableRow>
-            )}
-            {!loading && !hasRows && (
-              <TableRow>
-                <DataTableBodyCell
-                  align="center"
-                  colSpan={100}
-                >
-                  <MDTypography align="center">
-                    {i18n('table.noData')}
-                  </MDTypography>
-                </DataTableBodyCell>
-              </TableRow>
-            )}
-            {!loading &&
-              rows.map((row) => (
-                <TableRow key={row.id}>
-                  <DataTableBodyCell padding="checkbox">
-                    <Checkbox
-                      checked={selectedKeys.includes(
-                        row.id,
-                      )}
-                      onChange={() =>
-                        doToggleOneSelected(row.id)
-                      }
-                      size="small"
-                    />
-                  </DataTableBodyCell>
-                  <DataTableBodyCell>
-                    <MDBox
-                      display="flex"
-                      justifyContent="flex-end"
+      {loading && (
+        <MDBox>
+          <Spinner />
+        </MDBox>
+      )}
+      {!loading && !hasRows && (
+        <MDBox>
+          <MDTypography align="center">
+            {i18n('table.noData')}
+          </MDTypography>
+        </MDBox>
+      )}
+      {!loading &&
+        rows.map((row) => (
+          <MDBox
+            display="flex"
+            justifyContent="space-between"
+            alignItems="center"
+            px={3}
+            py={1}
+            mb={2}
+            border={1}
+            borderColor="grey.200"
+            borderRadius="10px"
+            key={row.id}
+          >
+            <MDBox display="flex" alignItems="center">
+              <img src={bundle} alt="Bundle" />
+              <MDTypography ml={2}>{row.name}</MDTypography>
+            </MDBox>
+            <MDBox>
+              <MDBox display="flex">
+                <Tooltip title={i18n('common.view')}>
+                  <IconButton
+                    onClick={() => {
+                      setBundleId(row.id);
+                      setViewModal(true);
+                    }}
+                    color="success"
+                  >
+                    <SearchIcon />
+                  </IconButton>
+                </Tooltip>
+                {hasPermissionToEdit && (
+                  <Tooltip title={i18n('common.edit')}>
+                    <IconButton
+                      color="success"
+                      component={Link}
+                      to={`/bundle/${row.id}/edit`}
                     >
-                      <Tooltip title={i18n('common.view')}>
-                        <IconButton
-                          component={Link}
-                          color={sidenavColor}
-                          to={`/bundle/${row.id}`}
-                        >
-                          <SearchIcon />
-                        </IconButton>
-                      </Tooltip>
-                      {hasPermissionToEdit && (
-                        <Tooltip
-                          title={i18n('common.edit')}
-                        >
-                          <IconButton
-                            color={sidenavColor}
-                            component={Link}
-                            to={`/bundle/${row.id}/edit`}
-                          >
-                            <EditIcon />
-                          </IconButton>
-                        </Tooltip>
+                      <EditIcon />
+                    </IconButton>
+                  </Tooltip>
+                )}
+                {hasPermissionToDestroy && (
+                  <Tooltip title={i18n('common.destroy')}>
+                    <IconButton
+                      color="success"
+                      onClick={() =>
+                        doOpenDestroyConfirmModal(row.id)
+                      }
+                    >
+                      <DeleteIcon />
+                    </IconButton>
+                  </Tooltip>
+                )}
+                <FormWrapper>
+                  <FormProvider {...form}>
+                    <form
+                      onSubmit={form.handleSubmit(
+                        activeBundle,
                       )}
-                      {hasPermissionToDestroy && (
-                        <Tooltip
-                          title={i18n('common.destroy')}
-                        >
-                          <IconButton
-                            color={sidenavColor}
-                            onClick={() =>
-                              doOpenDestroyConfirmModal(
-                                row.id,
-                              )
-                            }
-                          >
-                            <DeleteIcon />
-                          </IconButton>
-                        </Tooltip>
-                      )}
-                    </MDBox>
-                  </DataTableBodyCell>
-                  <DataTableBodyCell>
-                    {row.name}
-                  </DataTableBodyCell>
-                  <DataTableBodyCell>
-                    <UserListItem value={row.manager} />
-                  </DataTableBodyCell>
-                </TableRow>
-              ))}
-          </TableBody>
-        </Table>
+                    >
+                      <MDBox ml={2}>
+                        <SwitchFormItem
+                          name="active"
+                          label=""
+                          color="success"
+                        />
+                      </MDBox>
+                    </form>
+                  </FormProvider>
+                </FormWrapper>
+              </MDBox>
+            </MDBox>
+          </MDBox>
+        ))}
 
-        <Pagination
-          onChange={doChangePagination}
-          disabled={loading}
-          pagination={pagination}
-          entriesPerPage
-          showTotalEntries
-        />
-      </TableContainer>
+      <Pagination
+        onChange={doChangePagination}
+        disabled={loading}
+        pagination={pagination}
+        entriesPerPage
+        showTotalEntries
+      />
 
       {recordIdToDestroy && (
-        <ConfirmModal
-          title={i18n('common.areYouSure')}
+        <DeleteModal
+          title={i18n('bundle.destroy.title')}
+          description={i18n('bundle.destroy.description')}
           onConfirm={() => doDestroy(recordIdToDestroy)}
           onClose={() => doCloseDestroyConfirmModal()}
-          okText={i18n('common.yes')}
-          cancelText={i18n('common.no')}
+          cancelText={i18n('common.cancel')}
+          okText="Yeah, delete"
+        />
+      )}
+
+      {status === 'success' && formStatus === 'success' && (
+        <SuccessModal
+          title={i18n('bundle.create.publish')}
+          description={i18n('bundle.create.description5')}
+          onClose={() => doCloseSuccessModal()}
+          okText="Ok, got it!"
+        />
+      )}
+
+      {viewModal && (
+        <ViewModal
+          bundleId={bundleId}
+          onClose={() => doCloseViewModal()}
         />
       )}
     </>

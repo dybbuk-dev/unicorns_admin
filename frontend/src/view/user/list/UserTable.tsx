@@ -23,15 +23,12 @@ import Tooltip from '@mui/material/Tooltip';
 import EditIcon from '@mui/icons-material/Edit';
 import SearchIcon from '@mui/icons-material/Search';
 import DeleteIcon from '@mui/icons-material/Delete';
-import TableCellCustom from 'src/view/shared/table/TableCellCustom';
 import ConfirmModal from 'src/view/shared/modals/ConfirmModal';
 import Roles from 'src/security/roles';
 import UserStatusView from 'src/view/user/view/UserStatusView';
 import MDBox from 'src/mui/components/MDBox';
 import DataTableHeadCell from 'src/mui/examples/Tables/DataTable/DataTableHeadCell';
 import DataTableBodyCell from 'src/mui/examples/Tables/DataTable/DataTableBodyCell';
-import MDButton from 'src/mui/components/MDButton';
-import { selectMuiSettings } from 'src/modules/mui/muiSelectors';
 import MDTypography from 'src/mui/components/MDTypography';
 import MDBadgeDot from 'src/mui/components/MDBadgeDot';
 import colors from 'src/mui/assets/theme/base/colors';
@@ -91,8 +88,6 @@ function UserTable() {
   const doToggleOneSelected = (id) => {
     dispatch(actions.doToggleOneSelected(id));
   };
-
-  const { sidenavColor } = selectMuiSettings();
 
   return (
     <>

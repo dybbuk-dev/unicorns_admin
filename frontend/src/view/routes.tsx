@@ -126,6 +126,50 @@ const privateRoutes = [
   },
 
   {
+    path: '/bundle',
+    collapseName: 'bundle',
+    i18n: 'bundle.menu',
+    parent: '/',
+    loader: () =>
+      import('src/view/bundle/list/BundleListPage'),
+    permissionRequired: permissions.bundleRead,
+    exact: true,
+  },
+
+  {
+    path: '/bundle/new',
+    collapseName: 'bundle',
+    i18n: 'bundle.new.title',
+    parent: '/bundle',
+    loader: () =>
+      import('src/view/bundle/form/BundleFormPage'),
+    permissionRequired: permissions.bundleCreate,
+    exact: true,
+  },
+
+  {
+    path: '/bundle/:id/edit',
+    collapseName: 'bundle',
+    i18n: 'bundle.edit.title',
+    parent: '/bundle',
+    loader: () =>
+      import('src/view/bundle/form/BundleFormPage'),
+    permissionRequired: permissions.bundleEdit,
+    exact: true,
+  },
+
+  {
+    path: '/bundle/result/:status',
+    collapseName: 'bundle',
+    i18n: 'bundle.menu',
+    parent: '/',
+    loader: () =>
+      import('src/view/bundle/list/BundleListPage'),
+    permissionRequired: permissions.bundleRead,
+    exact: true,
+  },
+
+  {
     path: '/settings-breadcrumb',
     collapseName: 'settings',
     i18n: 'settings.title',

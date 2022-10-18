@@ -18,6 +18,7 @@ function SwitchFormItem(props) {
     hint,
     label,
     name,
+    color,
     required,
     value,
   } = props;
@@ -92,7 +93,7 @@ function SwitchFormItem(props) {
               props.onBlur && props.onBlur(null)
             }
             // inputRef={register}
-            color={sidenavColor}
+            color={color}
           />
         }
         label={label}
@@ -118,6 +119,7 @@ SwitchFormItem.propTypes = {
   name: PropTypes.string.isRequired,
   required: PropTypes.bool,
   value: PropTypes.bool,
+  color: PropTypes.string,
 };
 
 export default SwitchFormItem;

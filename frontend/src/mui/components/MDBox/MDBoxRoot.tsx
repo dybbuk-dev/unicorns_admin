@@ -72,6 +72,7 @@ export default styled(Box)(
       'primary',
       'secondary',
       'info',
+      'purple',
       'success',
       'warning',
       'error',

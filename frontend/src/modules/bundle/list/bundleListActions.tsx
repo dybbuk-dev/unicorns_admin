@@ -71,7 +71,7 @@ const bundleListActions = {
 
       new Exporter(
         exporterFields,
-        i18n('entities.bundle.exporterFileName'),
+        i18n('bundle.exporterFileName'),
       ).transformAndExportAsExcelFile(response.rows);
 
       dispatch({
