@@ -129,10 +129,7 @@ function BundleListTable(props) {
             borderRadius="10px"
             key={row.id}
           >
-            <MDBox display="flex" alignItems="center">
-              <img src={bundle} alt="Bundle" />
-              <MDTypography ml={2}>{row.name}</MDTypography>
-            </MDBox>
+            <MDTypography ml={2}>{row.name}</MDTypography>
             <MDBox>
               <MDBox display="flex">
                 <Tooltip title={i18n('common.view')}>
@@ -150,6 +147,7 @@ function BundleListTable(props) {
                   <Tooltip title={i18n('common.edit')}>
                     <IconButton
                       color="success"
+                      disabled
                       component={Link}
                       to={`/bundle/${row.id}/edit`}
                     >
@@ -180,6 +178,7 @@ function BundleListTable(props) {
                         <SwitchFormItem
                           name="active"
                           label=""
+                          value
                           color="success"
                         />
                       </MDBox>

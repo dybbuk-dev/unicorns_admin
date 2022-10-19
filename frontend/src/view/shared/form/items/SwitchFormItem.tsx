@@ -7,11 +7,8 @@ import {
   Switch,
 } from '@mui/material';
 import { useFormContext } from 'react-hook-form';
-import { selectMuiSettings } from 'src/modules/mui/muiSelectors';
 
 function SwitchFormItem(props) {
-  const { sidenavColor } = selectMuiSettings();
-
   const {
     externalErrorMessage,
     forceValue,

@@ -51,11 +51,13 @@ const validations = [
       {
         required: true,
         min: 0,
+        max: 8000,
       },
     ),
     RBW: yupFormSchemas.integer(i18n('bundle.fields.RBW'), {
       required: true,
       min: 0,
+      max: 6000,
     }),
     expirationDate: yupFormSchemas.date(
       i18n('bundle.fields.expiration'),
