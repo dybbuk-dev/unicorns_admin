@@ -1,18 +1,3 @@
-/**
-=========================================================
-* Material Dashboard 2 PRO React TS - v1.0.0
-=========================================================
-
-* Product Page: https://www.creative-tim.com/product/material-dashboard-2-pro-react-ts
-* Copyright 2022 Creative Tim (https://www.creative-tim.com)
-
-Coded by www.creative-tim.com
-
- =========================================================
-
-* The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
-*/
-
 import { FC, ReactNode, forwardRef } from 'react';
 
 // @mui material components
@@ -20,10 +5,6 @@ import { TypographyProps } from '@mui/material';
 
 // Custom styles for MDTypography
 import MDTypographyRoot from 'src/mui/components/MDTypography/MDTypographyRoot';
-
-// for MUI 2 Dashboard
-import muiActions from 'src/modules/mui/muiActions';
-import { selectMuiSettings } from 'src/modules/mui/muiSelectors';
 
 // Declaring props types for MDTypography
 interface Props extends TypographyProps {
@@ -81,8 +62,6 @@ const MDTypography: FC<Props | any> = forwardRef(
     },
     ref,
   ) => {
-    const { darkMode } = selectMuiSettings();
-
     return (
       <MDTypographyRoot
         {...rest}
@@ -94,7 +73,6 @@ const MDTypography: FC<Props | any> = forwardRef(
           fontWeight,
           opacity,
           textGradient,
-          darkMode,
         }}
       >
         {children}

@@ -1,9 +1,6 @@
 import BundleService from 'src/modules/bundle/bundleService';
 import selectors from 'src/modules/bundle/list/bundleListSelectors';
-import { i18n } from 'src/i18n';
-import exporterFields from 'src/modules/bundle/list/bundleListExporterFields';
 import Errors from 'src/modules/shared/error/errors';
-import Exporter from 'src/modules/shared/exporter/exporter';
 
 const prefix = 'BUNDLE_LIST';
 
@@ -13,35 +10,9 @@ const bundleListActions = {
   FETCH_ERROR: `${prefix}_FETCH_ERROR`,
 
   RESETED: `${prefix}_RESETED`,
-  TOGGLE_ONE_SELECTED: `${prefix}_TOGGLE_ONE_SELECTED`,
-  TOGGLE_ALL_SELECTED: `${prefix}_TOGGLE_ALL_SELECTED`,
-  CLEAR_ALL_SELECTED: `${prefix}_CLEAR_ALL_SELECTED`,
 
   PAGINATION_CHANGED: `${prefix}_PAGINATION_CHANGED`,
   SORTER_CHANGED: `${prefix}_SORTER_CHANGED`,
-
-  EXPORT_STARTED: `${prefix}_EXPORT_STARTED`,
-  EXPORT_SUCCESS: `${prefix}_EXPORT_SUCCESS`,
-  EXPORT_ERROR: `${prefix}_EXPORT_ERROR`,
-
-  doClearAllSelected() {
-    return {
-      type: bundleListActions.CLEAR_ALL_SELECTED,
-    };
-  },
-
-  doToggleAllSelected() {
-    return {
-      type: bundleListActions.TOGGLE_ALL_SELECTED,
-    };
-  },
-
-  doToggleOneSelected(id) {
-    return {
-      type: bundleListActions.TOGGLE_ONE_SELECTED,
-      payload: id,
-    };
-  },
 
   doReset: () => async (dispatch) => {
     dispatch({
@@ -49,41 +20,6 @@ const bundleListActions = {
     });
 
     dispatch(bundleListActions.doFetch());
-  },
-
-  doExport: () => async (dispatch, getState) => {
-    try {
-      if (!exporterFields || !exporterFields.length) {
-        throw new Error('exporterFields is required');
-      }
-
-      dispatch({
-        type: bundleListActions.EXPORT_STARTED,
-      });
-
-      const filter = selectors.selectFilter(getState());
-      const response = await BundleService.list(
-        filter,
-        selectors.selectOrderBy(getState()),
-        null,
-        null,
-      );
-
-      new Exporter(
-        exporterFields,
-        i18n('bundle.exporterFileName'),
-      ).transformAndExportAsExcelFile(response.rows);
-
-      dispatch({
-        type: bundleListActions.EXPORT_SUCCESS,
-      });
-    } catch (error) {
-      Errors.handle(error);
-
-      dispatch({
-        type: bundleListActions.EXPORT_ERROR,
-      });
-    }
   },
 
   doChangePagination:

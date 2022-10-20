@@ -1,12 +1,9 @@
 import PropTypes from 'prop-types';
-import { selectMuiSettings } from 'src/modules/mui/muiSelectors';
 import MDBox from 'src/mui/components/MDBox';
 import MDTypography from 'src/mui/components/MDTypography';
 import NoViewItem from 'src/view/shared/view/NoViewItem';
 
 function CustomViewItem(props) {
-  const { darkMode } = selectMuiSettings();
-
   const isBlank =
     (!props.value &&
       props.value !== 0 &&
@@ -27,7 +24,7 @@ function CustomViewItem(props) {
       {!props.hiddenLabel && (
         <MDTypography
           variant="caption"
-          color={darkMode ? 'text' : 'secondary'}
+          color="secondary"
           fontWeight="regular"
           sx={{
             lineHeight: 1,

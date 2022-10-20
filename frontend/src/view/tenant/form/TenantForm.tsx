@@ -15,10 +15,7 @@ import config from 'src/config';
 import { tenantSubdomain } from 'src/modules/tenant/tenantSubdomain';
 import InputAdornment from '@mui/material/InputAdornment';
 import { yupResolver } from '@hookform/resolvers/yup';
-import { selectMuiSettings } from 'src/modules/mui/muiSelectors';
 import MDButton from 'src/mui/components/MDButton';
-import MDBox from 'src/mui/components/MDBox';
-import MDTypography from 'src/mui/components/MDTypography';
 
 const schemaWithUrl = yup.object().shape({
   name: yupFormSchemas.string(
@@ -54,8 +51,7 @@ const schema = tenantSubdomain.isEnabled
   : schemaWithoutUrl;
 
 function TenantForm(props) {
-  const { sidenavColor, darkMode } = selectMuiSettings();
-  const color = darkMode ? 'light' : 'dark';
+  const color = 'dark';
 
   const [initialValues] = useState(
     () => props.record || { name: '' },
@@ -104,9 +100,7 @@ function TenantForm(props) {
                     <InputAdornment
                       position="end"
                       sx={{
-                        color:
-                          (darkMode ? 'white' : 'inherit') +
-                          ' !important',
+                        color: 'inherit !important',
                         pr: 5,
                       }}
                     >
@@ -127,24 +121,26 @@ function TenantForm(props) {
           >
             <MDButton
               variant="gradient"
-              color={sidenavColor}
+              color="purple"
               disabled={saveLoading}
               type="button"
               onClick={form.handleSubmit(onSubmit)}
               startIcon={<SaveIcon />}
               size="small"
+              circular
             >
               {i18n('common.save')}
             </MDButton>
 
             <MDButton
               variant="outlined"
-              color={sidenavColor}
+              color="purple"
               disabled={saveLoading}
               onClick={onReset}
               type="button"
               startIcon={<UndoIcon />}
               size="small"
+              circular
             >
               {i18n('common.reset')}
             </MDButton>
@@ -152,12 +148,13 @@ function TenantForm(props) {
             {props.onCancel ? (
               <MDButton
                 variant="outlined"
-                color={sidenavColor}
+                color="purple"
                 disabled={saveLoading}
                 onClick={() => props.onCancel()}
                 type="button"
                 startIcon={<CloseIcon />}
                 size="small"
+                circular
               >
                 {i18n('common.cancel')}
               </MDButton>

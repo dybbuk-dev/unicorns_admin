@@ -17,19 +17,6 @@ export default class Storage {
         bypassWritingPermissions: true,
         publicRead: true,
       },
-      settingsLogos: {
-        id: 'settingsLogos',
-        folder: 'tenant/:tenantId/settings/logos',
-        maxSizeInBytes: 10 * 1024 * 1024,
-        publicRead: true,
-      },
-      settingsBackgroundImages: {
-        id: 'settingsBackgroundImages',
-        folder:
-          'tenant/:tenantId/settings/backgroundImages',
-        maxSizeInBytes: 10 * 1024 * 1024,
-        publicRead: true,
-      },
     };
   }
 }

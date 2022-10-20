@@ -3,13 +3,11 @@ import MongooseQueryUtils from '../utils/mongooseQueryUtils';
 import AuditLogRepository from './auditLogRepository';
 import User from '../models/user';
 import Tenant from '../models/tenant';
-import Settings from '../models/settings';
 import Error404 from '../../errors/Error404';
 import Bundle from '../models/bundle';
 import Error400 from '../../errors/Error400';
 import { v4 as uuid } from 'uuid';
 import { isUserInTenant } from '../utils/userTenantUtils';
-import SettingsRepository from './settingsRepository';
 import { IRepositoryOptions } from './IRepositoryOptions';
 
 const forbiddenTenantUrls = ['www'];
@@ -152,11 +150,6 @@ class TenantRepository {
       options,
     );
 
-    await Settings(options.database).deleteMany(
-      { tenant: id },
-      options,
-    );
-
     await User(options.database).updateMany(
       {},
       {
@@ -190,11 +183,6 @@ class TenantRepository {
       ? record.toObject()
       : record;
 
-    output.settings = await SettingsRepository.find({
-      currentTenant: record,
-      ...options,
-    });
-
     return output;
   }
 
@@ -212,11 +200,6 @@ class TenantRepository {
     const output = record.toObject
       ? record.toObject()
       : record;
-
-    output.settings = await SettingsRepository.find({
-      currentTenant: record,
-      ...options,
-    });
 
     return output;
   }

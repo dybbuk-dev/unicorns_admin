@@ -49,24 +49,6 @@ export default class UserService {
     return response.data;
   }
 
-  static async import(values, importHash) {
-    const body = {
-      data: {
-        ...values,
-      },
-      importHash,
-    };
-
-    const tenantId = AuthCurrentTenant.get();
-
-    const response = await authAxios.post(
-      `/tenant/${tenantId}/user/import`,
-      body,
-    );
-
-    return response.data;
-  }
-
   static async find(id) {
     const tenantId = AuthCurrentTenant.get();
     const response = await authAxios.get(
@@ -92,23 +74,6 @@ export default class UserService {
       },
     );
 
-    return response.data;
-  }
-
-  static async fetchUserAutocomplete(query, limit) {
-    const params = {
-      query,
-      limit,
-    };
-
-    const tenantId = AuthCurrentTenant.get();
-
-    const response = await authAxios.get(
-      `/tenant/${tenantId}/user/autocomplete`,
-      {
-        params,
-      },
-    );
     return response.data;
   }
 }

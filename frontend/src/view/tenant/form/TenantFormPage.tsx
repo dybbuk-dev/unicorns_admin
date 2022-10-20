@@ -1,7 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import ContentWrapper from 'src/view/layout/styles/ContentWrapper';
-import PageTitle from 'src/view/shared/styles/PageTitle';
-import Breadcrumb from 'src/view/shared/Breadcrumb';
 import TenantForm from 'src/view/tenant/form/TenantForm';
 import { i18n } from 'src/i18n';
 import { getHistory } from 'src/modules/store';

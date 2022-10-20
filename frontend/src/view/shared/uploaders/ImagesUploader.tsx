@@ -1,5 +1,4 @@
 import { CardMedia, Grid } from '@mui/material';
-import { selectMuiSettings } from 'src/modules/mui/muiSelectors';
 import { useState } from 'react';
 import CloseIcon from '@mui/icons-material/Close';
 import Errors from 'src/modules/shared/error/errors';
@@ -12,7 +11,6 @@ import SearchIcon from '@mui/icons-material/Search';
 import DragAndDropUploaderArea from 'src/view/shared/uploaders/DragAndDropUploaderArea';
 
 function ImagesUploader(props) {
-  const { sidenavColor } = selectMuiSettings();
   const [loading, setLoading] = useState(false);
   const [image, setImage] = useState<any>(null);
 
@@ -109,7 +107,7 @@ function ImagesUploader(props) {
           <MDButton
             onClick={() => doPreviewImage(item)}
             size="small"
-            color={sidenavColor}
+            color="purple"
             iconOnly
           >
             <SearchIcon />
@@ -119,7 +117,7 @@ function ImagesUploader(props) {
             <MDButton
               onClick={() => handleRemove(item.id)}
               size="small"
-              color={sidenavColor}
+              color="purple"
               iconOnly
             >
               <CloseIcon />

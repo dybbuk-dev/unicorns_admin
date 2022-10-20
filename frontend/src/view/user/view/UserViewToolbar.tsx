@@ -6,15 +6,12 @@ import { useSelector } from 'react-redux';
 import userSelectors from 'src/modules/user/userSelectors';
 import selectors from 'src/modules/user/view/userViewSelectors';
 import auditLogSelectors from 'src/modules/auditLog/auditLogSelectors';
-import { Button } from '@mui/material';
 import EditIcon from '@mui/icons-material/Edit';
 import HistoryIcon from '@mui/icons-material/History';
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import MDButton from 'src/mui/components/MDButton';
-import { selectMuiSettings } from 'src/modules/mui/muiSelectors';
 
 function UserViewToolbar(props) {
-  const { sidenavColor } = selectMuiSettings();
   const { match } = props;
 
   const user = useSelector(selectors.selectUser);
@@ -34,10 +31,11 @@ function UserViewToolbar(props) {
           component={Link}
           to={`/user/${id}/edit`}
           variant="gradient"
-          color={sidenavColor}
+          color="purple"
           type="button"
           startIcon={<EditIcon />}
           size="small"
+          circular
         >
           {i18n('common.edit')}
         </MDButton>
@@ -49,10 +47,11 @@ function UserViewToolbar(props) {
           to={`/audit-logs?entityId=${encodeURIComponent(
             id,
           )}`}
-          color={sidenavColor}
+          color="purple"
           variant="outlined"
           startIcon={<HistoryIcon />}
           size="small"
+          circular
         >
           {i18n('auditLog.menu')}
         </MDButton>
@@ -62,13 +61,14 @@ function UserViewToolbar(props) {
         <MDButton
           component={Link}
           type="button"
-          color={sidenavColor}
+          color="purple"
           variant="outlined"
           to={`/audit-logs?createdByEmail=${encodeURIComponent(
             user.email,
           )}`}
           startIcon={<VisibilityIcon />}
           size="small"
+          circular
         >
           {i18n('user.view.activity')}
         </MDButton>

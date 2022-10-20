@@ -1,7 +1,7 @@
 {
   "compilerOptions": {
     "noFallthroughCasesInSwitch": true,
-    "typeRoots": ["node_modules/@types", "src/mui/types"],
+    "typeRoots": ["node_modules/@types", "src/types"],
     "outDir": "./build",
     "target": "es6",
     "module": "esnext",

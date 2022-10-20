@@ -22,16 +22,13 @@ import Pagination from 'src/view/shared/table/Pagination';
 import TableCellCustom from 'src/view/shared/table/TableCellCustom';
 import moment from 'moment';
 import MDBox from 'src/mui/components/MDBox';
-import DataTableHeadCell from 'src/mui/examples/Tables/DataTable/DataTableHeadCell';
-import DataTableBodyCell from 'src/mui/examples/Tables/DataTable/DataTableBodyCell';
-import { selectMuiSettings } from 'src/modules/mui/muiSelectors';
-import MDButton from 'src/mui/components/MDButton';
+import DataTableHeadCell from 'src/mui/components/DataTable/DataTableHeadCell';
+import DataTableBodyCell from 'src/mui/components/DataTable/DataTableBodyCell';
 import MDTypography from 'src/mui/components/MDTypography';
 import colors from 'src/mui/assets/theme/base/colors';
 
 function AuditLogTable(props) {
   const dispatch = useDispatch();
-  const { sidenavColor } = selectMuiSettings();
 
   const doOpenSelectdValues = (values) => {
     const data = JSON.stringify(values, null, 2);

@@ -8,13 +8,10 @@ import TextViewItem from 'src/view/shared/view/TextViewItem';
 import UserStatusView from 'src/view/user/view/UserStatusView';
 import { i18n } from 'src/i18n';
 import MDBox from 'src/mui/components/MDBox';
-import MDBadge from 'src/mui/components/MDBadge';
-import { selectMuiSettings } from 'src/modules/mui/muiSelectors';
 import MDBadgeDot from 'src/mui/components/MDBadgeDot';
 
 function UserView(props) {
   const { user, loading } = props;
-  const { sidenavColor } = selectMuiSettings();
 
   if (loading || !user) {
     return <Spinner />;
@@ -78,7 +75,7 @@ function UserView(props) {
                 <MDBadgeDot
                   key={roleId}
                   badgeContent={Roles.labelOf(roleId)}
-                  color={sidenavColor}
+                  color="purple"
                   variant="contained"
                   size="md"
                 />

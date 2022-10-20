@@ -28,9 +28,6 @@ function UserToolbar(props) {
   );
 
   const hasRows = useSelector(selectors.selectHasRows);
-  const exportLoading = useSelector(
-    selectors.selectExportLoading,
-  );
   const loading = useSelector(selectors.selectLoading);
   const selectedKeys = useSelector(
     selectors.selectSelectedKeys,
@@ -42,10 +39,6 @@ function UserToolbar(props) {
 
   const doCloseDestroyAllConfirmModal = () => {
     setDestroyAllConfirmVisible(false);
-  };
-
-  const doExport = () => {
-    dispatch(actions.doExport());
   };
 
   const doDestroyAllSelected = () => {

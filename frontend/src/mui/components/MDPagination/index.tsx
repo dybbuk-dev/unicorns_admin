@@ -42,6 +42,7 @@ interface Props {
     | 'info'
     | 'success'
     | 'warning'
+    | 'purple'
     | 'error'
     | 'light'
     | 'dark';

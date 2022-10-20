@@ -1,4 +1,4 @@
-import { Button, Grid } from '@mui/material';
+import { Grid } from '@mui/material';
 import CloseIcon from '@mui/icons-material/Close';
 import SaveIcon from '@mui/icons-material/Save';
 import UndoIcon from '@mui/icons-material/Undo';
@@ -15,9 +15,7 @@ import * as yup from 'yup';
 import yupFormSchemas from 'src/modules/shared/yup/yupFormSchemas';
 import userEnumerators from 'src/modules/user/userEnumerators';
 import { yupResolver } from '@hookform/resolvers/yup';
-import MDBox from 'src/mui/components/MDBox';
 import MDButton from 'src/mui/components/MDButton';
-import { selectMuiSettings } from 'src/modules/mui/muiSelectors';
 
 const singleSchema = yup.object().shape({
   email: yupFormSchemas.email(i18n('user.fields.email')),
@@ -51,7 +49,6 @@ const multipleSchema = yup.object().shape({
 });
 
 function UserNewForm(props) {
-  const { sidenavColor } = selectMuiSettings();
   const { single, saveLoading, modal } = props;
 
   const schema = props.single
@@ -143,24 +140,26 @@ function UserNewForm(props) {
           >
             <MDButton
               variant="gradient"
-              color={sidenavColor}
+              color="purple"
               disabled={saveLoading}
               type="submit"
               onClick={form.handleSubmit(onSubmit)}
               startIcon={<SaveIcon />}
               size="small"
+              circular
             >
               {i18n('common.save')}
             </MDButton>
 
             <MDButton
               variant="outlined"
-              color={sidenavColor}
+              color="purple"
               disabled={saveLoading}
               onClick={onReset}
               type="button"
               startIcon={<UndoIcon />}
               size="small"
+              circular
             >
               {i18n('common.reset')}
             </MDButton>
@@ -168,12 +167,13 @@ function UserNewForm(props) {
             {props.onCancel ? (
               <MDButton
                 variant="outlined"
-                color={sidenavColor}
+                color="purple"
                 disabled={saveLoading}
                 onClick={() => props.onCancel()}
                 type="button"
                 startIcon={<CloseIcon />}
                 size="small"
+                circular
               >
                 {i18n('common.cancel')}
               </MDButton>

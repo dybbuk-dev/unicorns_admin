@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 
 // react-router components
 import { useLocation } from 'react-router-dom';
@@ -13,57 +13,37 @@ import Icon from '@mui/material/Icon';
 import MDBox from 'src/mui/components/MDBox';
 
 // Material Dashboard 2 PRO React TS examples components
-import Breadcrumbs from 'src/mui/examples/Breadcrumbs';
+import Breadcrumbs from 'src/view/layout/components/Breadcrumbs';
 
 // Custom styles for Header
 import {
   navbar,
   navbarContainer,
   navbarRow,
-  navbarIconButton,
   navbarDesktopMenu,
   navbarMobileMenu,
-} from 'src/mui/examples/Navbars/DashboardNavbar/styles';
+} from 'src/view/layout/styles/Navbar';
 
 // for MUI 2 Dashboard
 import muiActions from 'src/modules/mui/muiActions';
 import { selectMuiSettings } from 'src/modules/mui/muiSelectors';
 
 import { useDispatch } from 'react-redux';
-import UserMenu from 'src/view/layout/UserMenu';
-import I18nSelect from 'src/view/layout/I18nSelect';
 
 // Declaring prop types for Header
 interface Props {
-  absolute?: boolean;
   light?: boolean;
   isMini?: boolean;
 }
 
-function Header({
-  absolute,
-  light,
-  isMini,
-}: Props): JSX.Element {
-  const [navbarType, setNavbarType] = useState<
-    'fixed' | 'absolute' | 'relative' | 'static' | 'sticky'
-  >('static');
+function Header({ light, isMini }: Props): JSX.Element {
   const dispatch = useDispatch();
   const { miniSidenav } = selectMuiSettings();
-  const [openMenu, setOpenMenu] = useState<any>(false);
   const route = useLocation().pathname.split('/').slice(1);
 
   const handleMiniSidenav = () => {
-    window.innerWidth >= 1200 &&
-      dispatch(
-        muiActions.doSave({
-          miniSidenav: !miniSidenav,
-        }),
-      );
     dispatch(muiActions.doMiniSidenav(!miniSidenav));
   };
-  const handleOpenMenu = (event: any) =>
-    setOpenMenu(event.currentTarget);
 
   // Styles for the navbar icons
   const iconsStyle = ({
@@ -80,7 +60,7 @@ function Header({
 
   return (
     <AppBar
-      position={navbarType}
+      position="static"
       color="inherit"
       sx={(theme) => navbar(theme)}
     >
@@ -132,7 +112,6 @@ function Header({
 
 // Declaring default props for Header
 Header.defaultProps = {
-  absolute: false,
   light: false,
   isMini: false,
 };

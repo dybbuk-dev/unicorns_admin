@@ -5,7 +5,6 @@ import tenant from 'src/modules/tenant/tenantReducers';
 import user from 'src/modules/user/userReducers';
 import bundle from 'src/modules/bundle/bundleReducers';
 import auditLog from 'src/modules/auditLog/auditLogReducers';
-import settings from 'src/modules/settings/settingsReducers';
 import { combineReducers } from 'redux';
 import mui from 'src/modules/mui/muiReducers';
 
@@ -19,5 +18,4 @@ export default (history) =>
     user,
     bundle,
     auditLog,
-    settings,
   });

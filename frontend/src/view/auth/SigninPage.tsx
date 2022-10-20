@@ -23,7 +23,7 @@ import MDTypography from 'src/mui/components/MDTypography';
 import MDButton from 'src/mui/components/MDButton';
 
 // Authentication layout components
-import CoverLayout from 'src/mui/layouts/authentication/components/CoverLayout';
+import CoverLayout from 'src/view/shared/layout/CoverLayout';
 
 import { FormControlLabel } from '@mui/material';
 import { BrandLogo } from 'src/assets/resources';

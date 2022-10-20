@@ -1,11 +1,9 @@
 import MDBox from 'src/mui/components/MDBox';
 import { Parser as HtmlToReactParser } from 'html-to-react';
-import { selectMuiSettings } from 'src/modules/mui/muiSelectors';
 import MDTypography from 'src/mui/components/MDTypography';
 
 function HtmlViewItem(props) {
   const { value, label } = props;
-  const { darkMode } = selectMuiSettings();
   const htmlToReactParser = new HtmlToReactParser();
   const reactElement = htmlToReactParser.parse(value);
   return (
@@ -17,7 +15,7 @@ function HtmlViewItem(props) {
     >
       <MDTypography
         variant="caption"
-        color={darkMode ? 'text' : 'secondary'}
+        color="secondary"
         fontWeight="regular"
         sx={{
           lineHeight: 1,

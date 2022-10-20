@@ -9,7 +9,6 @@ import SelectFormItem from 'src/view/shared/form/items/SelectFormItem';
 import yupFormSchemas from 'src/modules/shared/yup/yupFormSchemas';
 import * as yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';
-import { selectMuiSettings } from 'src/modules/mui/muiSelectors';
 import MDButton from 'src/mui/components/MDButton';
 
 const schema = yup.object().shape({
@@ -18,7 +17,6 @@ const schema = yup.object().shape({
 
 function TenantSelectForm(props) {
   const dispatch = useDispatch();
-  const { sidenavColor } = selectMuiSettings();
 
   const loading = useSelector(selectors.selectLoading);
 
@@ -67,20 +65,22 @@ function TenantSelectForm(props) {
         <MDButton
           style={{ marginTop: '16px' }}
           variant="gradient"
-          color={sidenavColor}
+          color="purple"
           type="submit"
           fullWidth
           disabled={loading}
+          circular
         >
           {i18n('tenant.invitation.accept')}
         </MDButton>
         <MDButton
           style={{ marginTop: '16px' }}
           variant="gradient"
-          color={sidenavColor}
+          color="purple"
           type="button"
           fullWidth
           onClick={props.onViewToggle}
+          circular
         >
           {i18n('tenant.new.title')}
         </MDButton>

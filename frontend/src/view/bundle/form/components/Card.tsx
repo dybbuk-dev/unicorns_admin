@@ -3,7 +3,7 @@ import MDTypography from 'src/mui/components/MDTypography';
 import {
   unicorns,
   lands,
-} from 'src/view/bundle/form/NFT_JSON';
+} from 'src/view/bundle/form/components/NFT_JSON';
 import colors from 'src/mui/assets/theme/base/colors';
 
 export default function Card(props) {

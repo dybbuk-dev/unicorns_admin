@@ -1,18 +1,16 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { i18n } from 'src/i18n';
-import { selectMuiSettings } from 'src/modules/mui/muiSelectors';
 import selectors from 'src/modules/auth/authSelectors';
 import MDButton from 'src/mui/components/MDButton';
 import { Card } from '@mui/material';
 import { BrandLogo } from 'src/assets/resources';
 import MDBox from 'src/mui/components/MDBox';
-import BasicLayout from 'src/mui/layouts/authentication/components/BasicLayout';
+import BasicLayout from 'src/view/shared/layout/BasicLayout';
 import MDTypography from 'src/mui/components/MDTypography';
 import { useSelector } from 'react-redux';
 
 const Error500Page = () => {
-  const { sidenavColor } = selectMuiSettings();
   const backgroundImageUrl = useSelector(
     selectors.selectBackgroundImageUrl,
   );
@@ -56,9 +54,10 @@ const Error500Page = () => {
               component={Link}
               to="/"
               variant="gradient"
-              color={sidenavColor}
+              color="purple"
               type="button"
               fullWidth
+              circular
             >
               {i18n('errors.backToHome')}
             </MDButton>

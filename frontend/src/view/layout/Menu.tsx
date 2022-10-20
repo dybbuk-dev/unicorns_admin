@@ -6,7 +6,6 @@ import { i18n } from 'src/i18n';
 import { Icon } from '@mui/material';
 import LogoutIcon from '@mui/icons-material/Logout';
 import PermissionChecker from 'src/modules/auth/permissionChecker';
-import layoutSelectors from 'src/modules/layout/layoutSelectors';
 import {
   menus,
   settingRoutes,
@@ -29,12 +28,12 @@ import MDBox from 'src/mui/components/MDBox';
 import MDTypography from 'src/mui/components/MDTypography';
 
 // Material Dashboard 2 PRO React TS examples components
-import SidenavCollapse from 'src/mui/examples/Sidenav/SidenavCollapse';
-import SidenavList from 'src/mui/examples/Sidenav/SidenavList';
-import SidenavItem from 'src/mui/examples/Sidenav/SidenavItem';
+import SidenavCollapse from 'src/view/layout/components/Sidenav/SidenavCollapse';
+import SidenavList from 'src/view/layout/components/Sidenav/SidenavList';
+import SidenavItem from 'src/view/layout/components/Sidenav/SidenavItem';
 
 // Custom styles for the Sidenav
-import SidenavRoot from 'src/mui/examples/Sidenav/SidenavRoot';
+import SidenavRoot from 'src/view/layout/components/Sidenav/SidenavRoot';
 
 // for MUI 2 Dashboard
 import muiActions from 'src/modules/mui/muiActions';
@@ -68,34 +67,12 @@ function Menu({ ...rest }: Props): JSX.Element {
     (currentRoute && currentRoute.collapseName) || false;
   const items = pathname.split('/').slice(1);
   const itemParentName = items[1];
-  const itemName = items[items.length - 1];
-
-  let textColor:
-    | 'primary'
-    | 'secondary'
-    | 'info'
-    | 'success'
-    | 'warning'
-    | 'error'
-    | 'dark'
-    | 'white'
-    | 'inherit'
-    | 'text'
-    | 'light' = 'white';
-
-  textColor = 'inherit';
 
   const doSignout = () => {
     dispatch(authActions.doSignout());
   };
 
   const closeSidenav = () => {
-    window.innerWidth >= 1200 &&
-      dispatch(
-        muiActions.doSave({
-          miniSidenav: true,
-        }),
-      );
     dispatch(muiActions.doMiniSidenav(true));
   };
 
@@ -111,9 +88,6 @@ function Menu({ ...rest }: Props): JSX.Element {
   );
   const currentUser = useSelector(
     authSelectors.selectCurrentUser,
-  );
-  const menuVisible = useSelector(
-    layoutSelectors.selectMenuVisible,
   );
 
   const permissionChecker = new PermissionChecker(
@@ -373,7 +347,7 @@ function Menu({ ...rest }: Props): JSX.Element {
           returnValue = (
             <MDTypography
               key={key}
-              color={textColor}
+              color="inherit"
               display="block"
               variant="caption"
               fontWeight="bold"

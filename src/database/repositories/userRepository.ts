@@ -5,8 +5,6 @@ import MongooseQueryUtils from '../utils/mongooseQueryUtils';
 import FileRepository from './fileRepository';
 import crypto from 'crypto';
 import Error404 from '../../errors/Error404';
-import SettingsRepository from './settingsRepository';
-import MuiRepository from './muiRepository';
 import { isUserInTenant } from '../utils/userTenantUtils';
 import { IRepositoryOptions } from './IRepositoryOptions';
 import lodash from 'lodash';
@@ -799,22 +797,6 @@ export default class UserRepository {
     const output = record.toObject
       ? record.toObject()
       : record;
-
-    if (output.tenants && output.tenants.length) {
-      await Promise.all(
-        output.tenants.map(async (userTenant) => {
-          userTenant.tenant.settings =
-            await SettingsRepository.find({
-              currentTenant: userTenant.tenant,
-              ...options,
-            });
-          userTenant.tenant.mui = await MuiRepository.find({
-            currentTenant: userTenant.tenant,
-            ...options,
-          });
-        }),
-      );
-    }
 
     output.avatars = await FileRepository.fillDownloadUrl(
       output.avatars,

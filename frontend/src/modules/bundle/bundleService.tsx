@@ -50,22 +50,6 @@ export default class BundleService {
     return response.data;
   }
 
-  static async import(values, importHash) {
-    const body = {
-      data: values,
-      importHash,
-    };
-
-    const tenantId = AuthCurrentTenant.get();
-
-    const response = await authAxios.post(
-      `/tenant/${tenantId}/bundle/import`,
-      body,
-    );
-
-    return response.data;
-  }
-
   static async find(id) {
     const tenantId = AuthCurrentTenant.get();
 
@@ -88,24 +72,6 @@ export default class BundleService {
 
     const response = await authAxios.get(
       `/tenant/${tenantId}/bundle`,
-      {
-        params,
-      },
-    );
-
-    return response.data;
-  }
-
-  static async listAutocomplete(query, limit) {
-    const params = {
-      query,
-      limit,
-    };
-
-    const tenantId = AuthCurrentTenant.get();
-
-    const response = await authAxios.get(
-      `/tenant/${tenantId}/bundle/autocomplete`,
       {
         params,
       },

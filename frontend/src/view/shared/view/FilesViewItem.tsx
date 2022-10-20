@@ -1,14 +1,11 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 import FilesUploader from 'src/view/shared/uploaders/FilesUploader';
-import { selectMuiSettings } from 'src/modules/mui/muiSelectors';
 import MDBox from 'src/mui/components/MDBox';
 import NoViewItem from 'src/view/shared/view/NoViewItem';
 import MDTypography from 'src/mui/components/MDTypography';
 
 function FilesViewItem(props) {
-  const { darkMode } = selectMuiSettings();
-
   const valueAsArray = () => {
     const { value } = props;
 
@@ -37,7 +34,7 @@ function FilesViewItem(props) {
       {!props.hiddenLabel && (
         <MDTypography
           variant="caption"
-          color={darkMode ? 'text' : 'secondary'}
+          color="secondary"
           fontWeight="regular"
           sx={{
             lineHeight: 1,

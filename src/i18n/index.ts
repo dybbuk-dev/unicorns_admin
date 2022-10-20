@@ -1,15 +1,11 @@
 import en from './en';
-import ptBR from './pt-BR';
 import _get from 'lodash/get';
-import es from './es';
 
 /**
  * Object with the languages available.
  */
 const languages = {
   en: en,
-  'pt-BR': ptBR,
-  es: es,
 };
 
 /**

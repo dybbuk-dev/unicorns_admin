@@ -28,7 +28,6 @@ import FilterPreview from 'src/view/shared/filter/FilterPreview';
 import FilterAccordion from 'src/view/shared/filter/FilterAccordion';
 import MDBox from 'src/mui/components/MDBox';
 import MDButton from 'src/mui/components/MDButton';
-import { selectMuiSettings } from 'src/modules/mui/muiSelectors';
 
 const schema = yup.object().shape({
   timestampRange: yupFilterSchemas.datetimeRange(
@@ -80,7 +79,6 @@ const emptyValues = {
 };
 
 function AuditLogFilter(props) {
-  const { sidenavColor } = selectMuiSettings();
   const rawFilter = useSelector(selectors.selectRawFilter);
   const dispatch = useDispatch();
   const location = useLocation();
@@ -232,10 +230,11 @@ function AuditLogFilter(props) {
                 <MDButton
                   size="small"
                   variant="gradient"
-                  color={sidenavColor}
+                  color="purple"
                   type="submit"
                   disabled={loading}
                   startIcon={<SearchIcon />}
+                  circular
                 >
                   {i18n('common.search')}
                 </MDButton>
@@ -243,11 +242,12 @@ function AuditLogFilter(props) {
                 <MDButton
                   size="small"
                   variant="outlined"
-                  color={sidenavColor}
+                  color="purple"
                   type="button"
                   onClick={onReset}
                   disabled={loading}
                   startIcon={<UndoIcon />}
+                  circular
                 >
                   {i18n('common.reset')}
                 </MDButton>

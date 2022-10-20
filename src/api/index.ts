@@ -8,7 +8,6 @@ import helmet from 'helmet';
 import { createRateLimiter } from './apiRateLimiter';
 import { languageMiddleware } from '../middlewares/languageMiddleware';
 import authSocial from './auth/authSocial';
-import setupSwaggerUI from './apiDocumentation';
 import path from 'path';
 import * as fs from 'fs';
 import { contentType } from 'mime-types';
@@ -27,9 +26,6 @@ app.use(languageMiddleware);
 // Configures the authentication middleware
 // to set the currentUser to the requests
 app.use(authMiddleware);
-
-// Setup the Documentation
-setupSwaggerUI(app);
 
 // Default rate limiter
 const defaultRateLimiter = createRateLimiter({
@@ -76,13 +72,11 @@ const routes = express.Router();
 // Enable Passport for Social Sign-in
 authSocial(app, routes);
 
-require('./mui').default(routes);
 require('./auditLog').default(routes);
 require('./auth').default(routes);
 require('./tenant').default(routes);
 require('./file').default(routes);
 require('./user').default(routes);
-require('./settings').default(routes);
 require('./bundle').default(routes);
 
 // Loads the Tenant if the :tenantId param is passed

@@ -1,6 +1,6 @@
 {
-  "name": "cryptounicorns",
-  "description": "Crypto Unicorns - Backend",
+  "name": "cryptounicorns.fun-admin-backend",
+  "description": "cryptounicorns.fun - Admin - Backend",
   "version": "0.1.0",
   "engines": {
     "node": "16.10.0",
@@ -10,8 +10,7 @@
   "scripts": {
     "start": "nodemon --watch \"src/**/*.ts\" -e ts,json --exec \"ts-node --transpile-only ./src/server.ts\"",
     "test": "nodemon --exec \"cross-env NODE_ENV=test mocha -r ts-node/register ./src/**/*.test.ts --exit || exit 1\"",
-    "build:documentation": "copyfiles --flat ./src/documentation/openapi.json ./dist/documentation/",
-    "build": "tsc && npm run build:documentation",
+    "build": "tsc",
     "db:create": "npm run build && node ./dist/database/migrations/create",
     "heroku-postbuild": "npm run build && cd frontend && yarn && npm run build:production"
   },

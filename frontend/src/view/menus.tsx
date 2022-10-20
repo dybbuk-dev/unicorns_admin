@@ -43,7 +43,7 @@ const settingRoutes = [
     name: i18n('settings.menu'),
     key: 'settings',
     icon: <Icon fontSize="medium">settings</Icon>,
-    permissionRequired: permissions.settingsEdit,
+    permissionRequired: null,
     collapse: [
       {
         path: '/audit-logs',

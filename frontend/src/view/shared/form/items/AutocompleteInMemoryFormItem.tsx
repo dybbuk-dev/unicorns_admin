@@ -1,7 +1,6 @@
 import _uniqBy from 'lodash/uniqBy';
 import { Autocomplete, Box } from '@mui/material';
 import { i18n } from 'src/i18n';
-import { selectMuiSettings } from 'src/modules/mui/muiSelectors';
 import { useFormContext } from 'react-hook-form';
 import { useState, useEffect } from 'react';
 import AddIcon from '@mui/icons-material/Add';
@@ -13,8 +12,6 @@ import MDTypography from 'src/mui/components/MDTypography';
 import PropTypes from 'prop-types';
 
 function AutocompleteInMemoryFormItem(props) {
-  const { sidenavColor } = selectMuiSettings();
-
   const {
     autoFocus,
     createButtonIcon,
@@ -310,7 +307,7 @@ function AutocompleteInMemoryFormItem(props) {
         {props.showCreate && props.hasPermissionToCreate ? (
           <MDButton
             variant="contained"
-            color={sidenavColor}
+            color="purple"
             onClick={props.onOpenModal}
             size="small"
             sx={{

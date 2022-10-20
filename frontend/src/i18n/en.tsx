@@ -30,7 +30,7 @@ const en = {
   },
 
   app: {
-    title: 'Crypto Unicoins',
+    title: 'Crypto Unicorns Fun Admin Panel',
   },
 
   auth: {
@@ -153,11 +153,6 @@ const en = {
       title: 'View User',
       activity: 'Activity',
     },
-    importer: {
-      title: 'Import Users',
-      fileName: 'users_import_template',
-      hint: 'Files/Images columns must be the URLs of the files separated by space. Relationships must be the ID of the referenced records separated by space. Roles must be the role ids separated by space.',
-    },
     errors: {
       userAlreadyExists:
         'User with this email already exists',
@@ -262,9 +257,6 @@ const en = {
     },
     view: {
       title: 'View Bundle',
-    },
-    importer: {
-      title: 'Import Bundle',
     },
     list: {
       title: 'Manage bundles',
@@ -376,42 +368,6 @@ const en = {
     image: 'You must upload an image',
     size: 'File is too big. Max allowed size is {0}',
     formats: `Invalid format. Must be one of: {0}.`,
-  },
-
-  importer: {
-    line: 'Line',
-    status: 'Status',
-    pending: 'Pending',
-    imported: 'Imported',
-    error: 'Error',
-    total: `{0} imported, {1} pending and {2} with error`,
-    importedMessage: `Processed {0} of {1}.`,
-    noNavigateAwayMessage:
-      'Do not navigate away from this page or import will be stopped.',
-    completed: {
-      success:
-        'Import completed. All rows were successfully imported.',
-      someErrors:
-        'Processing completed, but some rows were unable to be imported.',
-      allErrors: 'Import failed. There are no valid rows.',
-    },
-    form: {
-      downloadTemplate: 'Download the template',
-      hint: 'Click or drag the file to this area to continue',
-    },
-    list: {
-      discardConfirm:
-        'Are you sure? Non-imported data will be lost.',
-    },
-    errors: {
-      invalidFileEmpty: 'The file is empty',
-      invalidFileExcel:
-        'Only excel (.xlsx) files are allowed',
-      invalidFileUpload:
-        'Invalid file. Make sure you are using the last version of the template.',
-      importHashRequired: 'Import hash is required',
-      importHashExistent: 'Data has already been imported',
-    },
   },
 
   autocomplete: {

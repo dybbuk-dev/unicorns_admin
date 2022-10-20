@@ -7,11 +7,6 @@ const selectLoading = createSelector(
   (raw) => raw.loading,
 );
 
-const selectExportLoading = createSelector(
-  [selectRaw],
-  (raw) => raw.exportLoading,
-);
-
 const selectRows = createSelector(
   [selectRaw],
   (raw) => raw.rows,
@@ -121,7 +116,6 @@ const userListSelectors = {
   selectSelectedKeys,
   selectSelectedRows,
   selectHasRows,
-  selectExportLoading,
   selectRawFilter,
   selectIsAllSelected,
   selectSorter,

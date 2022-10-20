@@ -4,7 +4,7 @@
 
 const en = {
   app: {
-    title: 'Crypto Unicorns Back-end',
+    title: 'cryptounicorns.fun Admin Back-end',
   },
 
   auth: {
@@ -52,18 +52,6 @@ const en = {
     },
     planActive: `There is a plan active for this company. Please cancel the plan first.`,
     stripeNotConfigured: 'Stripe is not configured.',
-  },
-
-  importer: {
-    errors: {
-      invalidFileEmpty: 'The file is empty',
-      invalidFileExcel:
-        'Only excel (.xlsx) files are allowed',
-      invalidFileUpload:
-        'Invalid file. Make sure you are using the last version of the template.',
-      importHashRequired: 'Import hash is required',
-      importHashExistent: 'Data has already been imported',
-    },
   },
 
   errors: {

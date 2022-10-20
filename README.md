@@ -1,6 +1,6 @@
-# Crypto Unicorns - Back-end
+# cryptounicorns.fun - Admin - Back-end
 
-Version: 2.7.8
+Version: 0.1.0
 
 # Installation Guide
 

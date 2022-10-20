@@ -23,45 +23,6 @@ export default (state = initialData, { type, payload }) => {
     };
   }
 
-  if (type === actions.TOGGLE_ONE_SELECTED) {
-    let selectedKeys = state.selectedKeys;
-
-    const exists = selectedKeys.includes(payload);
-
-    if (exists) {
-      selectedKeys = selectedKeys.filter(
-        (key) => key !== payload,
-      );
-    } else {
-      selectedKeys = [payload, ...selectedKeys];
-    }
-
-    return {
-      ...state,
-      selectedKeys,
-    };
-  }
-
-  if (type === actions.TOGGLE_ALL_SELECTED) {
-    const isAllSelected =
-      (state.rows || []).length ===
-      (state.selectedKeys || []).length;
-
-    return {
-      ...state,
-      selectedKeys: isAllSelected
-        ? []
-        : state.rows.map((row) => row.id),
-    };
-  }
-
-  if (type === actions.CLEAR_ALL_SELECTED) {
-    return {
-      ...state,
-      selectedKeys: [],
-    };
-  }
-
   if (type === actions.PAGINATION_CHANGED) {
     return {
       ...state,
@@ -111,27 +72,6 @@ export default (state = initialData, { type, payload }) => {
       loading: false,
       rows: [],
       count: 0,
-    };
-  }
-
-  if (type === actions.EXPORT_STARTED) {
-    return {
-      ...state,
-      exportLoading: true,
-    };
-  }
-
-  if (type === actions.EXPORT_SUCCESS) {
-    return {
-      ...state,
-      exportLoading: false,
-    };
-  }
-
-  if (type === actions.EXPORT_ERROR) {
-    return {
-      ...state,
-      exportLoading: false,
     };
   }
 

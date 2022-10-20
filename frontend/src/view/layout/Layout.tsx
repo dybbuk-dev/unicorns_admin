@@ -1,5 +1,5 @@
 import Header from 'src/view/layout/Header';
-import DashboardLayout from 'src/mui/examples/LayoutContainers/DashboardLayout';
+import DashboardLayout from 'src/view/layout/components/DashboardLayout';
 import MDBox from 'src/mui/components/MDBox';
 import React from 'react';
 

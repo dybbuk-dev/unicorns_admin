@@ -7,17 +7,9 @@ export default (app) => {
     `/tenant/:tenantId/bundle/:id`,
     require('./bundleUpdate').default,
   );
-  app.post(
-    `/tenant/:tenantId/bundle/import`,
-    require('./bundleImport').default,
-  );
   app.delete(
     `/tenant/:tenantId/bundle`,
     require('./bundleDestroy').default,
-  );
-  app.get(
-    `/tenant/:tenantId/bundle/autocomplete`,
-    require('./bundleAutocomplete').default,
   );
   app.get(
     `/tenant/:tenantId/bundle`,

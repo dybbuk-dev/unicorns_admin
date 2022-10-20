@@ -1,24 +1,15 @@
-import React from 'react';
-import PaginationWrapper from 'src/view/shared/table/styles/PaginationWrapper';
 import { i18n } from 'src/i18n';
 import PropTypes from 'prop-types';
-import {
-  Autocomplete,
-  Icon,
-  TablePagination,
-  useMediaQuery,
-} from '@mui/material';
+import { Autocomplete, Icon } from '@mui/material';
 import MDBox from 'src/mui/components/MDBox';
 import MDTypography from 'src/mui/components/MDTypography';
 import MDPagination from 'src/mui/components/MDPagination';
 import MDInput from 'src/mui/components/MDInput';
-import { selectMuiSettings } from 'src/modules/mui/muiSelectors';
 
 function Pagination(props) {
   const { entriesPerPage, showTotalEntries, pagination } =
     props;
   const { current, pageSize, total } = pagination;
-  const { sidenavColor } = selectMuiSettings();
   const defaultPageSize = 10;
 
   let entries: any[];
@@ -186,9 +177,7 @@ function Pagination(props) {
                 : 'gradient'
             }
             color={
-              pagination.color
-                ? pagination.color
-                : sidenavColor
+              pagination.color ? pagination.color : 'purple'
             }
           >
             <MDPagination

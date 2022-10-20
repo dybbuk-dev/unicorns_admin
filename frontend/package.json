@@ -1,6 +1,6 @@
 {
-  "name": "unicornsadmin",
-  "description": "Crypto Unicorns - Admin",
+  "name": "cryptounicorns.fun-admin",
+  "description": "cryptounicorns.fun - Admin Panel",
   "version": "0.1.0",
   "private": true,
   "dependencies": {

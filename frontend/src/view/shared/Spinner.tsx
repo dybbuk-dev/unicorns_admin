@@ -1,13 +1,10 @@
-import React from 'react';
 import { CircularProgress } from '@mui/material';
-import { selectMuiSettings } from 'src/modules/mui/muiSelectors';
 
 interface SpinnerProps {
   size?: number;
 }
 
 function Spinner({ size }) {
-  const { sidenavColor } = selectMuiSettings();
   return (
     <div
       style={{
@@ -20,7 +17,12 @@ function Spinner({ size }) {
         alignItems: 'center',
       }}
     >
-      <CircularProgress color={sidenavColor} size={size} />
+      <CircularProgress
+        sx={{
+          color: '#6029E3',
+        }}
+        size={size}
+      />
     </div>
   );
 }

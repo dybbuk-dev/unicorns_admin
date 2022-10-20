@@ -181,9 +181,7 @@ const authActions = {
         },
       });
 
-      dispatch({
-        type: muiActions.INIT_RESET,
-      });
+      dispatch(muiActions.doInit());
     } catch (error) {
       Errors.handle(error);
 

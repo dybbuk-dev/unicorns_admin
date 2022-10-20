@@ -22,20 +22,14 @@ import 'react-quill/dist/quill.snow.css';
 // Custom styles for the MDEditor
 import MDEditorRoot from 'src/mui/components/MDEditor/MDEditorRoot';
 
-// for MUI 2 Dashboard
-import muiActions from 'src/modules/mui/muiActions';
-import { selectMuiSettings } from 'src/modules/mui/muiSelectors';
-
 // declaring types for the MDEditor
 interface Props {
   [key: string]: any;
 }
 
 function MDEditor(props: Props): JSX.Element {
-  const { darkMode } = selectMuiSettings();
-
   return (
-    <MDEditorRoot ownerState={{ darkMode }}>
+    <MDEditorRoot>
       <ReactQuill theme="snow" {...props} />
     </MDEditorRoot>
   );

@@ -8,10 +8,7 @@ import actions from 'src/modules/user/form/userFormActions';
 import selectors from 'src/modules/user/form/userFormSelectors';
 import MDBox from 'src/mui/components/MDBox';
 import MDTypography from 'src/mui/components/MDTypography';
-import ContentWrapper from 'src/view/layout/styles/ContentWrapper';
-import Breadcrumb from 'src/view/shared/Breadcrumb';
 import Spinner from 'src/view/shared/Spinner';
-import PageTitle from 'src/view/shared/styles/PageTitle';
 import UserEditForm from 'src/view/user/edit/UserEditForm';
 
 function UserEditPage(props) {

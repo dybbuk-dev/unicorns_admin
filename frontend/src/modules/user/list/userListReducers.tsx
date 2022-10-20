@@ -114,27 +114,6 @@ export default (state = initialData, { type, payload }) => {
     };
   }
 
-  if (type === actions.EXPORT_STARTED) {
-    return {
-      ...state,
-      exportLoading: true,
-    };
-  }
-
-  if (type === actions.EXPORT_SUCCESS) {
-    return {
-      ...state,
-      exportLoading: false,
-    };
-  }
-
-  if (type === actions.EXPORT_ERROR) {
-    return {
-      ...state,
-      exportLoading: false,
-    };
-  }
-
   if (type === actions.DESTROY_ALL_SELECTED_STARTED) {
     return {
       ...state,

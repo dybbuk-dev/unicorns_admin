@@ -27,7 +27,6 @@ export default styled(Typography)(
       fontWeight,
       opacity,
       textGradient,
-      darkMode,
     } = ownerState;
 
     const { gradients, transparent, white } = palette;
@@ -74,14 +73,6 @@ export default styled(Typography)(
       color === 'inherit' || !palette[color]
         ? 'inherit'
         : palette[color].main;
-
-    if (
-      darkMode &&
-      (color === 'inherit' || !palette[color])
-    ) {
-      colorValue = 'inherit';
-    } else if (darkMode && color === 'dark')
-      colorValue = white.main;
 
     return {
       opacity,

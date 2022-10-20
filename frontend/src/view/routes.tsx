@@ -95,17 +95,6 @@ const privateRoutes = [
   },
 
   {
-    path: '/user/importer',
-    i18n: 'user.importer.title',
-    collapseName: 'person',
-    parent: '/user',
-    loader: () =>
-      import('src/view/user/importer/UserImporterPage'),
-    permissionRequired: permissions.userImport,
-    exact: true,
-  },
-
-  {
     path: '/user/:id/edit',
     i18n: 'user.edit.title',
     collapseName: 'person',

@@ -16,7 +16,6 @@ import yupFormSchemas from 'src/modules/shared/yup/yupFormSchemas';
 import userEnumerators from 'src/modules/user/userEnumerators';
 import { yupResolver } from '@hookform/resolvers/yup';
 import MDButton from 'src/mui/components/MDButton';
-import { selectMuiSettings } from 'src/modules/mui/muiSelectors';
 
 const schema = yup.object().shape({
   roles: yupFormSchemas.stringArray(
@@ -26,8 +25,6 @@ const schema = yup.object().shape({
 
 function UserEditForm(props) {
   const dispatch = useDispatch();
-
-  const { sidenavColor } = selectMuiSettings();
 
   const [initialValues] = useState(() => props.user || {});
 
@@ -94,37 +91,40 @@ function UserEditForm(props) {
           <FormButtons>
             <MDButton
               variant="gradient"
-              color={sidenavColor}
+              color="purple"
               disabled={props.saveLoading}
               type="button"
               onClick={form.handleSubmit(onSubmit)}
               startIcon={<SaveIcon />}
               size="small"
+              circular
             >
               {i18n('common.save')}
             </MDButton>
 
             <MDButton
               disabled={props.saveLoading}
-              color={sidenavColor}
+              color="purple"
               variant="outlined"
               onClick={onReset}
               type="button"
               startIcon={<UndoIcon />}
               size="small"
+              circular
             >
               {i18n('common.reset')}
             </MDButton>
 
             {props.onCancel ? (
               <MDButton
-                color={sidenavColor}
+                color="purple"
                 variant="outlined"
                 disabled={props.saveLoading}
                 onClick={() => props.onCancel()}
                 type="button"
                 startIcon={<CloseIcon />}
                 size="small"
+                circular
               >
                 {i18n('common.cancel')}
               </MDButton>

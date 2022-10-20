@@ -1,7 +1,6 @@
 import { AuthToken } from 'src/modules/auth/authToken';
 import { CKEditor } from 'ckeditor4-react';
 import { getLanguageCode } from 'src/i18n';
-import { selectMuiSettings } from 'src/modules/mui/muiSelectors';
 import { useEffect, useState } from 'react';
 import { useFormContext } from 'react-hook-form';
 import $ from 'jquery';
@@ -68,8 +67,6 @@ function HtmlEditorFormItem({
     externalErrorMessage,
   );
 
-  const { darkMode } = selectMuiSettings();
-
   const [originalValue, setOriginalValue] = useState(
     formValue || value || defaultValues[name] || '',
   );
@@ -100,7 +97,7 @@ function HtmlEditorFormItem({
     >
       <MDTypography
         variant="caption"
-        color={darkMode ? 'text' : 'secondary'}
+        color="secondary"
         fontWeight="regular"
         sx={{
           lineHeight: 1,

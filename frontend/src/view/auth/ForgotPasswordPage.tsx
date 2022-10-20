@@ -19,7 +19,7 @@ import MDTypography from 'src/mui/components/MDTypography';
 import MDButton from 'src/mui/components/MDButton';
 
 import { BrandLogo } from 'src/assets/resources';
-import CoverLayout from 'src/mui/layouts/authentication/components/CoverLayout';
+import CoverLayout from 'src/view/shared/layout/CoverLayout';
 
 // Images
 const bgImage = '/images/background.svg';

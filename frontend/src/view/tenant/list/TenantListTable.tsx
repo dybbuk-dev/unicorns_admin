@@ -1,8 +1,7 @@
-import { Box, Button, TableContainer } from '@mui/material';
+import { TableContainer } from '@mui/material';
 import IconButton from '@mui/material/IconButton';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
-import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Tooltip from '@mui/material/Tooltip';
 import DeleteIcon from '@mui/icons-material/Delete';
@@ -29,18 +28,14 @@ import invitationActions from 'src/modules/tenant/invitation/tenantInvitationAct
 import ColoredChip from 'src/view/shared/ColoredChip';
 import config from 'src/config';
 import { tenantSubdomain } from 'src/modules/tenant/tenantSubdomain';
-
-import { red, green } from '@mui/material/colors';
-import { selectMuiSettings } from 'src/modules/mui/muiSelectors';
 import MDBox from 'src/mui/components/MDBox';
-import DataTableHeadCell from 'src/mui/examples/Tables/DataTable/DataTableHeadCell';
-import DataTableBodyCell from 'src/mui/examples/Tables/DataTable/DataTableBodyCell';
+import DataTableHeadCell from 'src/mui/components/DataTable/DataTableHeadCell';
+import DataTableBodyCell from 'src/mui/components/DataTable/DataTableBodyCell';
 import MDTypography from 'src/mui/components/MDTypography';
 import MDButton from 'src/mui/components/MDButton';
 
 function TenantListTable() {
   const dispatch = useDispatch();
-  const { sidenavColor } = selectMuiSettings();
 
   const [recordIdToDestroy, setRecordIdToDestroy] =
     useState(null);
@@ -181,7 +176,7 @@ function TenantListTable() {
                           )}
                         >
                           <IconButton
-                            color={sidenavColor}
+                            color="success"
                             onClick={() =>
                               doAcceptInvitation(
                                 invitationToken(row),
@@ -197,7 +192,7 @@ function TenantListTable() {
                           )}
                         >
                           <IconButton
-                            color={sidenavColor}
+                            color="success"
                             onClick={() =>
                               setInvitationTokenToDeclineInvitation(
                                 invitationToken(row),
@@ -219,7 +214,7 @@ function TenantListTable() {
                           >
                             <MDButton
                               mr={1}
-                              color={sidenavColor}
+                              color="purple"
                               variant="gradient"
                               onClick={() =>
                                 doSelectTenant(row)
@@ -235,7 +230,7 @@ function TenantListTable() {
                             title={i18n('common.edit')}
                           >
                             <IconButton
-                              color={sidenavColor}
+                              color="success"
                               component={Link}
                               to={`/tenant/${row.id}/edit`}
                             >
@@ -248,7 +243,7 @@ function TenantListTable() {
                             title={i18n('common.destroy')}
                           >
                             <IconButton
-                              color={sidenavColor}
+                              color="success"
                               onClick={() =>
                                 setRecordIdToDestroy(row.id)
                               }

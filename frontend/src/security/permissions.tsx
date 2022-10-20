@@ -43,14 +43,6 @@ class Permissions {
         id: 'auditLogRead',
         allowedRoles: [roles.admin],
       },
-      settingsEdit: {
-        id: 'settingsEdit',
-        allowedRoles: [roles.admin],
-        allowedStorage: [
-          storage.settingsBackgroundImages,
-          storage.settingsLogos,
-        ],
-      },
       bundleImport: {
         id: 'bundleImport',
         allowedRoles: [roles.admin, roles.custom],

@@ -17,16 +17,9 @@ Coded by www.creative-tim.com
 import { styled, Theme } from '@mui/material/styles';
 
 export default styled('form')(
-  ({
-    theme,
-    ownerState,
-  }: {
-    theme?: Theme | any;
-    ownerState: any;
-  }) => {
+  ({ theme }: { theme?: Theme | any }) => {
     const { palette, typography, borders, functions } =
       theme;
-    const { darkMode } = ownerState;
 
     const {
       text,
@@ -79,9 +72,7 @@ export default styled('form')(
       },
 
       '& .dz-remove': {
-        color: `${
-          darkMode ? white.main : dark.main
-        } !important`,
+        color: `${dark.main} !important`,
         textDecoration: 'none',
 
         '&:hover, &:focus': {

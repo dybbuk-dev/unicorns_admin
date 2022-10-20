@@ -7,7 +7,6 @@ import Permissions from '../security/permissions';
 import Error404 from '../errors/Error404';
 import { getConfig } from '../config';
 import Roles from '../security/roles';
-import SettingsService from './settingsService';
 import UserRepository from '../database/repositories/userRepository';
 import { IServiceOptions } from './IServiceOptions';
 
@@ -70,12 +69,6 @@ export default class TenantService {
         session,
       },
     );
-
-    await SettingsService.findOrCreateDefault({
-      ...this.options,
-      currentTenant: record,
-      session,
-    });
 
     await TenantUserRepository.create(
       record,
@@ -216,12 +209,6 @@ export default class TenantService {
         session,
       });
 
-      await SettingsService.findOrCreateDefault({
-        ...this.options,
-        currentTenant: record,
-        session,
-      });
-
       await TenantUserRepository.create(
         record,
         this.options.currentUser,
@@ -323,14 +310,6 @@ export default class TenantService {
     });
   }
 
-  async findAllAutocomplete(search, limit) {
-    return TenantRepository.findAllAutocomplete(
-      search,
-      limit,
-      this.options,
-    );
-  }
-
   async findAndCountAll(args) {
     return TenantRepository.findAndCountAll(
       args,
@@ -423,39 +402,5 @@ export default class TenantService {
 
       throw error;
     }
-  }
-
-  async import(data, importHash) {
-    if (!importHash) {
-      throw new Error400(
-        this.options.language,
-        'importer.errors.importHashRequired',
-      );
-    }
-
-    if (await this._isImportHashExistent(importHash)) {
-      throw new Error400(
-        this.options.language,
-        'importer.errors.importHashExistent',
-      );
-    }
-
-    const dataToCreate = {
-      ...data,
-      importHash,
-    };
-
-    return this.create(dataToCreate);
-  }
-
-  async _isImportHashExistent(importHash) {
-    const count = await TenantRepository.count(
-      {
-        importHash,
-      },
-      this.options,
-    );
-
-    return count > 0;
   }
 }

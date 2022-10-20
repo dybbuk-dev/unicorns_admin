@@ -1,13 +1,10 @@
 import { Avatar, Typography } from '@mui/material';
-import MaterialLink from '@mui/material/Link';
 import selectors from 'src/modules/user/userSelectors';
 import PropTypes from 'prop-types';
-import React from 'react';
 import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import MDBox from 'src/mui/components/MDBox';
 import MDButton from 'src/mui/components/MDButton';
-import { selectMuiSettings } from 'src/modules/mui/muiSelectors';
 import MDTypography from 'src/mui/components/MDTypography';
 import {
   getUserAvatar,
@@ -16,7 +13,6 @@ import {
 import { i18n } from 'src/i18n';
 
 function UserViewItem(props) {
-  const { sidenavColor, darkMode } = selectMuiSettings();
   const hasPermissionToRead = useSelector(
     selectors.selectPermissionToRead,
   );
@@ -75,7 +71,7 @@ function UserViewItem(props) {
           <MDButton
             component={Link}
             variant="contained"
-            color={sidenavColor}
+            color="purple"
             to={`/user/${record.id}`}
             underline="hover"
             sx={{
@@ -101,7 +97,7 @@ function UserViewItem(props) {
     >
       <MDTypography
         variant="caption"
-        color={darkMode ? 'text' : 'secondary'}
+        color="secondary"
         fontWeight="regular"
         sx={{
           lineHeight: 1,

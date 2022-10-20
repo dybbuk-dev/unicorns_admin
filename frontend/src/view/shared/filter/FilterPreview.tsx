@@ -2,13 +2,10 @@ import React from 'react';
 import Chip from '@mui/material/Chip';
 import { i18n } from 'src/i18n';
 import { Stack } from '@mui/material';
-import { selectMuiSettings } from 'src/modules/mui/muiSelectors';
 import MDTypography from 'src/mui/components/MDTypography';
 import MDBox from 'src/mui/components/MDBox';
 
 export default function FilterPreview(props) {
-  const { sidenavColor } = selectMuiSettings();
-
   const { values, renders, onRemove } = props;
 
   const itemsNotEmpty = Object.keys(values || {})
@@ -49,7 +46,7 @@ export default function FilterPreview(props) {
         {itemsNotEmpty.map((item) => (
           <Chip
             key={item.key}
-            color={sidenavColor}
+            color="success"
             label={`${item.label}: ${item.value}`}
             size="small"
             onDelete={

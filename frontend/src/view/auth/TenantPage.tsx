@@ -14,7 +14,7 @@ import MDBox from 'src/mui/components/MDBox';
 import MDTypography from 'src/mui/components/MDTypography';
 
 // Authentication layout components
-import CoverLayout from 'src/mui/layouts/authentication/components/CoverLayout';
+import CoverLayout from 'src/view/shared/layout/CoverLayout';
 
 // Images
 import { BrandLogo } from 'src/assets/resources';

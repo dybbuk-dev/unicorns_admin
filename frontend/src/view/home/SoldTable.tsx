@@ -12,8 +12,8 @@ import TableRow from '@mui/material/TableRow';
 import ConfirmModal from 'src/view/shared/modals/ConfirmModal';
 import Roles from 'src/security/roles';
 import MDBox from 'src/mui/components/MDBox';
-import DataTableHeadCell from 'src/mui/examples/Tables/DataTable/DataTableHeadCell';
-import DataTableBodyCell from 'src/mui/examples/Tables/DataTable/DataTableBodyCell';
+import DataTableHeadCell from 'src/mui/components/DataTable/DataTableHeadCell';
+import DataTableBodyCell from 'src/mui/components/DataTable/DataTableBodyCell';
 import MDTypography from 'src/mui/components/MDTypography';
 import MDBadgeDot from 'src/mui/components/MDBadgeDot';
 

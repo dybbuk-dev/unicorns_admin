@@ -4,11 +4,9 @@ import ImagesUploader from 'src/view/shared/uploaders/ImagesUploader';
 import { Typography } from '@mui/material';
 import MDTypography from 'src/mui/components/MDTypography';
 import MDBox from 'src/mui/components/MDBox';
-import { selectMuiSettings } from 'src/modules/mui/muiSelectors';
 import NoViewItem from 'src/view/shared/view/NoViewItem';
 
 function ImagesViewItem(props) {
-  const { darkMode } = selectMuiSettings();
   const valueAsArray = () => {
     const { value } = props;
 
@@ -36,7 +34,7 @@ function ImagesViewItem(props) {
     >
       <MDTypography
         variant="caption"
-        color={darkMode ? 'text' : 'secondary'}
+        color="secondary"
         fontWeight="regular"
         sx={{
           lineHeight: 1,

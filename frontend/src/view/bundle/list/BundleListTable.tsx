@@ -19,13 +19,9 @@ import { IconButton, Tooltip } from '@mui/material';
 import EditIcon from '@mui/icons-material/Edit';
 import SearchIcon from '@mui/icons-material/Search';
 import DeleteIcon from '@mui/icons-material/Delete';
-import Switch from '@mui/material/Switch';
 import MDBox from 'src/mui/components/MDBox';
 import MDTypography from 'src/mui/components/MDTypography';
-import form from 'src/mui/layouts/pages/users/new-user/schemas/form';
 import ViewModal from 'src/view/bundle/view/ViewModal';
-
-const bundle = '/images/bundle.svg';
 
 function BundleListTable(props) {
   const [recordIdToDestroy, setRecordIdToDestroy] =

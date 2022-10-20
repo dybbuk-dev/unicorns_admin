@@ -1,6 +1,3 @@
-/**
- * Starts the application on the port specified.
- */
 require('dotenv').config();
 
 import api from './api';

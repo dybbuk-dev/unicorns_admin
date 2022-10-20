@@ -1,19 +1,3 @@
-/* eslint-disable react/default-props-match-prop-types */
-/**
-=========================================================
-* Material Dashboard 2 PRO React TS - v1.0.0
-=========================================================
-
-* Product Page: https://www.creative-tim.com/product/material-dashboard-2-pro-react-ts
-* Copyright 2022 Creative Tim (https://www.creative-tim.com)
-
-Coded by www.creative-tim.com
-
- =========================================================
-
-* The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
-*/
-
 import { ReactNode } from 'react';
 
 // @mui material components
@@ -30,10 +14,6 @@ import MDTypography from 'src/mui/components/MDTypography';
 
 // Custom styles for the MDSnackbar
 import MDSnackbarIconRoot from 'src/mui/components/MDSnackbar/MDSnackbarIconRoot';
-
-// for MUI 2 Dashboard
-import muiActions from 'src/modules/mui/muiActions';
-import { selectMuiSettings } from 'src/modules/mui/muiSelectors';
 
 // Declaring props types for MDSnackbar
 interface Props extends SnackbarProps {
@@ -65,8 +45,6 @@ function MDSnackbar({
   bgWhite,
   ...rest
 }: Props): JSX.Element {
-  const { darkMode } = selectMuiSettings();
-
   let titleColor: any;
   let dateTimeColor: any;
   let dividerColor: any;
@@ -76,8 +54,8 @@ function MDSnackbar({
     dateTimeColor = 'dark';
     dividerColor = false;
   } else if (color === 'light') {
-    titleColor = darkMode ? 'inherit' : 'dark';
-    dateTimeColor = darkMode ? 'inherit' : 'text';
+    titleColor = 'dark';
+    dateTimeColor = 'text';
     dividerColor = false;
   } else {
     titleColor = 'white';
@@ -118,10 +96,7 @@ function MDSnackbar({
             palette,
           }: {
             palette: any;
-          }) =>
-            darkMode
-              ? palette.background.card
-              : palette[color] || palette.white.main,
+          }) => palette[color] || palette.white.main,
         }}
       >
         <MDBox
@@ -165,8 +140,7 @@ function MDSnackbar({
             <Icon
               sx={{
                 color: ({ palette: { dark, white } }) =>
-                  (bgWhite && !darkMode) ||
-                  color === 'light'
+                  bgWhite || color === 'light'
                     ? dark.main
                     : white.main,
                 fontWeight: ({
@@ -192,13 +166,6 @@ function MDSnackbar({
                 bgWhite || color === 'light'
                   ? palette.text.main
                   : palette.white.main;
-
-              if (darkMode) {
-                colorValue =
-                  color === 'light'
-                    ? 'inherit'
-                    : palette.white.main;
-              }
 
               return colorValue;
             },

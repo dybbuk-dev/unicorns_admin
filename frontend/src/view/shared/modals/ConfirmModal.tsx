@@ -5,12 +5,10 @@ import {
   DialogTitle,
   DialogActions,
 } from '@mui/material';
-import { selectMuiSettings } from 'src/modules/mui/muiSelectors';
 import MDButton from 'src/mui/components/MDButton';
 import MDTypography from 'src/mui/components/MDTypography';
 
 function ConfirmModal(props) {
-  const { sidenavColor } = selectMuiSettings();
   return ReactDOM.createPortal(
     <Dialog
       open={true}
@@ -25,17 +23,19 @@ function ConfirmModal(props) {
         <MDButton
           variant="outlined"
           onClick={props.onClose}
-          color={sidenavColor}
+          color="purple"
           size="small"
+          circular
         >
           {props.cancelText}
         </MDButton>
         <MDButton
           variant="gradient"
           onClick={props.onConfirm}
-          color={sidenavColor}
+          color="purple"
           size="small"
           autoFocus
+          circular
         >
           {props.okText}
         </MDButton>

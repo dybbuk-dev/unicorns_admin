@@ -20,10 +20,7 @@ function RoutesComponent(props) {
   const authLoading = useSelector(
     authSelectors.selectLoadingInit,
   );
-  const muiSettingsLoading = useSelector(
-    muiSelectors.selectLoading,
-  );
-  const loading = authLoading || muiSettingsLoading;
+  const loading = authLoading;
   const currentUser = useSelector(
     authSelectors.selectCurrentUser,
   );
