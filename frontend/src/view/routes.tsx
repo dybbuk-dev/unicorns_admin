@@ -42,39 +42,6 @@ const privateRoutes = [
   },
 
   {
-    path: '/tenant',
-    collapseName: 'companies',
-    i18n: 'tenant.list.title',
-    parent: '/person-name-breadcrumb',
-    loader: () =>
-      import('src/view/tenant/list/TenantListPage'),
-    permissionRequired: null,
-    exact: true,
-  },
-
-  {
-    path: '/tenant/new',
-    collapseName: 'companies',
-    i18n: 'tenant.new.title',
-    parent: '/tenant',
-    loader: () =>
-      import('src/view/tenant/form/TenantFormPage'),
-    permissionRequired: null,
-    exact: true,
-  },
-
-  {
-    path: '/tenant/:id/edit',
-    collapseName: 'companies',
-    i18n: 'tenant.edit.title',
-    parent: '/tenant',
-    loader: () =>
-      import('src/view/tenant/form/TenantFormPage'),
-    permissionRequired: null,
-    exact: true,
-  },
-
-  {
     path: '/user',
     i18n: 'user.menu',
     collapseName: 'person',

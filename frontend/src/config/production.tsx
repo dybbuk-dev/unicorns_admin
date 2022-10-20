@@ -6,7 +6,7 @@ const backendUrl = `/api`;
  * Frontend URL.
  */
 const frontendUrl = {
-  host: 'cryptounicorns.admin',
+  host: 'domain.com',
   protocol: 'https',
 };
 
