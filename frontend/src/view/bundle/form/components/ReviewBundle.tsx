@@ -8,7 +8,7 @@ import Card from 'src/view/bundle/form/components/Card';
 import moment from 'moment';
 
 function ReivewBundle(props) {
-  const { values, visible } = props;
+  const { values, lands, unicorns, visible } = props;
   return (
     <MDBox px={1} display={visible ? 'block' : 'none'}>
       <Grid spacing={3} container>
@@ -168,13 +168,19 @@ function ReivewBundle(props) {
         pr={1}
         mt={4}
       >
-        {[...Array(10)].map((e, i) =>
-          eval(`values.unicorn${i + 1}`) ? (
-            <Grid item key={i}>
-              <Card index={i} isGeneral isUnicorn />
-            </Grid>
-          ) : null,
-        )}
+        {unicorns !== null
+          ? unicorns.map((unicorn, i) =>
+              unicorn.checked ? (
+                <Grid item key={i}>
+                  <Card
+                    title={unicorn.title}
+                    image={unicorn.image}
+                    isGeneral
+                  />
+                </Grid>
+              ) : null,
+            )
+          : null}
       </Grid>
       <Grid
         container
@@ -189,13 +195,19 @@ function ReivewBundle(props) {
         mt={4}
         mb={1}
       >
-        {[...Array(10)].map((e, i) =>
-          eval(`values.land${i + 1}`) ? (
-            <Grid item key={i}>
-              <Card index={i} isGeneral />
-            </Grid>
-          ) : null,
-        )}
+        {lands !== null
+          ? lands.map((land, i) =>
+              land.checked ? (
+                <Grid item key={i}>
+                  <Card
+                    title={land.title}
+                    image={land.image}
+                    isGeneral
+                  />
+                </Grid>
+              ) : null,
+            )
+          : null}
       </Grid>
     </MDBox>
   );

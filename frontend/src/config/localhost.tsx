@@ -1,10 +1,10 @@
-const backendUrl = `http://146.19.207.88:8080/api`;
+const backendUrl = `http://localhost:8080/api`;
 
 /**
  * Frontend Url.
  */
 const frontendUrl = {
-  host: '146.19.207.88:3000',
+  host: 'localhost:3000',
   protocol: 'http',
 };
 

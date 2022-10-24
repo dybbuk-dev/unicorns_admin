@@ -22,12 +22,30 @@ const selectSaveLoading = createSelector(
   (raw) => Boolean(raw.saveLoading),
 );
 
+const selectNfts = createSelector(
+  [selectRaw],
+  (raw) => raw.nfts,
+);
+
+const selectNftLoading = createSelector(
+  [selectRaw],
+  (raw) => Boolean(raw.nftLoading),
+);
+
+const selectNftStatus = createSelector(
+  [selectRaw],
+  (raw) => raw.nftStatus,
+);
+
 const bundleFormSelectors = {
   selectInitLoading,
   selectSaveLoading,
+  selectNftLoading,
   selectRecord,
   selectStatus,
   selectRaw,
+  selectNfts,
+  selectNftStatus,
 };
 
 export default bundleFormSelectors;

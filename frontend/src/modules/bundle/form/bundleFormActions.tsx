@@ -19,6 +19,10 @@ const bundleFormActions = {
   UPDATE_SUCCESS: `${prefix}_UPDATE_SUCCESS`,
   UPDATE_ERROR: `${prefix}_UPDATE_ERROR`,
 
+  GET_NFT_STARTED: `${prefix}_GET_NFT_STARTED`,
+  GET_NFT_SUCCESS: `${prefix}_GET_NFT_SUCCESS`,
+  GET_NFT_ERROR: `${prefix}_GET_NFT_ERROR`,
+
   doInit: (id) => async (dispatch) => {
     try {
       dispatch({
@@ -92,6 +96,27 @@ const bundleFormActions = {
 
       dispatch({
         type: bundleFormActions.UPDATE_ERROR,
+      });
+    }
+  },
+
+  doGetNFT: () => async (dispatch) => {
+    try {
+      dispatch({
+        type: bundleFormActions.GET_NFT_STARTED,
+      });
+
+      let nfts = await BundleService.listNFT();
+
+      dispatch({
+        type: bundleFormActions.GET_NFT_SUCCESS,
+        payload: nfts,
+      });
+    } catch (error) {
+      Errors.handle(error);
+
+      dispatch({
+        type: bundleFormActions.GET_NFT_ERROR,
       });
     }
   },

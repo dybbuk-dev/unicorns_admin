@@ -24,11 +24,6 @@ function BundleFormPage(props) {
   );
   const record = useSelector(selectors.selectRecord);
 
-  const isEditing = Boolean(match.params.id);
-  const title = isEditing
-    ? i18n('bundle.edit.title')
-    : i18n('bundle.new.title');
-
   useEffect(() => {
     dispatch(actions.doInit(match.params.id));
     setDispatched(true);
@@ -36,11 +31,7 @@ function BundleFormPage(props) {
 
   const doSubmit = (id, data) => {
     setProgress(true);
-    if (isEditing) {
-      dispatch(actions.doUpdate(id, data));
-    } else {
-      dispatch(actions.doCreate(data));
-    }
+    dispatch(actions.doCreate(data));
   };
 
   return (
@@ -56,7 +47,6 @@ function BundleFormPage(props) {
           <BundleForm
             saveLoading={saveLoading}
             record={record}
-            title={title}
             onSubmit={doSubmit}
             onCancel={() =>
               getHistory().push('/bundle/success')

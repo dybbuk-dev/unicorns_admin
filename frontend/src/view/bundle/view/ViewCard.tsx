@@ -1,26 +1,13 @@
 import { useState } from 'react';
 import MDBox from 'src/mui/components/MDBox';
 import MDTypography from 'src/mui/components/MDTypography';
-import {
-  unicorns,
-  lands,
-} from 'src/view/bundle/form/components/NFT_JSON';
+import PropTypes from 'prop-types';
 import colors from 'src/mui/assets/theme/base/colors';
 import { IconButton } from '@mui/material';
 
-export default function Card(props) {
-  const { type, indexes, tokens } = props;
+function ViewCard(props) {
+  const { nfts, type, tokens } = props;
   const [active, setActive] = useState(0);
-  let images: string[] = [];
-  if (type === 'unicorns') {
-    for (let i = 0; i < indexes.length; i++) {
-      images[i] = unicorns[indexes[i]].img;
-    }
-  } else if (type === 'lands') {
-    for (let i = 0; i < indexes.length; i++) {
-      images[i] = lands[indexes[i]].img;
-    }
-  }
   return (
     <MDBox
       borderRadius="10px"
@@ -37,7 +24,7 @@ export default function Card(props) {
             ? '/images/pack/pack_UNIM.svg'
             : type === 'RBW'
             ? '/images/pack/pack_RBW.svg'
-            : images[active]
+            : nfts[active].image
         }
         width="100%"
         alt="Unicorn"
@@ -54,9 +41,9 @@ export default function Card(props) {
         {type === 'UNIM' || type === 'RBW'
           ? `$${type} tokens`
           : type === 'unicorns'
-          ? `${indexes.length} Unicorns`
+          ? `${nfts.length} Unicorns`
           : type === 'lands'
-          ? `${indexes.length} Lands Plot`
+          ? `${nfts.length} Lands Plot`
           : null}
       </MDTypography>
       <MDTypography
@@ -76,7 +63,7 @@ export default function Card(props) {
           justifyContent="center"
           alignItems="center"
         >
-          {images.map((e, i) => (
+          {nfts.map((nft, i) => (
             <IconButton
               size="small"
               key={i}
@@ -99,3 +86,15 @@ export default function Card(props) {
     </MDBox>
   );
 }
+
+ViewCard.defaultProps = {
+  tokens: 0,
+};
+
+ViewCard.propTypes = {
+  nfts: PropTypes.array,
+  tokens: PropTypes.number,
+  type: PropTypes.string,
+};
+
+export default ViewCard;

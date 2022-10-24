@@ -6,15 +6,14 @@ import MDTypography from 'src/mui/components/MDTypography';
 import typography from 'src/mui/assets/theme/base/typography';
 import colors from 'src/mui/assets/theme/base/colors';
 import Card from 'src/view/bundle/form/components/Card';
-import ImageCheckboxFormItem from 'src/view/shared/form/items/ImageCheckboxFormItem';
+import ImageCheckbox from 'src/view/bundle/form/components/ImageCheckbox';
 import CachedIcon from '@mui/icons-material/Cached';
 
 function SelectUnicorns(props) {
+  let { unicorns, visible } = props;
+
   return (
-    <MDBox
-      px={1}
-      display={props.visible ? 'block' : 'none'}
-    >
+    <MDBox px={1} display={visible ? 'block' : 'none'}>
       <Grid spacing={3} container>
         <Grid item xs={12}>
           <MDBox pt={3}>
@@ -58,22 +57,33 @@ function SelectUnicorns(props) {
         spacing={1}
         my="15px"
       >
-        {[...Array(10)].map((e, i) => (
-          <Grid item key={i}>
-            <ImageCheckboxFormItem
-              name={`unicorn${i + 1}`}
-              icon={<Card index={i} isUnicorn mt="12px" />}
-              checkedIcon={
-                <Card
-                  index={i}
-                  isUnicorn
-                  isChecked
-                  mt="12px"
+        {unicorns !== null
+          ? unicorns.map((unicorn, i) => (
+              <Grid item key={i}>
+                <ImageCheckbox
+                  checked={unicorn.checked}
+                  onChange={(checked) =>
+                    props.onChange(checked, unicorn.tokenId)
+                  }
+                  icon={
+                    <Card
+                      image={unicorn.image}
+                      title={unicorn.title}
+                      mt="12px"
+                    />
+                  }
+                  checkedIcon={
+                    <Card
+                      image={unicorn.image}
+                      title={unicorn.title}
+                      isChecked
+                      mt="12px"
+                    />
+                  }
                 />
-              }
-            />
-          </Grid>
-        ))}
+              </Grid>
+            ))
+          : null}
       </Grid>
     </MDBox>
   );

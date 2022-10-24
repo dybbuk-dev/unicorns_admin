@@ -208,7 +208,9 @@ class BundleRepository {
       .find(criteria)
       .skip(skip)
       .limit(limitEscaped)
-      .sort(sort);
+      .sort(sort)
+      .populate('unicorns')
+      .populate('lands');
 
     const count = await Bundle(
       options.database,
@@ -249,7 +251,9 @@ class BundleRepository {
     const records = await Bundle(options.database)
       .find(criteria)
       .limit(limitEscaped)
-      .sort(sort);
+      .sort(sort)
+      .populate('unicorns')
+      .populate('lands');
 
     return records.map((record) => ({
       id: record.id,

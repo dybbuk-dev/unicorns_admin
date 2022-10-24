@@ -7,14 +7,13 @@ import MDTypography from 'src/mui/components/MDTypography';
 import typography from 'src/mui/assets/theme/base/typography';
 import colors from 'src/mui/assets/theme/base/colors';
 import Card from 'src/view/bundle/form/components/Card';
-import ImageCheckboxFormItem from 'src/view/shared/form/items/ImageCheckboxFormItem';
+import ImageCheckbox from 'src/view/bundle/form/components/ImageCheckbox';
 
 function SelectLands(props) {
+  let { lands, visible } = props;
+
   return (
-    <MDBox
-      px={1}
-      display={props.visible ? 'block' : 'none'}
-    >
+    <MDBox px={1} display={visible ? 'block' : 'none'}>
       <Grid spacing={3} container>
         <Grid item xs={12}>
           <MDBox pt={3}>
@@ -58,17 +57,33 @@ function SelectLands(props) {
         spacing={1}
         my="15px"
       >
-        {[...Array(10)].map((e, i) => (
-          <Grid item key={i}>
-            <ImageCheckboxFormItem
-              name={`land${i + 1}`}
-              icon={<Card index={i} mt="12px" />}
-              checkedIcon={
-                <Card index={i} isChecked mt="12px" />
-              }
-            />
-          </Grid>
-        ))}
+        {lands !== null
+          ? lands.map((land, i) => (
+              <Grid item key={i}>
+                <ImageCheckbox
+                  checked={land.checked}
+                  onChange={(checked) =>
+                    props.onChange(checked, land.tokenId)
+                  }
+                  icon={
+                    <Card
+                      image={land.image}
+                      title={land.title}
+                      mt="12px"
+                    />
+                  }
+                  checkedIcon={
+                    <Card
+                      image={land.image}
+                      title={land.title}
+                      isChecked
+                      mt="12px"
+                    />
+                  }
+                />
+              </Grid>
+            ))
+          : null}
       </Grid>
     </MDBox>
   );

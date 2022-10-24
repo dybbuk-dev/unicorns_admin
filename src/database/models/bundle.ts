@@ -1,4 +1,5 @@
 import mongoose from 'mongoose';
+import NftSchema from './schemas/nftSchema';
 const Schema = mongoose.Schema;
 
 export default (database) => {
@@ -32,18 +33,8 @@ export default (database) => {
         type: Number,
         required: true,
       },
-      unicorns: [
-        {
-          type: Number,
-          required: true,
-        },
-      ],
-      lands: [
-        {
-          type: Number,
-          required: true,
-        },
-      ],
+      unicorns: [NftSchema],
+      lands: [NftSchema],
       importHash: { type: String },
     },
     { timestamps: true },

@@ -2,7 +2,6 @@ import React, { useEffect } from 'react';
 import ReactDOM from 'react-dom';
 import { Dialog } from '@mui/material';
 import { useDispatch, useSelector } from 'react-redux';
-import { i18n } from 'src/i18n';
 import actions from 'src/modules/bundle/view/bundleViewActions';
 import selectors from 'src/modules/bundle/view/bundleViewSelectors';
 import { IconButton } from '@mui/material';
@@ -10,7 +9,7 @@ import MDBox from 'src/mui/components/MDBox';
 import MDButton from 'src/mui/components/MDButton';
 import { Grid } from '@mui/material';
 import MDTypography from 'src/mui/components/MDTypography';
-import Card from 'src/view/bundle/view/Card';
+import ViewCard from 'src/view/bundle/view/ViewCard';
 import Spinner from 'src/view/shared/Spinner';
 import CloseIcon from '@mui/icons-material/Close';
 import colors from 'src/mui/assets/theme/base/colors';
@@ -18,12 +17,12 @@ import colors from 'src/mui/assets/theme/base/colors';
 function ViewModal(props) {
   const dispatch = useDispatch();
 
-  const loading = useSelector(selectors.selectLoading);
-  const record = useSelector(selectors.selectRecord);
-
   useEffect(() => {
     dispatch(actions.doFind(props.bundleId));
   }, [dispatch, props.bundleId]);
+
+  const loading = useSelector(selectors.selectLoading);
+  const record = useSelector(selectors.selectRecord);
 
   return ReactDOM.createPortal(
     <Dialog
@@ -67,7 +66,7 @@ function ViewModal(props) {
               background: `linear-gradient(to right, #306ED6, #600D8B, #43006A)`,
             }}
           >
-            <Card type="UNIM" tokens={record.UNIM} />
+            <ViewCard type="UNIM" tokens={record.UNIM} />
             <MDBox px={1}>
               <img
                 src="/images/plus.svg"
@@ -75,9 +74,9 @@ function ViewModal(props) {
                 width="18px"
               />
             </MDBox>
-            <Card
+            <ViewCard
               type="unicorns"
-              indexes={record.unicorns}
+              nfts={record.unicorns}
             />
             <MDBox px={1}>
               <img
@@ -86,7 +85,7 @@ function ViewModal(props) {
                 width="18px"
               />
             </MDBox>
-            <Card type="RBW" tokens={record.RBW} />
+            <ViewCard type="RBW" tokens={record.RBW} />
             <MDBox px={1}>
               <img
                 src="/images/plus.svg"
@@ -94,7 +93,7 @@ function ViewModal(props) {
                 width="18px"
               />
             </MDBox>
-            <Card type="lands" indexes={record.lands} />
+            <ViewCard type="lands" nfts={record.lands} />
           </MDBox>
           <Grid container mt={3}>
             <Grid item xs={6}>

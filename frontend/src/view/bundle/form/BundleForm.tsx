@@ -1,6 +1,7 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { i18n } from 'src/i18n';
 import FormWrapper from 'src/view/shared/styles/FormWrapper';
+import { useDispatch, useSelector } from 'react-redux';
 import { useForm, FormProvider } from 'react-hook-form';
 import * as yup from 'yup';
 import yupFormSchemas from 'src/modules/shared/yup/yupFormSchemas';
@@ -8,6 +9,8 @@ import CreateBundle from 'src/view/bundle/form/components/CreateBundle';
 import SelectUnicorns from 'src/view/bundle/form/components/SelectUnicorns';
 import SelectLands from 'src/view/bundle/form/components/SelectLands';
 import ReviewBundle from 'src/view/bundle/form/components/ReviewBundle';
+import selectors from 'src/modules/bundle/form/bundleFormSelectors';
+import actions from 'src/modules/bundle/form/bundleFormActions';
 import { yupResolver } from '@hookform/resolvers/yup';
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
@@ -36,71 +39,78 @@ interface Bundle {
   lands: number[];
 }
 
-const validations = [
-  yup.object().shape({
-    name: yupFormSchemas.string(
-      i18n('bundle.fields.name'),
-      {
-        required: true,
-        max: 200,
-        min: 1,
-      },
-    ),
-    UNIM: yupFormSchemas.integer(
-      i18n('bundle.fields.UNIM'),
-      {
-        required: true,
-        min: 0,
-        max: 8000,
-      },
-    ),
-    RBW: yupFormSchemas.integer(i18n('bundle.fields.RBW'), {
+const schema = yup.object().shape({
+  name: yupFormSchemas.string(i18n('bundle.fields.name'), {
+    required: true,
+    max: 200,
+    min: 1,
+  }),
+  UNIM: yupFormSchemas.integer(i18n('bundle.fields.UNIM'), {
+    required: true,
+    min: 0,
+    max: 8000,
+  }),
+  RBW: yupFormSchemas.integer(i18n('bundle.fields.RBW'), {
+    required: true,
+    min: 0,
+    max: 6000,
+  }),
+  expirationDate: yupFormSchemas.date(
+    i18n('bundle.fields.expiration'),
+    {
       required: true,
-      min: 0,
-      max: 6000,
-    }),
-    expirationDate: yupFormSchemas.date(
-      i18n('bundle.fields.expiration'),
-      {
-        required: true,
-      },
-    ),
-  }),
-  yup.object().shape({
-    unicorn1: yupFormSchemas.boolean('unicorn1', {}),
-    unicorn2: yupFormSchemas.boolean('unicorn2', {}),
-    unicorn3: yupFormSchemas.boolean('unicorn3', {}),
-    unicorn4: yupFormSchemas.boolean('unicorn4', {}),
-    unicorn5: yupFormSchemas.boolean('unicorn5', {}),
-    unicorn6: yupFormSchemas.boolean('unicorn6', {}),
-    unicorn7: yupFormSchemas.boolean('unicorn7', {}),
-    unicorn8: yupFormSchemas.boolean('unicorn8', {}),
-    unicorn9: yupFormSchemas.boolean('unicorn9', {}),
-    unicorn10: yupFormSchemas.boolean('unicorn10', {}),
-  }),
-  yup.object().shape({
-    land1: yupFormSchemas.boolean('land1', {}),
-    land2: yupFormSchemas.boolean('land2', {}),
-    land3: yupFormSchemas.boolean('land3', {}),
-    land4: yupFormSchemas.boolean('land4', {}),
-    land5: yupFormSchemas.boolean('land5', {}),
-    land6: yupFormSchemas.boolean('land6', {}),
-    land7: yupFormSchemas.boolean('land7', {}),
-    land8: yupFormSchemas.boolean('land8', {}),
-    land9: yupFormSchemas.boolean('land9', {}),
-    land10: yupFormSchemas.boolean('land10', {}),
-  }),
-  yup.object().shape({
-    bundle: yupFormSchemas.boolean('bundle', {}),
-  }),
-];
+    },
+  ),
+});
 
 function BundleForm(props) {
   const [activeStep, setActiveStep] = useState<number>(0);
+  const [unicorns, setUnicorns] = useState(null);
+  const [lands, setLands] = useState(null);
   const steps = getSteps();
   const isLastStep: boolean =
     activeStep === steps.length - 1;
-  const currentValidation = validations[activeStep];
+
+  const dispatch = useDispatch();
+  useEffect(() => {
+    dispatch(actions.doGetNFT());
+  }, [dispatch]);
+
+  const nfts = useSelector(selectors.selectNfts);
+  const nftStatus = useSelector(selectors.selectNftStatus);
+
+  useEffect(() => {
+    if (nftStatus === 'success') {
+      setUnicorns(() => {
+        let unicorns = [];
+
+        for (let i = 0; i < nfts.unicorns?.length; i++) {
+          unicorns.push({
+            tokenId: nfts.unicorns[i].tokenId,
+            image: nfts.unicorns[i].image,
+            title: nfts.unicorns[i].title,
+            checked: false,
+          });
+        }
+
+        return unicorns;
+      });
+
+      setLands(() => {
+        let lands = [];
+
+        for (let i = 0; i < nfts.lands?.length; i++) {
+          lands.push({
+            tokenId: nfts.lands[i].tokenId,
+            image: nfts.lands[i].image,
+            title: nfts.lands[i].title,
+            checked: false,
+          });
+        }
+        return lands;
+      });
+    }
+  }, [nftStatus]);
 
   const handleBack = () => setActiveStep(activeStep - 1);
 
@@ -112,36 +122,44 @@ function BundleForm(props) {
       UNIM: record.UNIM,
       RBW: record.RBW,
       expirationDate: record.expirationDate,
-      unicorn1: false,
-      unicorn2: false,
-      unicorn3: false,
-      unicorn4: false,
-      unicorn5: false,
-      unicorn6: false,
-      unicorn7: false,
-      unicorn8: false,
-      unicorn9: false,
-      unicorn10: false,
-      land1: false,
-      land2: false,
-      land3: false,
-      land4: false,
-      land5: false,
-      land6: false,
-      land7: false,
-      land8: false,
-      land9: false,
-      land10: false,
     };
   });
 
   const [values, setValues] = useState<any>(initialValues);
 
   const form = useForm({
-    resolver: yupResolver(currentValidation),
+    resolver: yupResolver(schema),
     mode: 'onSubmit',
     defaultValues: initialValues as any,
   });
+
+  const setCheckedUnicorn = (checked, tokenId) => {
+    setUnicorns(() => {
+      let unicorns_temp = unicorns;
+
+      for (let i = 0; i < unicorns_temp.length; i++) {
+        if (unicorns_temp[i].tokenId === tokenId) {
+          unicorns_temp[i].checked = checked;
+        }
+      }
+
+      return unicorns_temp;
+    });
+  };
+
+  const setCheckedLand = (checked, tokenId) => {
+    setLands(() => {
+      let lands_temp = lands;
+
+      for (let i = 0; i < lands_temp.length; i++) {
+        if (lands_temp[i].tokenId === tokenId) {
+          lands_temp[i].checked = checked;
+        }
+      }
+
+      return lands_temp;
+    });
+  };
 
   const onSubmit = (values) => {
     if (isLastStep) {
@@ -153,20 +171,27 @@ function BundleForm(props) {
         unicorns: [],
         lands: [],
       };
-      for (let i = 0; i < 10; i++) {
-        if (eval(`values.unicorn${i + 1}`))
-          bundle.unicorns.push(i);
-        if (eval(`values.land${i + 1}`))
-          bundle.lands.push(i);
+
+      for (let i = 0; i < unicorns.length; i++) {
+        if (unicorns[i].checked === true) {
+          bundle.unicorns.push(unicorns[i]);
+        }
       }
-      props.onSubmit(props.record?.id, bundle);
+
+      for (let i = 0; i < lands.length; i++) {
+        if (lands[i].checked === true) {
+          bundle.lands.push(lands[i]);
+        }
+      }
+
+      props.onSubmit(props.record?.tokenId, bundle);
     } else {
       setValues(values);
       setActiveStep(activeStep + 1);
     }
   };
 
-  const { saveLoading, title, modal } = props;
+  const { saveLoading } = props;
 
   const makeFormButtons = () => {
     return (
@@ -285,42 +310,43 @@ function BundleForm(props) {
           autoComplete="off"
           noValidate
         >
-          {modal ? (
-            <>
-              <CreateBundle title={title} />
-              <MDBox px={1}>{makeFormButtons()}</MDBox>
-            </>
-          ) : (
-            <Grid
-              container
-              spacing={2}
-              justifyContent="center"
-              mt={1}
-            >
-              <Grid item md={10} sm={12} xs={12}>
-                <Card>
-                  <MDBox px={3}>
-                    <CreateBundle
-                      visible={activeStep === 0}
-                    />
-                    <SelectUnicorns
-                      visible={activeStep === 1}
-                    />
-                    <SelectLands
-                      visible={activeStep === 2}
-                    />
-                    <ReviewBundle
-                      visible={isLastStep}
-                      values={values}
-                    />
-                    <MDBox px={1}>
-                      {makeFormButtons()}
-                    </MDBox>
-                  </MDBox>
-                </Card>
-              </Grid>
+          <Grid
+            container
+            spacing={2}
+            justifyContent="center"
+            mt={1}
+          >
+            <Grid item md={10} sm={12} xs={12}>
+              <Card>
+                <MDBox px={3}>
+                  <CreateBundle
+                    visible={activeStep === 0}
+                  />
+                  <SelectUnicorns
+                    visible={activeStep === 1}
+                    unicorns={unicorns}
+                    onChange={(checked, tokenId) =>
+                      setCheckedUnicorn(checked, tokenId)
+                    }
+                  />
+                  <SelectLands
+                    visible={activeStep === 2}
+                    lands={lands}
+                    onChange={(checked, tokenId) =>
+                      setCheckedLand(checked, tokenId)
+                    }
+                  />
+                  <ReviewBundle
+                    visible={isLastStep}
+                    values={values}
+                    unicorns={unicorns}
+                    lands={lands}
+                  />
+                  <MDBox px={1}>{makeFormButtons()}</MDBox>
+                </MDBox>
+              </Card>
             </Grid>
-          )}
+          </Grid>
         </form>
       </FormProvider>
     </FormWrapper>

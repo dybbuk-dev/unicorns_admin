@@ -1,4 +1,7 @@
 node_modules/
 build/
+
 .eslintcache
 *.sh
+.env
+src/config/

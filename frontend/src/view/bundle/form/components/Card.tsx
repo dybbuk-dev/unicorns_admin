@@ -1,20 +1,11 @@
 import MDBox from 'src/mui/components/MDBox';
 import MDTypography from 'src/mui/components/MDTypography';
-import {
-  unicorns,
-  lands,
-} from 'src/view/bundle/form/components/NFT_JSON';
+import PropTypes from 'prop-types';
 import colors from 'src/mui/assets/theme/base/colors';
 
-export default function Card(props) {
-  const { index, isChecked, isUnicorn, isGeneral, mt } =
-    props;
-  const image = isUnicorn
-    ? unicorns[index].img
-    : lands[index].img;
-  const name = isUnicorn
-    ? unicorns[index].name
-    : lands[index].name;
+function Card(props) {
+  const { title, image, isChecked, isGeneral, mt } = props;
+
   return (
     <MDBox
       borderRadius="10px"
@@ -40,21 +31,24 @@ export default function Card(props) {
             width="80%"
             src="/images/unchecked.svg"
             alt="Unchecked"
+            loading="lazy"
           />
         </MDBox>
       ) : null}
-      <img src={image} width="100%" alt="Unicorn" />
-      <MDTypography
-        sx={{
-          fontWeight: 600,
-          color: colors.dark,
-          fontSize: 16,
-          px: '10px',
-          pt: '4px',
-        }}
-      >
-        {name}
-      </MDTypography>
+      <img src={image} width="100%" alt={image} />
+      <MDBox mx="10px" overflow="hidden">
+        <MDTypography
+          sx={{
+            fontWeight: 600,
+            color: colors.dark,
+            fontSize: 16,
+            pt: '4px',
+            width: '200%',
+          }}
+        >
+          {title}
+        </MDTypography>
+      </MDBox>
       <MDTypography
         sx={{
           fontWeight: 400,
@@ -69,3 +63,20 @@ export default function Card(props) {
     </MDBox>
   );
 }
+
+Card.defaultProps = {
+  title: '',
+  image: '',
+  isChecked: false,
+  isGeneral: false,
+};
+
+Card.propTypes = {
+  title: PropTypes.string,
+  image: PropTypes.string,
+  isChecked: PropTypes.bool,
+  isGeneral: PropTypes.bool,
+  mt: PropTypes.string,
+};
+
+export default Card;

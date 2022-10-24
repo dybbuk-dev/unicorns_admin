@@ -5,6 +5,7 @@
 node_modules/
 /data
 dist/
+frontend/src/config/
 
 *.sh
 
