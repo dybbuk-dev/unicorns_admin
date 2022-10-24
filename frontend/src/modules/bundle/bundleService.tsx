@@ -81,7 +81,7 @@ export default class BundleService {
     return response.data;
   }
 
-  static async listNFT() {
+  static async getNFTs() {
     const config = {
       apiKey: '9Ngi3iug8k2n7YN8NFccK7Slovnzdkzz',
       network: Network.MATIC_MAINNET,
@@ -131,5 +131,50 @@ export default class BundleService {
     };
 
     return nfts;
+  }
+
+  static async getTokens() {
+    const config = {
+      apiKey: '9Ngi3iug8k2n7YN8NFccK7Slovnzdkzz',
+      network: Network.MATIC_MAINNET,
+    };
+    const alchemy = new Alchemy(config);
+
+    const address =
+      '0x477F1EEe3CD57571f77b61B99D9526a37533C53d';
+
+    const balances = await alchemy.core.getTokenBalances(
+      address,
+    );
+
+    const nonZeroBalances = balances.tokenBalances.filter(
+      (token) => {
+        return token.tokenBalance !== '0';
+      },
+    );
+
+    let tokens = { RBW: 0, UNIM: 0 };
+
+    for (let token of nonZeroBalances) {
+      const metadata = await alchemy.core.getTokenMetadata(
+        token.contractAddress,
+      );
+
+      let balance =
+        parseInt(token.tokenBalance) /
+        Math.pow(10, metadata.decimals);
+
+      balance = parseInt(balance.toFixed(0));
+
+      if (metadata.symbol === 'RBW') {
+        tokens.RBW = balance;
+      }
+
+      if (metadata.symbol === 'UNIM') {
+        tokens.UNIM = balance;
+      }
+    }
+
+    return tokens;
   }
 }

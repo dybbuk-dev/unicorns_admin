@@ -19,9 +19,13 @@ const bundleFormActions = {
   UPDATE_SUCCESS: `${prefix}_UPDATE_SUCCESS`,
   UPDATE_ERROR: `${prefix}_UPDATE_ERROR`,
 
-  GET_NFT_STARTED: `${prefix}_GET_NFT_STARTED`,
-  GET_NFT_SUCCESS: `${prefix}_GET_NFT_SUCCESS`,
-  GET_NFT_ERROR: `${prefix}_GET_NFT_ERROR`,
+  GET_NFTS_STARTED: `${prefix}_GET_NFT_STARTED`,
+  GET_NFTS_SUCCESS: `${prefix}_GET_NFT_SUCCESS`,
+  GET_NFTS_ERROR: `${prefix}_GET_NFT_ERROR`,
+
+  GET_TOKENS_STARTED: `${prefix}_GET_TOKENS_STARTED`,
+  GET_TOKENS_SUCCESS: `${prefix}_GET_TOKENS_SUCCESS`,
+  GET_TOKENS_ERROR: `${prefix}_GET_TOKENS_ERROR`,
 
   doInit: (id) => async (dispatch) => {
     try {
@@ -100,23 +104,44 @@ const bundleFormActions = {
     }
   },
 
-  doGetNFT: () => async (dispatch) => {
+  doGetNFTs: () => async (dispatch) => {
     try {
       dispatch({
-        type: bundleFormActions.GET_NFT_STARTED,
+        type: bundleFormActions.GET_NFTS_STARTED,
       });
 
-      let nfts = await BundleService.listNFT();
+      let nfts = await BundleService.getNFTs();
 
       dispatch({
-        type: bundleFormActions.GET_NFT_SUCCESS,
+        type: bundleFormActions.GET_NFTS_SUCCESS,
         payload: nfts,
       });
     } catch (error) {
       Errors.handle(error);
 
       dispatch({
-        type: bundleFormActions.GET_NFT_ERROR,
+        type: bundleFormActions.GET_NFTS_ERROR,
+      });
+    }
+  },
+
+  doGetTokens: () => async (dispatch) => {
+    try {
+      dispatch({
+        type: bundleFormActions.GET_TOKENS_STARTED,
+      });
+
+      let tokens = await BundleService.getTokens();
+
+      dispatch({
+        type: bundleFormActions.GET_TOKENS_SUCCESS,
+        payload: tokens,
+      });
+    } catch (error) {
+      Errors.handle(error);
+
+      dispatch({
+        type: bundleFormActions.GET_TOKENS_ERROR,
       });
     }
   },

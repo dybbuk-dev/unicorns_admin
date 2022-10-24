@@ -2,12 +2,13 @@ import actions from 'src/modules/bundle/form/bundleFormActions';
 
 const initialData = {
   initLoading: false,
-  nftLoading: false,
   saveLoading: false,
   record: null,
   status: null,
   nftStatus: null,
+  tokenStatus: null,
   nfts: null,
+  tokens: null,
 };
 
 export default (state = initialData, { type, payload }) => {
@@ -79,27 +80,45 @@ export default (state = initialData, { type, payload }) => {
     };
   }
 
-  if (type === actions.GET_NFT_STARTED) {
+  if (type === actions.GET_NFTS_STARTED) {
     return {
       ...state,
-      nftLoading: true,
     };
   }
 
-  if (type === actions.GET_NFT_SUCCESS) {
+  if (type === actions.GET_NFTS_SUCCESS) {
     return {
       ...state,
       nfts: payload,
       nftStatus: 'success',
-      nftLoading: false,
     };
   }
 
-  if (type === actions.GET_NFT_ERROR) {
+  if (type === actions.GET_NFTS_ERROR) {
     return {
       ...state,
       nftStatus: 'failed',
-      nftLoading: false,
+    };
+  }
+
+  if (type === actions.GET_TOKENS_STARTED) {
+    return {
+      ...state,
+    };
+  }
+
+  if (type === actions.GET_TOKENS_SUCCESS) {
+    return {
+      ...state,
+      tokens: payload,
+      tokenStatus: 'success',
+    };
+  }
+
+  if (type === actions.GET_TOKENS_ERROR) {
+    return {
+      ...state,
+      tokenStatus: 'failed',
     };
   }
 

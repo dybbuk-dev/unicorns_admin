@@ -20,6 +20,7 @@ import { Card, Grid } from '@mui/material';
 import Stepper from 'src/view/shared/Stepper';
 import MDTypography from 'src/mui/components/MDTypography';
 import colors from 'src/mui/assets/theme/base/colors';
+import Spinner from 'src/view/shared/Spinner';
 
 function getSteps(): string[] {
   return [
@@ -48,12 +49,12 @@ const schema = yup.object().shape({
   UNIM: yupFormSchemas.integer(i18n('bundle.fields.UNIM'), {
     required: true,
     min: 0,
-    max: 8000,
+    max: 18780,
   }),
   RBW: yupFormSchemas.integer(i18n('bundle.fields.RBW'), {
     required: true,
     min: 0,
-    max: 6000,
+    max: 216,
   }),
   expirationDate: yupFormSchemas.date(
     i18n('bundle.fields.expiration'),
@@ -67,17 +68,23 @@ function BundleForm(props) {
   const [activeStep, setActiveStep] = useState<number>(0);
   const [unicorns, setUnicorns] = useState(null);
   const [lands, setLands] = useState(null);
+  const [tokens, setTokens] = useState(null);
   const steps = getSteps();
   const isLastStep: boolean =
     activeStep === steps.length - 1;
 
   const dispatch = useDispatch();
   useEffect(() => {
-    dispatch(actions.doGetNFT());
+    dispatch(actions.doGetNFTs());
+    dispatch(actions.doGetTokens());
   }, [dispatch]);
 
   const nfts = useSelector(selectors.selectNfts);
+  const tokens_temp = useSelector(selectors.selectTokens);
   const nftStatus = useSelector(selectors.selectNftStatus);
+  const tokenStatus = useSelector(
+    selectors.selectTokenStatus,
+  );
 
   useEffect(() => {
     if (nftStatus === 'success') {
@@ -111,6 +118,12 @@ function BundleForm(props) {
       });
     }
   }, [nftStatus]);
+
+  useEffect(() => {
+    if (tokenStatus === 'success') {
+      setTokens(tokens_temp);
+    }
+  }, [tokenStatus]);
 
   const handleBack = () => setActiveStep(activeStep - 1);
 
@@ -203,60 +216,66 @@ function BundleForm(props) {
         alignItems="center"
       >
         {activeStep === 0 ? (
-          <MDBox>
-            <MDTypography
-              sx={{
-                color: colors.dark.main,
-                fontWeight: 500,
-                fontSize: 14,
-              }}
-            >
-              {i18n('bundle.create.balance')}
-            </MDTypography>
-            <MDBox display="flex">
-              <MDBox
-                display="flex"
+          tokenStatus === 'success' ? (
+            <MDBox>
+              <MDTypography
                 sx={{
-                  borderRight: 1,
-                  borderColor: 'grey.400',
-                  pr: '12px',
+                  color: colors.dark.main,
+                  fontWeight: 500,
+                  fontSize: 14,
                 }}
               >
-                <img
-                  src="/images/tokens/UNIM.svg"
-                  width="20px"
-                  alt="UNIM"
-                />
-                <MDTypography
+                {i18n('bundle.create.balance')}
+              </MDTypography>
+              <MDBox display="flex">
+                <MDBox
+                  display="flex"
                   sx={{
-                    ml: '4px',
-                    color: colors.dark.main,
-                    fontWeight: 500,
-                    fontSize: 14,
+                    borderRight: 1,
+                    borderColor: 'grey.400',
+                    pr: '12px',
                   }}
                 >
-                  8000 UNIM
-                </MDTypography>
-              </MDBox>
-              <MDBox display="flex" pl="12px">
-                <img
-                  src="/images/tokens/RBW.svg"
-                  width="20px"
-                  alt="RBW"
-                />
-                <MDTypography
-                  sx={{
-                    ml: '4px',
-                    color: colors.dark.main,
-                    fontWeight: 500,
-                    fontSize: 14,
-                  }}
-                >
-                  6000 RBW
-                </MDTypography>
+                  <img
+                    src="/images/tokens/UNIM.svg"
+                    width="20px"
+                    alt="UNIM"
+                  />
+                  <MDTypography
+                    sx={{
+                      ml: '4px',
+                      color: colors.dark.main,
+                      fontWeight: 500,
+                      fontSize: 14,
+                    }}
+                  >
+                    {`${tokens?.UNIM} UNIM`}
+                  </MDTypography>
+                </MDBox>
+                <MDBox display="flex" pl="12px">
+                  <img
+                    src="/images/tokens/RBW.svg"
+                    width="20px"
+                    alt="RBW"
+                  />
+                  <MDTypography
+                    sx={{
+                      ml: '4px',
+                      color: colors.dark.main,
+                      fontWeight: 500,
+                      fontSize: 14,
+                    }}
+                  >
+                    {`${tokens?.RBW} RBW`}
+                  </MDTypography>
+                </MDBox>
               </MDBox>
             </MDBox>
-          </MDBox>
+          ) : (
+            <MDBox pl="30px">
+              <Spinner size={25} />
+            </MDBox>
+          )
         ) : (
           <MDButton
             variant="outlined"
