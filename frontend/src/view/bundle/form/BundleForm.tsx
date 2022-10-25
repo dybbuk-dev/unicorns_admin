@@ -49,12 +49,12 @@ const schema = yup.object().shape({
   UNIM: yupFormSchemas.integer(i18n('bundle.fields.UNIM'), {
     required: true,
     min: 0,
-    max: 18780,
+    max: 39096,
   }),
   RBW: yupFormSchemas.integer(i18n('bundle.fields.RBW'), {
     required: true,
     min: 0,
-    max: 216,
+    max: 456,
   }),
   expirationDate: yupFormSchemas.date(
     i18n('bundle.fields.expiration'),

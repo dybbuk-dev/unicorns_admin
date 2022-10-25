@@ -1,3 +1,4 @@
+import { useState, useEffect } from 'react';
 import { Grid } from '@mui/material';
 import { i18n } from 'src/i18n';
 import MDBox from 'src/mui/components/MDBox';
@@ -9,6 +10,25 @@ import moment from 'moment';
 
 function ReivewBundle(props) {
   const { values, lands, unicorns, visible } = props;
+  const [price, setPrice] = useState(null);
+
+  useEffect(() => {
+    let numberNFTs = 0;
+    for (let i = 0; i < lands?.length; i++) {
+      if (lands[i].checked === true) numberNFTs++;
+    }
+    for (let i = 0; i < unicorns?.length; i++) {
+      if (unicorns[i].checked === true) numberNFTs++;
+    }
+    setPrice(() => {
+      return (
+        numberNFTs * 0.015 +
+        values.UNIM * 0.000003 +
+        values.RBW * 0.000224
+      ).toFixed(2);
+    });
+  }, [props]);
+
   return (
     <MDBox px={1} display={visible ? 'block' : 'none'}>
       <Grid spacing={3} container>
@@ -42,7 +62,7 @@ function ReivewBundle(props) {
         pr={1}
         mt={4}
       >
-        <Grid item md={4} sm={12}>
+        <Grid item lg={3} md={6} sm={12}>
           <MDBox
             display="flex"
             borderRadius="10px"
@@ -79,7 +99,7 @@ function ReivewBundle(props) {
             </MDBox>
           </MDBox>
         </Grid>
-        <Grid item md={4} sm={12}>
+        <Grid item lg={3} md={6} sm={12}>
           <MDBox
             display="flex"
             borderRadius="10px"
@@ -116,7 +136,7 @@ function ReivewBundle(props) {
             </MDBox>
           </MDBox>
         </Grid>
-        <Grid item md={4} sm={12}>
+        <Grid item lg={3} md={6} sm={12}>
           <MDBox
             display="flex"
             borderRadius="10px"
@@ -151,6 +171,43 @@ function ReivewBundle(props) {
                 {moment(values.expirationDate).format(
                   'MM/DD/YYYY',
                 )}
+              </MDTypography>
+            </MDBox>
+          </MDBox>
+        </Grid>
+        <Grid item lg={3} md={6} sm={12}>
+          <MDBox
+            display="flex"
+            borderRadius="10px"
+            border={1}
+            borderColor="grey.400"
+            bgcolor="#ffffff"
+            pl={2}
+          >
+            <img
+              src="/images/ether.svg"
+              width="25px"
+              alt="Calendar"
+            />
+            <MDBox pl="20px" py="10px">
+              <MDTypography
+                sx={{
+                  fontWeight: 500,
+                  color: colors.dark,
+                  fontSize: 16,
+                }}
+              >
+                Bundle Price
+              </MDTypography>
+              <MDTypography
+                sx={{
+                  lineHeight: 1.0,
+                  fontWeight: 700,
+                  color: colors.dark,
+                  fontSize: 16,
+                }}
+              >
+                {`${price} ETH`}
               </MDTypography>
             </MDBox>
           </MDBox>

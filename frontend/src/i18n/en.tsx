@@ -201,7 +201,7 @@ const en = {
     label: 'Home',
     menu: 'Home',
     overview: 'Overview',
-    sold: 'Most sold bundles',
+    sold: 'Sold Bundles',
     card1: {
       title: 'Total sales value',
       count: '',
