@@ -33,6 +33,10 @@ export default (database) => {
         type: Number,
         required: true,
       },
+      price: {
+        type: Number,
+        required: true,
+      },
       unicorns: [NftSchema],
       lands: [NftSchema],
       importHash: { type: String },

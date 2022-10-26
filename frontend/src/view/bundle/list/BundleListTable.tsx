@@ -143,7 +143,6 @@ function BundleListTable(props) {
                   <Tooltip title={i18n('common.edit')}>
                     <IconButton
                       color="success"
-                      disabled
                       component={Link}
                       to={`/bundle/${row.id}/edit`}
                     >

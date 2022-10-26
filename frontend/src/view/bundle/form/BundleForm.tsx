@@ -11,6 +11,7 @@ import SelectLands from 'src/view/bundle/form/components/SelectLands';
 import ReviewBundle from 'src/view/bundle/form/components/ReviewBundle';
 import selectors from 'src/modules/bundle/form/bundleFormSelectors';
 import actions from 'src/modules/bundle/form/bundleFormActions';
+import formActions from 'src/modules/form/formActions';
 import { yupResolver } from '@hookform/resolvers/yup';
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
@@ -38,6 +39,7 @@ interface Bundle {
   RBW: number;
   unicorns: number[];
   lands: number[];
+  price: number;
 }
 
 const schema = yup.object().shape({
@@ -69,6 +71,7 @@ function BundleForm(props) {
   const [unicorns, setUnicorns] = useState(null);
   const [lands, setLands] = useState(null);
   const [tokens, setTokens] = useState(null);
+
   const steps = getSteps();
   const isLastStep: boolean =
     activeStep === steps.length - 1;
@@ -98,6 +101,20 @@ function BundleForm(props) {
             title: nfts.unicorns[i].title,
             checked: false,
           });
+
+          if (props.record.unicorns) {
+            for (
+              let j = 0;
+              j < props.record.unicorns.length;
+              j++
+            ) {
+              if (
+                props.record.unicorns[j].tokenId ===
+                unicorns[i].tokenId
+              )
+                unicorns[i].checked = true;
+            }
+          }
         }
 
         return unicorns;
@@ -113,6 +130,20 @@ function BundleForm(props) {
             title: nfts.lands[i].title,
             checked: false,
           });
+
+          if (props.record.lands) {
+            for (
+              let j = 0;
+              j < props.record.lands.length;
+              j++
+            ) {
+              if (
+                props.record.lands[j].tokenId ===
+                lands[i].tokenId
+              )
+                lands[i].checked = true;
+            }
+          }
         }
         return lands;
       });
@@ -135,12 +166,13 @@ function BundleForm(props) {
       UNIM: record.UNIM,
       RBW: record.RBW,
       expirationDate: record.expirationDate,
+      price: record.price,
     };
   });
 
   const [values, setValues] = useState<any>(initialValues);
 
-  const form = useForm({
+  let form = useForm({
     resolver: yupResolver(schema),
     mode: 'onSubmit',
     defaultValues: initialValues as any,
@@ -183,6 +215,7 @@ function BundleForm(props) {
         RBW: values.RBW,
         unicorns: [],
         lands: [],
+        price: values.price,
       };
 
       for (let i = 0; i < unicorns.length; i++) {
@@ -197,8 +230,24 @@ function BundleForm(props) {
         }
       }
 
-      props.onSubmit(props.record?.tokenId, bundle);
+      props.onSubmit(props.record?.id, bundle);
     } else {
+      let numberNFTs = 0;
+      for (let i = 0; i < lands?.length; i++) {
+        if (lands[i].checked === true) numberNFTs++;
+      }
+      for (let i = 0; i < unicorns?.length; i++) {
+        if (unicorns[i].checked === true) numberNFTs++;
+      }
+      let price = parseFloat(
+        (
+          numberNFTs * 0.015 +
+          values.UNIM * 0.000003 +
+          values.RBW * 0.000224
+        ).toFixed(2),
+      );
+      form.setValue('price', price);
+      dispatch(formActions.doRefresh());
       setValues(values);
       setActiveStep(activeStep + 1);
     }
@@ -340,6 +389,7 @@ function BundleForm(props) {
                 <MDBox px={3}>
                   <CreateBundle
                     visible={activeStep === 0}
+                    title={props.title}
                   />
                   <SelectUnicorns
                     visible={activeStep === 1}

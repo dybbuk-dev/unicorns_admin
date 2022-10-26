@@ -142,7 +142,7 @@ function ViewModal(props) {
                     lineHeight: 1.4,
                   }}
                 >
-                  0.1 ETH
+                  {`${record.price} ETH`}
                 </MDTypography>
                 <MDTypography
                   sx={{
@@ -154,7 +154,9 @@ function ViewModal(props) {
                     lineHeight: 1.4,
                   }}
                 >
-                  ($134,28 USD)
+                  {`($${(record.price * 1520).toFixed(
+                    2,
+                  )} USD)`}
                 </MDTypography>
               </MDBox>
             </Grid>

@@ -6,28 +6,11 @@ import MDTypography from 'src/mui/components/MDTypography';
 import typography from 'src/mui/assets/theme/base/typography';
 import colors from 'src/mui/assets/theme/base/colors';
 import Card from 'src/view/bundle/form/components/Card';
+import InputFormItem from 'src/view/shared/form/items/InputFormItem';
 import moment from 'moment';
 
 function ReivewBundle(props) {
   const { values, lands, unicorns, visible } = props;
-  const [price, setPrice] = useState(null);
-
-  useEffect(() => {
-    let numberNFTs = 0;
-    for (let i = 0; i < lands?.length; i++) {
-      if (lands[i].checked === true) numberNFTs++;
-    }
-    for (let i = 0; i < unicorns?.length; i++) {
-      if (unicorns[i].checked === true) numberNFTs++;
-    }
-    setPrice(() => {
-      return (
-        numberNFTs * 0.015 +
-        values.UNIM * 0.000003 +
-        values.RBW * 0.000224
-      ).toFixed(2);
-    });
-  }, [props]);
 
   return (
     <MDBox px={1} display={visible ? 'block' : 'none'}>
@@ -190,25 +173,13 @@ function ReivewBundle(props) {
               alt="Calendar"
             />
             <MDBox pl="20px" py="10px">
-              <MDTypography
-                sx={{
-                  fontWeight: 500,
-                  color: colors.dark,
-                  fontSize: 16,
-                }}
-              >
-                Bundle Price
-              </MDTypography>
-              <MDTypography
-                sx={{
-                  lineHeight: 1.0,
-                  fontWeight: 700,
-                  color: colors.dark,
-                  fontSize: 16,
-                }}
-              >
-                {`${price} ETH`}
-              </MDTypography>
+              <InputFormItem
+                endAdornment="ETH"
+                label="Bundle Price"
+                name="price"
+                variant="standard"
+                width="90%"
+              />
             </MDBox>
           </MDBox>
         </Grid>

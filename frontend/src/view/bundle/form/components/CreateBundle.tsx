@@ -17,7 +17,7 @@ function CreateBundle(props) {
         <Grid item xs={12}>
           <MDBox pt={3}>
             <MDTypography variant="h3" color="dark">
-              {i18n('bundle.create.title')}
+              {props.title}
             </MDTypography>
             <MDTypography
               sx={{

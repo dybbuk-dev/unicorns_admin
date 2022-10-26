@@ -5,6 +5,8 @@ import MDBox from 'src/mui/components/MDBox';
 import MDInput from 'src/mui/components/MDInput';
 import MDTypography from 'src/mui/components/MDTypography';
 import PropTypes from 'prop-types';
+import { useSelector } from 'react-redux';
+import formSelectors from 'src/modules/form/formSelectors';
 
 export function InputFormItem(props) {
   const {
@@ -15,18 +17,20 @@ export function InputFormItem(props) {
     externalErrorMessage,
     forceValue,
     fullWidth,
+    hideLabel,
     hint,
     id,
     label,
     margin,
     name,
     placeholder,
-    readOnly,
     required,
+    rerender,
     shrink,
     size,
     startAdornment,
     type,
+    width,
     value,
     variant,
   } = props;
@@ -42,13 +46,18 @@ export function InputFormItem(props) {
 
   const defaultValues = defaultValuesRef.current || {};
 
-  const formValue = getValues(name);
+  const formValue = name ? getValues(name) : null;
+
+  const getInitialValue = () =>
+    ![null, undefined].includes(formValue)
+      ? formValue
+      : value || defaultValues[name] || '';
 
   const [curValue, setCurValue] = useState(
-    formValue || value || defaultValues[name] || '',
+    getInitialValue(),
   );
 
-  if (forceValue) {
+  if (forceValue && name) {
     setValue(name, value, {
       shouldValidate: false,
       shouldDirty: true,
@@ -56,7 +65,9 @@ export function InputFormItem(props) {
   }
 
   useEffect(() => {
-    register({ name });
+    if (name) {
+      register({ name });
+    }
   }, [register, name]);
 
   useEffect(() => {
@@ -64,6 +75,12 @@ export function InputFormItem(props) {
       setCurValue(value);
     }
   }, [value]);
+
+  const refresh = useSelector(formSelectors.selectRefresh);
+
+  useEffect(() => {
+    setCurValue(getInitialValue());
+  }, [rerender, refresh]);
 
   const errorMessage = FormErrors.errorMessage(
     name,
@@ -79,7 +96,7 @@ export function InputFormItem(props) {
         id={name}
         name={name}
         type={type}
-        label={label}
+        label={hideLabel ? undefined : label}
         required={required}
         // inputRef={register}
         onChange={(event) => {
@@ -111,13 +128,15 @@ export function InputFormItem(props) {
         InputProps={{ startAdornment, endAdornment }}
         inputProps={{
           name,
-          readOnly,
         }}
         disabled={disabled}
         value={curValue}
+        sx={{
+          width: width,
+        }}
       />
       {errorMessage && (
-        <MDBox mt={0.75}>
+        <MDBox mt={0.6}>
           <MDTypography
             component="div"
             variant="caption"
@@ -134,7 +153,7 @@ export function InputFormItem(props) {
 
 InputFormItem.defaultProps = {
   forceValue: false,
-  readOnly: false,
+  hideLabel: false,
   required: false,
   type: 'text',
 };
@@ -147,21 +166,23 @@ InputFormItem.propTypes = {
   externalErrorMessage: PropTypes.string,
   forceValue: PropTypes.bool,
   fullWidth: PropTypes.bool,
+  hideLabel: PropTypes.bool,
   hint: PropTypes.string,
   id: PropTypes.string,
   label: PropTypes.string,
   margin: PropTypes.string,
-  name: PropTypes.string.isRequired,
+  name: PropTypes.string,
   onChange: PropTypes.func,
   placeholder: PropTypes.string,
   prefix: PropTypes.string,
-  readOnly: PropTypes.bool,
   required: PropTypes.bool,
+  rerender: PropTypes.number,
   shrink: PropTypes.bool,
   size: PropTypes.string,
   startAdornment: PropTypes.any,
   type: PropTypes.string,
   value: PropTypes.string,
+  width: PropTypes.string,
   variant: PropTypes.string,
 };
 

@@ -24,14 +24,25 @@ function BundleFormPage(props) {
   );
   const record = useSelector(selectors.selectRecord);
 
+  const isEditing = Boolean(match.params.id);
+
+  const title = isEditing
+    ? i18n('bundle.edit.title')
+    : i18n('bundle.create.title');
+
   useEffect(() => {
     dispatch(actions.doInit(match.params.id));
     setDispatched(true);
   }, [dispatch, match.params.id]);
 
   const doSubmit = (id, data) => {
+    console.log(isEditing);
     setProgress(true);
-    dispatch(actions.doCreate(data));
+    if (isEditing) {
+      dispatch(actions.doUpdate(id, data));
+    } else {
+      dispatch(actions.doCreate(data));
+    }
   };
 
   return (
@@ -45,6 +56,7 @@ function BundleFormPage(props) {
 
         {dispatched && !initLoading && (
           <BundleForm
+            title={title}
             saveLoading={saveLoading}
             record={record}
             onSubmit={doSubmit}
