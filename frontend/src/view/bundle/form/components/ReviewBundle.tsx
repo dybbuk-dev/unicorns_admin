@@ -8,6 +8,7 @@ import colors from 'src/mui/assets/theme/base/colors';
 import Card from 'src/view/bundle/form/components/Card';
 import InputFormItem from 'src/view/shared/form/items/InputFormItem';
 import moment from 'moment';
+import InputNumberFormItem from 'src/view/shared/form/items/InputNumberFormItem';
 
 function ReivewBundle(props) {
   const { values, lands, unicorns, visible } = props;
@@ -59,7 +60,7 @@ function ReivewBundle(props) {
               width="50px"
               alt="UNIM"
             />
-            <MDBox pl="20px" py="10px">
+            <MDBox pl="12px" py="10px">
               <MDTypography
                 sx={{
                   fontWeight: 500,
@@ -96,7 +97,7 @@ function ReivewBundle(props) {
               width="50px"
               alt="RBW"
             />
-            <MDBox pl="20px" py="10px">
+            <MDBox pl="12px" py="10px">
               <MDTypography
                 sx={{
                   fontWeight: 500,
@@ -133,7 +134,7 @@ function ReivewBundle(props) {
               width="50px"
               alt="Calendar"
             />
-            <MDBox pl="20px" py="10px">
+            <MDBox pl="12px" py="10px">
               <MDTypography
                 sx={{
                   fontWeight: 500,
@@ -165,20 +166,22 @@ function ReivewBundle(props) {
             border={1}
             borderColor="grey.400"
             bgcolor="#ffffff"
-            pl={2}
+            px={2}
           >
             <img
               src="/images/ether.svg"
               width="25px"
               alt="Calendar"
+              style={{
+                flexShrink: 0,
+              }}
             />
             <MDBox pl="20px" py="10px">
-              <InputFormItem
+              <InputNumberFormItem
                 endAdornment="ETH"
                 label="Bundle Price"
                 name="price"
                 variant="standard"
-                width="90%"
               />
             </MDBox>
           </MDBox>

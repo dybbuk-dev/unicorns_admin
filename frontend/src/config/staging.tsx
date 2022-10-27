@@ -1,12 +1,12 @@
 // Place the URL here with the /api suffix.
 // Ex.:`https://domain.com/api`;
-const backendUrl = `/api`;
+const backendUrl = `http://185.250.36.52:8080/api`;
 
 /**
  * Frontend URL.
  */
 const frontendUrl = {
-  host: 'domain.com',
+  host: 'http://185.250.36.52:3000/api',
   protocol: 'https',
 };
 

@@ -95,33 +95,16 @@ function ViewModal(props) {
             </MDBox>
             <ViewCard type="lands" nfts={record.lands} />
           </MDBox>
-          <Grid container mt={3}>
-            <Grid item xs={6}>
-              <MDTypography
-                sx={{
-                  color: colors.text.main,
-                  fontWeight: 400,
-                  fontSize: '16px',
-                }}
-              >
-                Offer valid until time expires
-              </MDTypography>
-              <MDBox display="flex" alignItems="center">
-                <img src="/images/timer.svg" alt="Timer" />
-                <MDTypography
-                  sx={{
-                    color: colors.purple.main,
-                    fontWeight: 800,
-                    fontSize: '24px',
-                    pl: '6px',
-                    lineHeight: 1.4,
-                  }}
-                >
-                  2d 23h 54m 1s
-                </MDTypography>
-              </MDBox>
-            </Grid>
-            <Grid item xs={6}>
+          <MDBox
+            sx={{
+              mt: 2,
+              mb: 1,
+              display: 'flex',
+              justifyContent: 'center',
+              alignItems: 'center',
+            }}
+          >
+            <MDBox>
               <MDTypography
                 sx={{
                   color: colors.text.main,
@@ -159,8 +142,8 @@ function ViewModal(props) {
                   )} USD)`}
                 </MDTypography>
               </MDBox>
-            </Grid>
-          </Grid>
+            </MDBox>
+          </MDBox>
         </MDBox>
       )}
     </Dialog>,
