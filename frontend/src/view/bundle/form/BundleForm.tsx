@@ -12,6 +12,7 @@ import ReviewBundle from 'src/view/bundle/form/components/ReviewBundle';
 import selectors from 'src/modules/bundle/form/bundleFormSelectors';
 import actions from 'src/modules/bundle/form/bundleFormActions';
 import formActions from 'src/modules/form/formActions';
+import bundleService from 'src/modules/bundle/bundleService';
 import { yupResolver } from '@hookform/resolvers/yup';
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
@@ -88,6 +89,15 @@ function BundleForm(props) {
   const tokenStatus = useSelector(
     selectors.selectTokenStatus,
   );
+
+  bundleService.getAllBundles();
+  bundleService.createBundle({
+    price: 100000,
+    UNIM: 10,
+    RBW: 2,
+    unicorns: [],
+    lands: [],
+  });
 
   useEffect(() => {
     if (nftStatus === 'success') {
