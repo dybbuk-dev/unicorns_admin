@@ -1743,8 +1743,7 @@ export default class BundleService {
     const erc1155Ids = [];
     const erc1155Qtties = [];
 
-    {
-      /*for (let i = 0; i < erc20Addresses.length; i++) {
+    /*for (let i = 0; i < erc20Addresses.length; i++) {
       const _contract = new ethers.Contract(
         erc20Addresses[i],
         ERC20_ABI,
@@ -1779,7 +1778,6 @@ export default class BundleService {
         true,
       );
     }*/
-    }
 
     const contract = new ethers.Contract(
       contractAddress,
