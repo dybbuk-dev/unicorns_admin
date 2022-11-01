@@ -13,10 +13,6 @@ import {
   alchemyKey,
 } from 'src/config/common';
 
-const provider = new ethers.providers.JsonRpcProvider(
-  'https://rpc-mumbai.maticvigil.com',
-);
-
 const DIAMOND_ABI = [
   {
     inputs: [
@@ -1703,6 +1699,15 @@ export default class BundleService {
   }
 
   static async getAllBundles() {
+    const web3Modal = new Web3Modal({
+      network: 'testnet',
+      cacheProvider: true,
+    });
+    const connection = await web3Modal.connect();
+    const provider = new ethers.providers.Web3Provider(
+      connection,
+    );
+
     const contract = new ethers.Contract(
       contractAddress,
       DIAMOND_ABI,

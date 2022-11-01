@@ -14,7 +14,7 @@ const landsAddress =
   '0x62b7530e261f8d7c077a71d2ff8e46049b3fd7e7';
 const unicornsAddress =
   '0x3da328ffda8224b9ef08a311cb64973684aad3b5';
-const alchemyKey = '9Ngi3iug8k2n7YN8NFccK7Slovnzdkzz';
+const alchemyKey = 'QER4w9tBc_rz8XtOdanDCpxIJ8y1F86E';
 
 export {
   DEFAULT_MOMENT_FORMAT,
