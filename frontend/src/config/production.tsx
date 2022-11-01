@@ -6,7 +6,7 @@ const backendUrl = `/api`;
  * Frontend URL.
  */
 const frontendUrl = {
-  host: 'domain.com',
+  host: 'unicornsadmin.herokuapp.com',
   protocol: 'https',
 };
 

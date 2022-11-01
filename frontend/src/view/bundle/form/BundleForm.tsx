@@ -91,13 +91,6 @@ function BundleForm(props) {
   );
 
   bundleService.getAllBundles();
-  bundleService.createBundle({
-    price: 100000,
-    UNIM: 10,
-    RBW: 2,
-    unicorns: [],
-    lands: [],
-  });
 
   useEffect(() => {
     if (nftStatus === 'success') {

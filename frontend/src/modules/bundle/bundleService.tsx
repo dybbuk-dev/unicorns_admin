@@ -1709,7 +1709,7 @@ export default class BundleService {
       provider,
     );
     const data = await contract.getAllBundles();
-    console.log(data[0]);
+    console.log(data);
   }
 
   static async createBundle(data) {
