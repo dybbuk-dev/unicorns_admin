@@ -24,7 +24,9 @@ function ViewCard(props) {
             ? '/images/pack/pack_UNIM.svg'
             : type === 'RBW'
             ? '/images/pack/pack_RBW.svg'
-            : nfts[active].image
+            : nfts[active]?.image
+            ? nfts[active]?.image
+            : '/images/unicorns/unicorn1.svg'
         }
         width="100%"
         alt="Unicorn"
@@ -52,10 +54,15 @@ function ViewCard(props) {
           color: colors.text,
           fontSize: 12,
           px: '14px',
-          pb: tokens ? '20px' : '4px',
+          pb:
+            type === 'UNIM' || type === 'RBW'
+              ? '20px'
+              : '4px',
         }}
       >
-        {tokens ? `${tokens} Tokens` : 'Rarity: Common'}
+        {type === 'UNIM' || type === 'RBW'
+          ? `${tokens} Tokens`
+          : 'Rarity: Common'}
       </MDTypography>
       {type === 'unicorns' || type === 'lands' ? (
         <MDBox

@@ -178,7 +178,7 @@ function ReivewBundle(props) {
             />
             <MDBox pl="20px" py="10px">
               <InputNumberFormItem
-                endAdornment="ETH"
+                endAdornment="MATIC"
                 label="Bundle Price"
                 name="price"
                 variant="standard"

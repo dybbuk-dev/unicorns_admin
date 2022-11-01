@@ -7,13 +7,11 @@ import { useForm, FormProvider } from 'react-hook-form';
 import SwitchFormItem from 'src/view/shared/form/items/SwitchFormItem';
 import bundleSelectors from 'src/modules/bundle/bundleSelectors';
 import destroyActions from 'src/modules/bundle/destroy/bundleDestroyActions';
-import destroySelectors from 'src/modules/bundle/destroy/bundleDestroySelectors';
 import actions from 'src/modules/bundle/list/bundleListActions';
 import selectors from 'src/modules/bundle/list/bundleListSelectors';
 import formSelectors from 'src/modules/bundle/form/bundleFormSelectors';
 import DeleteModal from 'src/view/shared/modals/DeleteModal';
 import SuccessModal from 'src/view/shared/modals/SuccessModal';
-import Pagination from 'src/view/shared/table/Pagination';
 import Spinner from 'src/view/shared/Spinner';
 import { IconButton, Tooltip } from '@mui/material';
 import EditIcon from '@mui/icons-material/Edit';
@@ -26,31 +24,19 @@ import ViewModal from 'src/view/bundle/view/ViewModal';
 function BundleListTable(props) {
   const [recordIdToDestroy, setRecordIdToDestroy] =
     useState(null);
-  const [bundleId, setBundleId] = useState(null);
+  const [bundle, setBundle] = useState(null);
   const [viewModal, setViewModal] = useState(false);
+  const [successModal, setSuccessModal] = useState(true);
   const dispatch = useDispatch();
-  const match = useRouteMatch();
-  const [status, setStatus] = match.params.status
-    ? useState(match.params.status)
-    : useState(null);
 
-  const findLoading = useSelector(selectors.selectLoading);
+  const bundles = useSelector(selectors.selectBundles);
 
-  const destroyLoading = useSelector(
-    destroySelectors.selectLoading,
-  );
-
-  const loading = findLoading || destroyLoading;
-
-  const rows = useSelector(selectors.selectRows);
+  const status = useSelector(selectors.selectStatus);
 
   const formStatus = useSelector(
     formSelectors.selectStatus,
   );
-  const pagination = useSelector(
-    selectors.selectPagination,
-  );
-  const hasRows = useSelector(selectors.selectHasRows);
+
   const hasPermissionToEdit = useSelector(
     bundleSelectors.selectPermissionToEdit,
   );
@@ -72,7 +58,7 @@ function BundleListTable(props) {
   };
 
   const doCloseSuccessModal = () => {
-    setStatus(null);
+    setSuccessModal(false);
   };
 
   const doCloseViewModal = () => {
@@ -87,10 +73,6 @@ function BundleListTable(props) {
     return;
   };
 
-  const doChangePagination = (pagination) => {
-    dispatch(actions.doChangePagination(pagination));
-  };
-
   const doDestroy = (id) => {
     doCloseDestroyConfirmModal();
 
@@ -99,20 +81,20 @@ function BundleListTable(props) {
 
   return (
     <>
-      {loading && (
+      {!status && (
         <MDBox>
           <Spinner />
         </MDBox>
       )}
-      {!loading && !hasRows && (
+      {status && bundles === null && (
         <MDBox>
           <MDTypography align="center">
             {i18n('table.noData')}
           </MDTypography>
         </MDBox>
       )}
-      {!loading &&
-        rows.map((row) => (
+      {status &&
+        bundles.map((bundle, index) => (
           <MDBox
             display="flex"
             justifyContent="space-between"
@@ -123,15 +105,17 @@ function BundleListTable(props) {
             border={1}
             borderColor="grey.200"
             borderRadius="10px"
-            key={row.id}
+            key={index}
           >
-            <MDTypography ml={2}>{row.name}</MDTypography>
+            <MDTypography ml={2}>
+              {bundle.id + 1}
+            </MDTypography>
             <MDBox>
               <MDBox display="flex">
                 <Tooltip title={i18n('common.view')}>
                   <IconButton
                     onClick={() => {
-                      setBundleId(row.id);
+                      setBundle(bundle);
                       setViewModal(true);
                     }}
                     color="success"
@@ -144,7 +128,8 @@ function BundleListTable(props) {
                     <IconButton
                       color="success"
                       component={Link}
-                      to={`/bundle/${row.id}/edit`}
+                      to={`/bundle/${bundle.id}/edit`}
+                      disabled
                     >
                       <EditIcon />
                     </IconButton>
@@ -155,7 +140,7 @@ function BundleListTable(props) {
                     <IconButton
                       color="success"
                       onClick={() =>
-                        doOpenDestroyConfirmModal(row.id)
+                        doOpenDestroyConfirmModal(bundle.id)
                       }
                     >
                       <DeleteIcon />
@@ -173,7 +158,7 @@ function BundleListTable(props) {
                         <SwitchFormItem
                           name="active"
                           label=""
-                          value
+                          value={bundle.status === 0}
                           color="success"
                         />
                       </MDBox>
@@ -184,14 +169,6 @@ function BundleListTable(props) {
             </MDBox>
           </MDBox>
         ))}
-
-      <Pagination
-        onChange={doChangePagination}
-        disabled={loading}
-        pagination={pagination}
-        entriesPerPage
-        showTotalEntries
-      />
 
       {recordIdToDestroy && (
         <DeleteModal
@@ -204,7 +181,7 @@ function BundleListTable(props) {
         />
       )}
 
-      {status === 'success' && formStatus === 'success' && (
+      {successModal && formStatus === 'success' && (
         <SuccessModal
           title={i18n('bundle.create.publish')}
           description={i18n('bundle.create.description5')}
@@ -215,7 +192,7 @@ function BundleListTable(props) {
 
       {viewModal && (
         <ViewModal
-          bundleId={bundleId}
+          bundle={bundle}
           onClose={() => doCloseViewModal()}
         />
       )}

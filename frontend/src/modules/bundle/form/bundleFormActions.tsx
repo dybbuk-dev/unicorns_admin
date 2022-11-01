@@ -62,13 +62,13 @@ const bundleFormActions = {
         type: bundleFormActions.CREATE_STARTED,
       });
 
-      await BundleService.create(values);
+      await BundleService.createBundle(values);
 
       dispatch({
         type: bundleFormActions.CREATE_SUCCESS,
       });
 
-      getHistory().push('/bundle/result/success');
+      getHistory().push('/bundle');
     } catch (error) {
       Errors.handle(error);
 
@@ -76,7 +76,7 @@ const bundleFormActions = {
         type: bundleFormActions.CREATE_ERROR,
       });
 
-      getHistory().push('/bundle/result/failed');
+      getHistory().push('/bundle');
     }
   },
 

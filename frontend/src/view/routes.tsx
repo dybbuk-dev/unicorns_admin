@@ -115,17 +115,6 @@ const privateRoutes = [
   },
 
   {
-    path: '/bundle/result/:status',
-    collapseName: 'bundle',
-    i18n: 'bundle.menu',
-    parent: '/',
-    loader: () =>
-      import('src/view/bundle/list/BundleListPage'),
-    permissionRequired: permissions.bundleRead,
-    exact: true,
-  },
-
-  {
     path: '/settings-breadcrumb',
     collapseName: 'settings',
     i18n: 'settings.title',

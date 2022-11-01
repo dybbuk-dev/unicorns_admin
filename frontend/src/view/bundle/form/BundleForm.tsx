@@ -34,8 +34,6 @@ function getSteps(): string[] {
 }
 
 interface Bundle {
-  name: string;
-  expirationDate: Date;
   UNIM: number;
   RBW: number;
   unicorns: number[];
@@ -45,7 +43,6 @@ interface Bundle {
 
 const schema = yup.object().shape({
   name: yupFormSchemas.string(i18n('bundle.fields.name'), {
-    required: true,
     max: 200,
     min: 1,
   }),
@@ -61,9 +58,7 @@ const schema = yup.object().shape({
   }),
   expirationDate: yupFormSchemas.date(
     i18n('bundle.fields.expiration'),
-    {
-      required: true,
-    },
+    {},
   ),
 });
 
@@ -212,8 +207,6 @@ function BundleForm(props) {
   const onSubmit = (values) => {
     if (isLastStep) {
       let bundle: Bundle = {
-        name: values.name,
-        expirationDate: values.expirationDate,
         UNIM: values.UNIM,
         RBW: values.RBW,
         unicorns: [],
@@ -223,13 +216,13 @@ function BundleForm(props) {
 
       for (let i = 0; i < unicorns.length; i++) {
         if (unicorns[i].checked === true) {
-          bundle.unicorns.push(unicorns[i]);
+          bundle.unicorns.push(unicorns[i].tokenId);
         }
       }
 
       for (let i = 0; i < lands.length; i++) {
         if (lands[i].checked === true) {
-          bundle.lands.push(lands[i]);
+          bundle.lands.push(lands[i].tokenId);
         }
       }
 

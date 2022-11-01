@@ -41,6 +41,7 @@ function BundleFormPage(props) {
     if (isEditing) {
       dispatch(actions.doUpdate(id, data));
     } else {
+      console.log(data);
       dispatch(actions.doCreate(data));
     }
   };
@@ -60,9 +61,7 @@ function BundleFormPage(props) {
             saveLoading={saveLoading}
             record={record}
             onSubmit={doSubmit}
-            onCancel={() =>
-              getHistory().push('/bundle/success')
-            }
+            onCancel={() => getHistory().push('/bundle')}
           />
         )}
       </Grid>

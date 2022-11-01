@@ -26,13 +26,9 @@ const bundleDestroyActions = {
 
       Message.success(i18n('bundle.destroy.success'));
 
-      dispatch(listActions.doFetchCurrentFilter());
-
       getHistory().push('/bundle');
     } catch (error) {
       Errors.handle(error);
-
-      dispatch(listActions.doFetchCurrentFilter());
 
       dispatch({
         type: bundleDestroyActions.DESTROY_ERROR,

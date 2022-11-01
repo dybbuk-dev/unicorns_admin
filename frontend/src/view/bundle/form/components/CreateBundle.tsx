@@ -35,7 +35,7 @@ function CreateBundle(props) {
           <InputFormItem
             name="name"
             label={i18n('bundle.fields.name')}
-            required={true}
+            disabled
             variant="standard"
           />
         </Grid>
@@ -43,7 +43,6 @@ function CreateBundle(props) {
           <DatePickerFormItem
             name="expirationDate"
             label={i18n('bundle.fields.expiration')}
-            required={true}
             variant="standard"
           />
         </Grid>

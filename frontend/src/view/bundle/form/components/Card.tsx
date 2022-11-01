@@ -35,7 +35,13 @@ function Card(props) {
           />
         </MDBox>
       ) : null}
-      <img src={image} width="100%" alt={image} />
+      <img
+        src={
+          image ? image : '/images/unicorns/unicorn1.svg'
+        }
+        width="100%"
+        alt={image}
+      />
       <MDBox mx="10px" overflow="hidden">
         <MDTypography
           sx={{
@@ -46,7 +52,7 @@ function Card(props) {
             width: '200%',
           }}
         >
-          {title}
+          {title ? title : 'NFT to test'}
         </MDTypography>
       </MDBox>
       <MDTypography

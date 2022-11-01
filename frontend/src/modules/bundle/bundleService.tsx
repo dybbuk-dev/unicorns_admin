@@ -3,6 +3,7 @@ import AuthCurrentTenant from 'src/modules/auth/authCurrentTenant';
 import { Alchemy, Network } from 'alchemy-sdk';
 import { ethers } from 'ethers';
 import Web3Modal from 'web3modal';
+import axios from 'axios';
 import {
   account,
   contractAddress,
@@ -1714,7 +1715,76 @@ export default class BundleService {
       provider,
     );
     const data = await contract.getAllBundles();
-    console.log(data);
+
+    let bundles = [];
+    for (let i = 0; i < data.length; i++) {
+      let UNIM = 0;
+      let RBW = 0;
+      let lands = [];
+      let unicorns = [];
+
+      for (
+        let j = 0;
+        j < data[i].erc20Addresses.length;
+        j++
+      ) {
+        if (data[i].erc20Addresses[j] === UNIMAddress)
+          UNIM = data[i].erc20Amounts[j].toNumber();
+        if (data[i].erc20Addresses[j] === RBWAddress)
+          RBW = data[i].erc20Amounts[j].toNumber();
+      }
+
+      for (
+        let j = 0;
+        j < data[i].erc721Addresses.length;
+        j++
+      ) {
+        if (
+          data[i].erc721Addresses[j] === unicornsAddress
+        ) {
+          const _contract = new ethers.Contract(
+            unicornsAddress,
+            ERC721_ABI,
+            provider,
+          );
+          const tokenUri = await _contract.tokenURI(
+            data[i].erc721Ids[j],
+          );
+          const meta = await axios.get(tokenUri);
+          unicorns.push({
+            tokenId: data[i].erc721Ids[j],
+            image: meta.data.image,
+          });
+        }
+        if (data[i].erc721Addresses[j] === landsAddress) {
+          const _contract = new ethers.Contract(
+            landsAddress,
+            ERC721_ABI,
+            provider,
+          );
+          const tokenUri = await _contract.tokenURI(
+            data[i].erc721Ids[j],
+          );
+          const meta = await axios.get(tokenUri);
+          lands.push({
+            tokenId: data[i].erc721Ids[j],
+            image: meta.data.image,
+          });
+        }
+      }
+
+      bundles.push({
+        id: data[i].bundleId.toNumber(),
+        UNIM: UNIM,
+        RBW: RBW,
+        unicorns: unicorns,
+        lands: lands,
+        price: data[i].price / Math.pow(10, 18),
+        status: data[i].status,
+      });
+    }
+
+    return bundles;
   }
 
   static async createBundle(data) {
@@ -1727,7 +1797,9 @@ export default class BundleService {
       connection,
     );
     const signer = provider.getSigner();
-    const price = data.price;
+    const price = (
+      data.price * Math.pow(10, 18)
+    ).toString();
     const status = 0;
     const erc20Addresses = [UNIMAddress, RBWAddress];
     const erc20Qtties = [data.UNIM, data.RBW];
@@ -1748,7 +1820,7 @@ export default class BundleService {
     const erc1155Ids = [];
     const erc1155Qtties = [];
 
-    /*for (let i = 0; i < erc20Addresses.length; i++) {
+    for (let i = 0; i < erc20Addresses.length; i++) {
       const _contract = new ethers.Contract(
         erc20Addresses[i],
         ERC20_ABI,
@@ -1782,7 +1854,7 @@ export default class BundleService {
         contractAddress,
         true,
       );
-    }*/
+    }
 
     const contract = new ethers.Contract(
       contractAddress,
@@ -1792,8 +1864,8 @@ export default class BundleService {
     await contract.createBundle(
       price,
       status,
-      [],
-      [],
+      erc20Addresses,
+      erc20Qtties,
       erc721Addresses,
       erc721Ids,
       erc1155Addresses,
