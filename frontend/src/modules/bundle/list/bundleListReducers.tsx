@@ -1,7 +1,7 @@
 import actions from 'src/modules/bundle/list/bundleListActions';
 
 const initialData = {
-  status: null,
+  status: false,
   bundles: null,
 };
 
@@ -15,7 +15,7 @@ export default (state = initialData, { type, payload }) => {
   if (type === actions.FETCH_SUCCESS) {
     return {
       ...state,
-      status: 'success',
+      status: true,
       bundles: payload,
     };
   }
@@ -23,7 +23,7 @@ export default (state = initialData, { type, payload }) => {
   if (type === actions.FETCH_ERROR) {
     return {
       ...state,
-      status: 'failed',
+      status: false,
     };
   }
 

@@ -10,6 +10,7 @@ import destroyActions from 'src/modules/bundle/destroy/bundleDestroyActions';
 import actions from 'src/modules/bundle/list/bundleListActions';
 import selectors from 'src/modules/bundle/list/bundleListSelectors';
 import formSelectors from 'src/modules/bundle/form/bundleFormSelectors';
+import BundleService from 'src/modules/bundle/bundleService';
 import DeleteModal from 'src/view/shared/modals/DeleteModal';
 import SuccessModal from 'src/view/shared/modals/SuccessModal';
 import Spinner from 'src/view/shared/Spinner';
@@ -32,6 +33,8 @@ function BundleListTable(props) {
   const bundles = useSelector(selectors.selectBundles);
 
   const status = useSelector(selectors.selectStatus);
+
+  //BundleService.mintCollectionNFT();
 
   const formStatus = useSelector(
     formSelectors.selectStatus,

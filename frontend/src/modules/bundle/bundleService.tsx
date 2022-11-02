@@ -1645,8 +1645,6 @@ export default class BundleService {
       lands: lands,
     };
 
-    console.log(nfts);
-
     return nfts;
   }
 
@@ -1693,8 +1691,6 @@ export default class BundleService {
           Math.pow(10, RBWMetadata.decimals - 18);
       }
     }
-
-    console.log(tokens);
 
     return tokens;
   }
@@ -1748,12 +1744,14 @@ export default class BundleService {
             provider,
           );
           const tokenUri = await _contract.tokenURI(
-            data[i].erc721Ids[j],
+            data[i].erc721Ids[j].toNumber(),
           );
-          const meta = await axios.get(tokenUri);
+          const meta = tokenUri
+            ? await axios.get(tokenUri)
+            : null;
           unicorns.push({
-            tokenId: data[i].erc721Ids[j],
-            image: meta.data.image,
+            tokenId: data[i].erc721Ids[j].toNumber(),
+            image: meta?.data.image,
           });
         }
         if (data[i].erc721Addresses[j] === landsAddress) {
@@ -1763,12 +1761,14 @@ export default class BundleService {
             provider,
           );
           const tokenUri = await _contract.tokenURI(
-            data[i].erc721Ids[j],
+            data[i].erc721Ids[j].toNumber(),
           );
-          const meta = await axios.get(tokenUri);
+          const meta = tokenUri
+            ? await axios.get(tokenUri)
+            : null;
           lands.push({
-            tokenId: data[i].erc721Ids[j],
-            image: meta.data.image,
+            tokenId: data[i].erc721Ids[j].toNumber(),
+            image: meta?.data.image,
           });
         }
       }
@@ -1873,5 +1873,59 @@ export default class BundleService {
       erc1155Qtties,
       { gasLimit: 4000000 },
     );
+  }
+
+  static async mintCollectionNFT() {
+    const web3Modal = new Web3Modal({
+      network: 'testnet',
+      cacheProvider: true,
+    });
+    const connection = await web3Modal.connect();
+    const provider = new ethers.providers.Web3Provider(
+      connection,
+    );
+    const signer = provider.getSigner();
+
+    const contract1 = new ethers.Contract(
+      unicornsAddress,
+      ERC721_ABI,
+      signer,
+    );
+    const contract2 = new ethers.Contract(
+      landsAddress,
+      ERC721_ABI,
+      signer,
+    );
+
+    await contract1.mintCollectionNFT(account, 6, {
+      gasLimit: 4000000,
+    });
+    await contract1.mintCollectionNFT(account, 7, {
+      gasLimit: 4000000,
+    });
+    await contract1.mintCollectionNFT(account, 8, {
+      gasLimit: 4000000,
+    });
+    await contract1.mintCollectionNFT(account, 9, {
+      gasLimit: 4000000,
+    });
+    await contract1.mintCollectionNFT(account, 10, {
+      gasLimit: 4000000,
+    });
+    await contract2.mintCollectionNFT(account, 6, {
+      gasLimit: 4000000,
+    });
+    await contract2.mintCollectionNFT(account, 7, {
+      gasLimit: 4000000,
+    });
+    await contract2.mintCollectionNFT(account, 8, {
+      gasLimit: 4000000,
+    });
+    await contract2.mintCollectionNFT(account, 9, {
+      gasLimit: 4000000,
+    });
+    await contract2.mintCollectionNFT(account, 10, {
+      gasLimit: 4000000,
+    });
   }
 }

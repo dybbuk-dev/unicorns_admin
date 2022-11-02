@@ -1,23 +1,14 @@
-import React, { useState, useEffect } from 'react';
 import ReactDOM from 'react-dom';
 import { Dialog } from '@mui/material';
-import { useDispatch, useSelector } from 'react-redux';
-import actions from 'src/modules/bundle/list/bundleListActions';
-import selectors from 'src/modules/bundle/list/bundleListSelectors';
 import { IconButton } from '@mui/material';
 import MDBox from 'src/mui/components/MDBox';
-import MDButton from 'src/mui/components/MDButton';
-import { Grid } from '@mui/material';
 import MDTypography from 'src/mui/components/MDTypography';
 import ViewCard from 'src/view/bundle/view/ViewCard';
-import Spinner from 'src/view/shared/Spinner';
 import CloseIcon from '@mui/icons-material/Close';
 import colors from 'src/mui/assets/theme/base/colors';
 
 function ViewModal(props) {
   const bundle = props.bundle;
-
-  console.log(bundle);
 
   return ReactDOM.createPortal(
     <Dialog

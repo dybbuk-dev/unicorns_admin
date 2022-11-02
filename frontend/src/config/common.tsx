@@ -7,13 +7,13 @@ const account =
 const contractAddress =
   '0xeae9a7779Ad36d77B6052FC64120Fc25a244717A';
 const UNIMAddress =
-  '0x89e3CaB15d194c960a71c9D7159e22D7a137B42c';
+  '0x9CD796E44ED12c10Ed0Ad6FFc4BB4905Eb85Fa99';
 const RBWAddress =
-  '0x429C3E2b5bafe58875b30367C05eCCBC78aFce55';
+  '0x6794056710D2a46c7900e4fEF42851bA37E8E8dd';
 const landsAddress =
-  '0x62b7530e261f8d7c077a71d2ff8e46049b3fd7e7';
+  '0x59D92374aaF05C3635f10F8048165075c0F92493';
 const unicornsAddress =
-  '0x3da328ffda8224b9ef08a311cb64973684aad3b5';
+  '0x6324e7B7F000f32f2B4e469b653A6F09571A8A2d';
 const alchemyKey = 'QER4w9tBc_rz8XtOdanDCpxIJ8y1F86E';
 
 export {
