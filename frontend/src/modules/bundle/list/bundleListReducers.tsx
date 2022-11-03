@@ -1,21 +1,22 @@
 import actions from 'src/modules/bundle/list/bundleListActions';
 
 const initialData = {
-  status: false,
-  bundles: null,
+  loading: false,
+  bundles: [],
 };
 
 export default (state = initialData, { type, payload }) => {
   if (type === actions.FETCH_STARTED) {
     return {
       ...state,
+      loading: true,
     };
   }
 
   if (type === actions.FETCH_SUCCESS) {
     return {
       ...state,
-      status: true,
+      loading: false,
       bundles: payload,
     };
   }
@@ -23,7 +24,50 @@ export default (state = initialData, { type, payload }) => {
   if (type === actions.FETCH_ERROR) {
     return {
       ...state,
-      status: false,
+      loading: false,
+      bundles: [],
+    };
+  }
+
+  if (type === actions.CHANGE_STATUS_STARTED) {
+    return {
+      ...state,
+      loading: true,
+    };
+  }
+
+  if (type === actions.CHANGE_STATUS_SUCCESS) {
+    return {
+      ...state,
+      loading: false,
+    };
+  }
+
+  if (type === actions.CHANGE_STATUS_ERROR) {
+    return {
+      ...state,
+      loading: false,
+    };
+  }
+
+  if (type === actions.DESTROY_STARTED) {
+    return {
+      ...state,
+      loading: true,
+    };
+  }
+
+  if (type === actions.DESTROY_SUCCESS) {
+    return {
+      ...state,
+      loading: false,
+    };
+  }
+
+  if (type === actions.DESTROY_ERROR) {
+    return {
+      ...state,
+      loading: false,
     };
   }
 

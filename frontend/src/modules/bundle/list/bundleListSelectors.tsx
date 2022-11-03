@@ -1,20 +1,25 @@
 import { createSelector } from 'reselect';
 
-const selectRaw = (state) => state.bundle.list;
-
-const selectStatus = createSelector(
-  [selectRaw],
-  (raw) => raw.status,
-);
+const selectList = (state) => state.bundle.list;
 
 const selectBundles = createSelector(
-  [selectRaw],
-  (raw) => raw.bundles,
+  [selectList],
+  (list) => list.bundles,
+);
+
+const selectLoading = createSelector([selectList], (list) =>
+  Boolean(list.loading),
+);
+
+const selectHasBundles = createSelector(
+  [selectBundles],
+  (bundles) => Boolean(bundles.length > 0),
 );
 
 const bundleListSelectors = {
-  selectStatus,
   selectBundles,
+  selectLoading,
+  selectHasBundles,
 };
 
 export default bundleListSelectors;

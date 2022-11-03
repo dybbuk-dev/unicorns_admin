@@ -64,95 +64,70 @@ const schema = yup.object().shape({
 
 function BundleForm(props) {
   const [activeStep, setActiveStep] = useState<number>(0);
-  const [unicorns, setUnicorns] = useState(null);
-  const [lands, setLands] = useState(null);
-  const [tokens, setTokens] = useState(null);
+  const [unicorns, setUnicorns] = useState(() => {
+    const nfts = props.nfts;
+    let unicorns = [];
+
+    for (let i = 0; i < nfts.unicorns?.length; i++) {
+      unicorns.push({
+        tokenId: nfts.unicorns[i].tokenId,
+        image: nfts.unicorns[i].image,
+        title: nfts.unicorns[i].title,
+        checked: false,
+      });
+
+      if (props.record?.unicorns) {
+        for (
+          let j = 0;
+          j < props.record.unicorns.length;
+          j++
+        ) {
+          if (
+            props.record.unicorns[j].tokenId ===
+            unicorns[i].tokenId
+          )
+            unicorns[i].checked = true;
+        }
+      }
+    }
+
+    return unicorns;
+  });
+
+  const [lands, setLands] = useState(() => {
+    const nfts = props.nfts;
+    let lands = [];
+
+    for (let i = 0; i < nfts.lands?.length; i++) {
+      lands.push({
+        tokenId: nfts.lands[i].tokenId,
+        image: nfts.lands[i].image,
+        title: nfts.lands[i].title,
+        checked: false,
+      });
+
+      if (props.record?.lands) {
+        for (
+          let j = 0;
+          j < props.record.lands.length;
+          j++
+        ) {
+          if (
+            props.record.lands[j].tokenId ===
+            lands[i].tokenId
+          )
+            lands[i].checked = true;
+        }
+      }
+    }
+    return lands;
+  });
+
+  const dispatch = useDispatch();
 
   const steps = getSteps();
   const isLastStep: boolean =
     activeStep === steps.length - 1;
-
-  const dispatch = useDispatch();
-  useEffect(() => {
-    dispatch(actions.doGetNFTs());
-    dispatch(actions.doGetTokens());
-  }, [dispatch]);
-
-  const nfts = useSelector(selectors.selectNfts);
-  const tokens_temp = useSelector(selectors.selectTokens);
-  const nftStatus = useSelector(selectors.selectNftStatus);
-  const tokenStatus = useSelector(
-    selectors.selectTokenStatus,
-  );
-
-  bundleService.getAllBundles();
-
-  useEffect(() => {
-    if (nftStatus === 'success') {
-      setUnicorns(() => {
-        let unicorns = [];
-
-        for (let i = 0; i < nfts.unicorns?.length; i++) {
-          unicorns.push({
-            tokenId: nfts.unicorns[i].tokenId,
-            image: nfts.unicorns[i].image,
-            title: nfts.unicorns[i].title,
-            checked: false,
-          });
-
-          if (props.record.unicorns) {
-            for (
-              let j = 0;
-              j < props.record.unicorns.length;
-              j++
-            ) {
-              if (
-                props.record.unicorns[j].tokenId ===
-                unicorns[i].tokenId
-              )
-                unicorns[i].checked = true;
-            }
-          }
-        }
-
-        return unicorns;
-      });
-
-      setLands(() => {
-        let lands = [];
-
-        for (let i = 0; i < nfts.lands?.length; i++) {
-          lands.push({
-            tokenId: nfts.lands[i].tokenId,
-            image: nfts.lands[i].image,
-            title: nfts.lands[i].title,
-            checked: false,
-          });
-
-          if (props.record.lands) {
-            for (
-              let j = 0;
-              j < props.record.lands.length;
-              j++
-            ) {
-              if (
-                props.record.lands[j].tokenId ===
-                lands[i].tokenId
-              )
-                lands[i].checked = true;
-            }
-          }
-        }
-        return lands;
-      });
-    }
-  }, [nftStatus]);
-
-  useEffect(() => {
-    if (tokenStatus === 'success') {
-      setTokens(tokens_temp);
-    }
-  }, [tokenStatus]);
 
   const handleBack = () => setActiveStep(activeStep - 1);
 
@@ -261,66 +236,60 @@ function BundleForm(props) {
         alignItems="center"
       >
         {activeStep === 0 ? (
-          tokenStatus === 'success' ? (
-            <MDBox>
-              <MDTypography
+          <MDBox>
+            <MDTypography
+              sx={{
+                color: colors.dark.main,
+                fontWeight: 500,
+                fontSize: 14,
+              }}
+            >
+              {i18n('bundle.create.balance')}
+            </MDTypography>
+            <MDBox display="flex">
+              <MDBox
+                display="flex"
                 sx={{
-                  color: colors.dark.main,
-                  fontWeight: 500,
-                  fontSize: 14,
+                  borderRight: 1,
+                  borderColor: 'grey.400',
+                  pr: '12px',
                 }}
               >
-                {i18n('bundle.create.balance')}
-              </MDTypography>
-              <MDBox display="flex">
-                <MDBox
-                  display="flex"
+                <img
+                  src="/images/tokens/UNIM.svg"
+                  width="20px"
+                  alt="UNIM"
+                />
+                <MDTypography
                   sx={{
-                    borderRight: 1,
-                    borderColor: 'grey.400',
-                    pr: '12px',
+                    ml: '4px',
+                    color: colors.dark.main,
+                    fontWeight: 500,
+                    fontSize: 14,
                   }}
                 >
-                  <img
-                    src="/images/tokens/UNIM.svg"
-                    width="20px"
-                    alt="UNIM"
-                  />
-                  <MDTypography
-                    sx={{
-                      ml: '4px',
-                      color: colors.dark.main,
-                      fontWeight: 500,
-                      fontSize: 14,
-                    }}
-                  >
-                    {`${tokens?.UNIM} UNIM`}
-                  </MDTypography>
-                </MDBox>
-                <MDBox display="flex" pl="12px">
-                  <img
-                    src="/images/tokens/RBW.svg"
-                    width="20px"
-                    alt="RBW"
-                  />
-                  <MDTypography
-                    sx={{
-                      ml: '4px',
-                      color: colors.dark.main,
-                      fontWeight: 500,
-                      fontSize: 14,
-                    }}
-                  >
-                    {`${tokens?.RBW} RBW`}
-                  </MDTypography>
-                </MDBox>
+                  {`${props.tokens?.UNIM} UNIM`}
+                </MDTypography>
+              </MDBox>
+              <MDBox display="flex" pl="12px">
+                <img
+                  src="/images/tokens/RBW.svg"
+                  width="20px"
+                  alt="RBW"
+                />
+                <MDTypography
+                  sx={{
+                    ml: '4px',
+                    color: colors.dark.main,
+                    fontWeight: 500,
+                    fontSize: 14,
+                  }}
+                >
+                  {`${props.tokens?.RBW} RBW`}
+                </MDTypography>
               </MDBox>
             </MDBox>
-          ) : (
-            <MDBox pl="30px">
-              <Spinner size={25} />
-            </MDBox>
-          )
+          </MDBox>
         ) : (
           <MDButton
             variant="outlined"

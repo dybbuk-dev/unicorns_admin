@@ -9,12 +9,16 @@ import { getHistory } from 'src/modules/store';
 import Spinner from 'src/view/shared/Spinner';
 import { Grid } from '@mui/material';
 import SpinnerModal from 'src/view/shared/modals/SpinnerModal';
+import MDBox from 'src/mui/components/MDBox';
 
 function BundleFormPage(props) {
-  const [dispatched, setDispatched] = useState(false);
-  const [progress, setProgress] = useState(false);
   const dispatch = useDispatch();
   const match = useRouteMatch();
+
+  useEffect(() => {
+    dispatch(actions.doGetNFTs());
+    dispatch(actions.doGetTokens());
+  }, [dispatch]);
 
   const initLoading = useSelector(
     selectors.selectInitLoading,
@@ -22,7 +26,8 @@ function BundleFormPage(props) {
   const saveLoading = useSelector(
     selectors.selectSaveLoading,
   );
-  const record = useSelector(selectors.selectRecord);
+  const nfts = useSelector(selectors.selectNfts);
+  const tokens = useSelector(selectors.selectTokens);
 
   const isEditing = Boolean(match.params.id);
 
@@ -30,20 +35,8 @@ function BundleFormPage(props) {
     ? i18n('bundle.edit.title')
     : i18n('bundle.create.title');
 
-  useEffect(() => {
-    dispatch(actions.doInit(match.params.id));
-    setDispatched(true);
-  }, [dispatch, match.params.id]);
-
   const doSubmit = (id, data) => {
-    console.log(isEditing);
-    setProgress(true);
-    if (isEditing) {
-      dispatch(actions.doUpdate(id, data));
-    } else {
-      console.log(data);
-      dispatch(actions.doCreate(data));
-    }
+    dispatch(actions.doCreate(data));
   };
 
   return (
@@ -53,20 +46,25 @@ function BundleFormPage(props) {
       alignItems="center"
     >
       <Grid item xs={12}>
-        {initLoading && <Spinner />}
+        {initLoading && (
+          <MDBox my="100px">
+            <Spinner size={80} />
+          </MDBox>
+        )}
 
-        {dispatched && !initLoading && (
+        {!initLoading && (
           <BundleForm
             title={title}
             saveLoading={saveLoading}
-            record={record}
+            nfts={nfts}
+            tokens={tokens}
             onSubmit={doSubmit}
             onCancel={() => getHistory().push('/bundle')}
           />
         )}
       </Grid>
 
-      {progress && <SpinnerModal />}
+      {saveLoading && <SpinnerModal />}
     </Grid>
   );
 }

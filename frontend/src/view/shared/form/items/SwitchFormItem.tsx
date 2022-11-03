@@ -117,6 +117,7 @@ SwitchFormItem.propTypes = {
   required: PropTypes.bool,
   value: PropTypes.bool,
   color: PropTypes.string,
+  onChange: PropTypes.func,
 };
 
 export default SwitchFormItem;

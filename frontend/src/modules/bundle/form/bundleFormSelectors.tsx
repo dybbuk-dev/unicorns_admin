@@ -1,58 +1,39 @@
-import { raw } from 'express';
 import { createSelector } from 'reselect';
 
-const selectRaw = (state) => state.bundle.form;
+const selectForm = (state) => state.bundle.form;
 
-const selectRecord = createSelector(
-  [selectRaw],
-  (raw) => raw.record,
-);
-
-const selectStatus = createSelector(
-  [selectRaw],
-  (raw) => raw.status,
+const selectIsCreated = createSelector(
+  [selectForm],
+  (form) => form.isCreated,
 );
 
 const selectInitLoading = createSelector(
-  [selectRaw],
-  (raw) => Boolean(raw.initLoading),
+  [selectForm],
+  (form) => Boolean(form.nftLoading && form.tokenLoading),
 );
 
 const selectSaveLoading = createSelector(
-  [selectRaw],
-  (raw) => Boolean(raw.saveLoading),
+  [selectForm],
+  (form) => Boolean(form.saveLoading),
 );
 
 const selectNfts = createSelector(
-  [selectRaw],
-  (raw) => raw.nfts,
+  [selectForm],
+  (form) => form.nfts,
 );
 
 const selectTokens = createSelector(
-  [selectRaw],
-  (raw) => raw.tokens,
-);
-
-const selectNftStatus = createSelector(
-  [selectRaw],
-  (raw) => raw.nftStatus,
-);
-
-const selectTokenStatus = createSelector(
-  [selectRaw],
-  (raw) => raw.tokenStatus,
+  [selectForm],
+  (form) => form.tokens,
 );
 
 const bundleFormSelectors = {
   selectInitLoading,
   selectSaveLoading,
-  selectRecord,
-  selectStatus,
-  selectRaw,
+  selectIsCreated,
+  selectForm,
   selectNfts,
   selectTokens,
-  selectNftStatus,
-  selectTokenStatus,
 };
 
 export default bundleFormSelectors;

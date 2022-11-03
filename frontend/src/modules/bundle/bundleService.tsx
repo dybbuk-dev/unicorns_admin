@@ -23,7 +23,7 @@ const DIAMOND_ABI = [
         type: 'uint256[]',
       },
     ],
-    name: 'activeBundles',
+    name: 'activateBundles',
     outputs: [],
     stateMutability: 'nonpayable',
     type: 'function',
@@ -153,6 +153,19 @@ const DIAMOND_ABI = [
     type: 'function',
   },
   {
+    inputs: [
+      {
+        internalType: 'uint256',
+        name: 'bundleId',
+        type: 'uint256',
+      },
+    ],
+    name: 'deleteBundle',
+    outputs: [],
+    stateMutability: 'payable',
+    type: 'function',
+  },
+  {
     inputs: [],
     name: 'getAllBundles',
     outputs: [
@@ -212,19 +225,6 @@ const DIAMOND_ABI = [
         internalType: 'struct LibBundles.Bundle[]',
         name: 'result',
         type: 'tuple[]',
-      },
-    ],
-    stateMutability: 'view',
-    type: 'function',
-  },
-  {
-    inputs: [],
-    name: 'getBalance',
-    outputs: [
-      {
-        internalType: 'uint256',
-        name: '',
-        type: 'uint256',
       },
     ],
     stateMutability: 'view',
@@ -1516,84 +1516,6 @@ const ERC1155_ABI = [
 ];
 
 export default class BundleService {
-  static async update(id, data) {
-    const body = {
-      id,
-      data,
-    };
-
-    const tenantId = AuthCurrentTenant.get();
-
-    const response = await authAxios.put(
-      `/tenant/${tenantId}/bundle/${id}`,
-      body,
-    );
-
-    return response.data;
-  }
-
-  static async destroyAll(ids) {
-    const params = {
-      ids,
-    };
-
-    const tenantId = AuthCurrentTenant.get();
-
-    const response = await authAxios.delete(
-      `/tenant/${tenantId}/bundle`,
-      {
-        params,
-      },
-    );
-
-    return response.data;
-  }
-
-  static async create(data) {
-    const body = {
-      data,
-    };
-
-    const tenantId = AuthCurrentTenant.get();
-
-    const response = await authAxios.post(
-      `/tenant/${tenantId}/bundle`,
-      body,
-    );
-
-    return response.data;
-  }
-
-  static async find(id) {
-    const tenantId = AuthCurrentTenant.get();
-
-    const response = await authAxios.get(
-      `/tenant/${tenantId}/bundle/${id}`,
-    );
-
-    return response.data;
-  }
-
-  static async list(filter, orderBy, limit, offset) {
-    const params = {
-      filter,
-      orderBy,
-      limit,
-      offset,
-    };
-
-    const tenantId = AuthCurrentTenant.get();
-
-    const response = await authAxios.get(
-      `/tenant/${tenantId}/bundle`,
-      {
-        params,
-      },
-    );
-
-    return response.data;
-  }
-
   static async getNFTs() {
     const config = {
       apiKey: alchemyKey,
@@ -1696,13 +1618,8 @@ export default class BundleService {
   }
 
   static async getAllBundles() {
-    const web3Modal = new Web3Modal({
-      network: 'testnet',
-      cacheProvider: true,
-    });
-    const connection = await web3Modal.connect();
-    const provider = new ethers.providers.Web3Provider(
-      connection,
+    const provider = new ethers.providers.JsonRpcProvider(
+      'https://rpc-mumbai.maticvigil.com',
     );
 
     const contract = new ethers.Contract(
@@ -1714,6 +1631,8 @@ export default class BundleService {
 
     let bundles = [];
     for (let i = 0; i < data.length; i++) {
+      if (data[i].status !== 0 && data[i].status !== 1)
+        continue;
       let UNIM = 0;
       let RBW = 0;
       let lands = [];
@@ -1797,6 +1716,7 @@ export default class BundleService {
       connection,
     );
     const signer = provider.getSigner();
+
     const price = (
       data.price * Math.pow(10, 18)
     ).toString();
@@ -1875,7 +1795,7 @@ export default class BundleService {
     );
   }
 
-  static async mintCollectionNFT() {
+  static async changeStatus(data) {
     const web3Modal = new Web3Modal({
       network: 'testnet',
       cacheProvider: true,
@@ -1886,46 +1806,36 @@ export default class BundleService {
     );
     const signer = provider.getSigner();
 
-    const contract1 = new ethers.Contract(
-      unicornsAddress,
-      ERC721_ABI,
-      signer,
-    );
-    const contract2 = new ethers.Contract(
-      landsAddress,
-      ERC721_ABI,
+    const contract = new ethers.Contract(
+      contractAddress,
+      DIAMOND_ABI,
       signer,
     );
 
-    await contract1.mintCollectionNFT(account, 6, {
-      gasLimit: 4000000,
+    await contract.updateStatus(
+      data.bundleId,
+      data.status,
+      { gasLimit: 4000000 },
+    );
+  }
+
+  static async delete(id) {
+    const web3Modal = new Web3Modal({
+      network: 'testnet',
+      cacheProvider: true,
     });
-    await contract1.mintCollectionNFT(account, 7, {
-      gasLimit: 4000000,
-    });
-    await contract1.mintCollectionNFT(account, 8, {
-      gasLimit: 4000000,
-    });
-    await contract1.mintCollectionNFT(account, 9, {
-      gasLimit: 4000000,
-    });
-    await contract1.mintCollectionNFT(account, 10, {
-      gasLimit: 4000000,
-    });
-    await contract2.mintCollectionNFT(account, 6, {
-      gasLimit: 4000000,
-    });
-    await contract2.mintCollectionNFT(account, 7, {
-      gasLimit: 4000000,
-    });
-    await contract2.mintCollectionNFT(account, 8, {
-      gasLimit: 4000000,
-    });
-    await contract2.mintCollectionNFT(account, 9, {
-      gasLimit: 4000000,
-    });
-    await contract2.mintCollectionNFT(account, 10, {
-      gasLimit: 4000000,
-    });
+    const connection = await web3Modal.connect();
+    const provider = new ethers.providers.Web3Provider(
+      connection,
+    );
+    const signer = provider.getSigner();
+
+    const contract = new ethers.Contract(
+      contractAddress,
+      DIAMOND_ABI,
+      signer,
+    );
+
+    await contract.deleteBundle(id, { gasLimit: 4000000 });
   }
 }

@@ -2,9 +2,6 @@ import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link, useRouteMatch } from 'react-router-dom';
 import { i18n } from 'src/i18n';
-import FormWrapper from 'src/view/shared/styles/FormWrapper';
-import { useForm, FormProvider } from 'react-hook-form';
-import SwitchFormItem from 'src/view/shared/form/items/SwitchFormItem';
 import bundleSelectors from 'src/modules/bundle/bundleSelectors';
 import destroyActions from 'src/modules/bundle/destroy/bundleDestroyActions';
 import actions from 'src/modules/bundle/list/bundleListActions';
@@ -14,7 +11,7 @@ import BundleService from 'src/modules/bundle/bundleService';
 import DeleteModal from 'src/view/shared/modals/DeleteModal';
 import SuccessModal from 'src/view/shared/modals/SuccessModal';
 import Spinner from 'src/view/shared/Spinner';
-import { IconButton, Tooltip } from '@mui/material';
+import { IconButton, Tooltip, Switch } from '@mui/material';
 import EditIcon from '@mui/icons-material/Edit';
 import SearchIcon from '@mui/icons-material/Search';
 import DeleteIcon from '@mui/icons-material/Delete';
@@ -23,6 +20,7 @@ import MDTypography from 'src/mui/components/MDTypography';
 import ViewModal from 'src/view/bundle/view/ViewModal';
 
 function BundleListTable(props) {
+  const [checked, setChecked] = useState(null);
   const [recordIdToDestroy, setRecordIdToDestroy] =
     useState(null);
   const [bundle, setBundle] = useState(null);
@@ -31,13 +29,15 @@ function BundleListTable(props) {
   const dispatch = useDispatch();
 
   const bundles = useSelector(selectors.selectBundles);
-
-  const status = useSelector(selectors.selectStatus);
+  const hasBundles = useSelector(
+    selectors.selectHasBundles,
+  );
+  const loading = useSelector(selectors.selectLoading);
 
   //BundleService.mintCollectionNFT();
 
-  const formStatus = useSelector(
-    formSelectors.selectStatus,
+  const isCreated = useSelector(
+    formSelectors.selectIsCreated,
   );
 
   const hasPermissionToEdit = useSelector(
@@ -45,6 +45,9 @@ function BundleListTable(props) {
   );
   const hasPermissionToDestroy = useSelector(
     bundleSelectors.selectPermissionToDestroy,
+  );
+  const hasPermissionToChangeStatus = useSelector(
+    bundleSelectors.selectPermissionToChangeStatus,
   );
 
   useEffect(() => {
@@ -68,35 +71,27 @@ function BundleListTable(props) {
     setViewModal(false);
   };
 
-  const form = useForm({
-    mode: 'onSubmit',
-  });
-
-  const activeBundle = (values) => {
-    return;
-  };
-
   const doDestroy = (id) => {
     doCloseDestroyConfirmModal();
 
-    dispatch(destroyActions.doDestroy(id));
+    dispatch(actions.doDestroy(id));
   };
 
   return (
     <>
-      {!status && (
+      {loading && (
         <MDBox>
           <Spinner />
         </MDBox>
       )}
-      {status && bundles === null && (
-        <MDBox>
+      {!loading && !hasBundles && (
+        <MDBox my={2}>
           <MDTypography align="center">
             {i18n('table.noData')}
           </MDTypography>
         </MDBox>
       )}
-      {status &&
+      {!loading &&
         bundles.map((bundle, index) => (
           <MDBox
             display="flex"
@@ -110,9 +105,7 @@ function BundleListTable(props) {
             borderRadius="10px"
             key={index}
           >
-            <MDTypography ml={2}>
-              {bundle.id + 1}
-            </MDTypography>
+            <MDTypography ml={2}>{bundle.id}</MDTypography>
             <MDBox>
               <MDBox display="flex">
                 <Tooltip title={i18n('common.view')}>
@@ -150,24 +143,30 @@ function BundleListTable(props) {
                     </IconButton>
                   </Tooltip>
                 )}
-                <FormWrapper>
-                  <FormProvider {...form}>
-                    <form
-                      onSubmit={form.handleSubmit(
-                        activeBundle,
-                      )}
-                    >
-                      <MDBox ml={2}>
-                        <SwitchFormItem
-                          name="active"
-                          label=""
-                          value={bundle.status === 0}
-                          color="success"
-                        />
-                      </MDBox>
-                    </form>
-                  </FormProvider>
-                </FormWrapper>
+                {hasPermissionToChangeStatus && (
+                  <MDBox ml={2}>
+                    <Switch
+                      checked={
+                        checked
+                          ? checked
+                          : bundle.status === 0
+                      }
+                      color="success"
+                      onChange={(e) => {
+                        console.log(e.target.checked);
+                        setChecked(e.target.checked);
+                        dispatch(
+                          actions.doChangeStatus({
+                            bundleId: bundle.id,
+                            status: e.target.checked
+                              ? 0
+                              : 1,
+                          }),
+                        );
+                      }}
+                    />
+                  </MDBox>
+                )}
               </MDBox>
             </MDBox>
           </MDBox>
@@ -184,7 +183,7 @@ function BundleListTable(props) {
         />
       )}
 
-      {successModal && formStatus === 'success' && (
+      {successModal && isCreated && (
         <SuccessModal
           title={i18n('bundle.create.publish')}
           description={i18n('bundle.create.description5')}

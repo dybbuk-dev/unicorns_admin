@@ -18,8 +18,6 @@ const bundleDestroyActions = {
         type: bundleDestroyActions.DESTROY_STARTED,
       });
 
-      await BundleService.destroyAll([id]);
-
       dispatch({
         type: bundleDestroyActions.DESTROY_SUCCESS,
       });

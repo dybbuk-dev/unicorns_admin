@@ -36,14 +36,14 @@ const selectPermissionToCreate = createSelector(
     ),
 );
 
-const selectPermissionToImport = createSelector(
+const selectPermissionToChangeStatus = createSelector(
   [
     authSelectors.selectCurrentTenant,
     authSelectors.selectCurrentUser,
   ],
   (currentTenant, currentUser) =>
     new PermissionChecker(currentTenant, currentUser).match(
-      Permissions.values.bundleImport,
+      Permissions.values.bundleChangeStatus,
     ),
 );
 
@@ -63,7 +63,7 @@ const bundleSelectors = {
   selectPermissionToEdit,
   selectPermissionToCreate,
   selectPermissionToDestroy,
-  selectPermissionToImport,
+  selectPermissionToChangeStatus,
 };
 
 export default bundleSelectors;

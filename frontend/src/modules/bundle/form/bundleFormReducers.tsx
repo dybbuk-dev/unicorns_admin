@@ -1,41 +1,15 @@
 import actions from 'src/modules/bundle/form/bundleFormActions';
 
 const initialData = {
-  initLoading: false,
   saveLoading: false,
-  record: null,
-  status: null,
-  nftStatus: null,
-  tokenStatus: null,
-  nfts: null,
-  tokens: null,
+  nftLoading: false,
+  tokenLoading: false,
+  isCreated: false,
+  nfts: [],
+  tokens: [],
 };
 
 export default (state = initialData, { type, payload }) => {
-  if (type === actions.INIT_STARTED) {
-    return {
-      ...state,
-      record: null,
-      initLoading: true,
-    };
-  }
-
-  if (type === actions.INIT_SUCCESS) {
-    return {
-      ...state,
-      record: payload,
-      initLoading: false,
-    };
-  }
-
-  if (type === actions.INIT_ERROR) {
-    return {
-      ...state,
-      record: null,
-      initLoading: false,
-    };
-  }
-
   if (type === actions.CREATE_STARTED) {
     return {
       ...state,
@@ -46,7 +20,7 @@ export default (state = initialData, { type, payload }) => {
   if (type === actions.CREATE_SUCCESS) {
     return {
       ...state,
-      status: true,
+      isCreated: true,
       saveLoading: false,
     };
   }
@@ -54,28 +28,7 @@ export default (state = initialData, { type, payload }) => {
   if (type === actions.CREATE_ERROR) {
     return {
       ...state,
-      status: false,
-      saveLoading: false,
-    };
-  }
-
-  if (type === actions.UPDATE_STARTED) {
-    return {
-      ...state,
-      saveLoading: true,
-    };
-  }
-
-  if (type === actions.UPDATE_SUCCESS) {
-    return {
-      ...state,
-      saveLoading: false,
-    };
-  }
-
-  if (type === actions.UPDATE_ERROR) {
-    return {
-      ...state,
+      isCreated: false,
       saveLoading: false,
     };
   }
@@ -83,6 +36,7 @@ export default (state = initialData, { type, payload }) => {
   if (type === actions.GET_NFTS_STARTED) {
     return {
       ...state,
+      nftLoading: true,
     };
   }
 
@@ -90,20 +44,22 @@ export default (state = initialData, { type, payload }) => {
     return {
       ...state,
       nfts: payload,
-      nftStatus: 'success',
+      nftLoading: false,
     };
   }
 
   if (type === actions.GET_NFTS_ERROR) {
     return {
       ...state,
-      nftStatus: 'failed',
+      nfts: [],
+      nftLoading: false,
     };
   }
 
   if (type === actions.GET_TOKENS_STARTED) {
     return {
       ...state,
+      tokenLoading: true,
     };
   }
 
@@ -111,14 +67,15 @@ export default (state = initialData, { type, payload }) => {
     return {
       ...state,
       tokens: payload,
-      tokenStatus: 'success',
+      tokenLoading: false,
     };
   }
 
   if (type === actions.GET_TOKENS_ERROR) {
     return {
       ...state,
-      tokenStatus: 'failed',
+      tokens: [],
+      tokenLoading: false,
     };
   }
 

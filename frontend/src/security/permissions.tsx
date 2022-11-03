@@ -43,28 +43,24 @@ class Permissions {
         id: 'auditLogRead',
         allowedRoles: [roles.admin],
       },
-      bundleImport: {
-        id: 'bundleImport',
-        allowedRoles: [roles.admin, roles.custom],
+      bundleChangeStatus: {
+        id: 'bundleChangeStatus',
+        allowedRoles: [roles.admin],
       },
       bundleCreate: {
         id: 'bundleCreate',
-        allowedRoles: [roles.admin, roles.custom],
+        allowedRoles: [roles.admin],
       },
       bundleEdit: {
         id: 'bundleEdit',
-        allowedRoles: [roles.admin, roles.custom],
+        allowedRoles: [roles.admin],
       },
       bundleDestroy: {
         id: 'bundleDestroy',
-        allowedRoles: [roles.admin, roles.custom],
+        allowedRoles: [roles.admin],
       },
       bundleRead: {
         id: 'bundleRead',
-        allowedRoles: [roles.admin, roles.custom],
-      },
-      bundleAutocomplete: {
-        id: 'bundleAutocomplete',
         allowedRoles: [roles.admin, roles.custom],
       },
       segmentRead: {
