@@ -43,11 +43,17 @@ const bundleListActions = {
         type: bundleListActions.CHANGE_STATUS_STARTED,
       });
 
-      await BundleService.changeStatus(values);
+      const response = await BundleService.changeStatus(
+        values,
+      );
+
+      await response.wait();
 
       dispatch({
         type: bundleListActions.CHANGE_STATUS_SUCCESS,
       });
+
+      dispatch(bundleListActions.doFetch());
     } catch (error) {
       Errors.handle(error);
 
@@ -63,11 +69,15 @@ const bundleListActions = {
         type: bundleListActions.DESTROY_STARTED,
       });
 
-      await BundleService.delete(id);
+      const response = await BundleService.delete(id);
+
+      await response.wait();
 
       dispatch({
         type: bundleListActions.DESTROY_SUCCESS,
       });
+
+      dispatch(bundleListActions.doFetch());
     } catch (error) {
       Errors.handle(error);
 

@@ -146,15 +146,10 @@ function BundleListTable(props) {
                 {hasPermissionToChangeStatus && (
                   <MDBox ml={2}>
                     <Switch
-                      checked={
-                        checked
-                          ? checked
-                          : bundle.status === 0
-                      }
+                      checked={bundle.status === 0}
                       color="success"
                       onChange={(e) => {
                         console.log(e.target.checked);
-                        setChecked(e.target.checked);
                         dispatch(
                           actions.doChangeStatus({
                             bundleId: bundle.id,

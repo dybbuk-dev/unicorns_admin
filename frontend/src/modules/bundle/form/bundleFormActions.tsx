@@ -23,7 +23,11 @@ const bundleFormActions = {
         type: bundleFormActions.CREATE_STARTED,
       });
 
-      await BundleService.createBundle(values);
+      const response = await BundleService.createBundle(
+        values,
+      );
+
+      await response.wait();
 
       dispatch({
         type: bundleFormActions.CREATE_SUCCESS,

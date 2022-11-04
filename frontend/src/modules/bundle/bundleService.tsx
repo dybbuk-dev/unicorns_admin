@@ -1781,7 +1781,7 @@ export default class BundleService {
       DIAMOND_ABI,
       signer,
     );
-    await contract.createBundle(
+    const response = await contract.createBundle(
       price,
       status,
       erc20Addresses,
@@ -1793,6 +1793,8 @@ export default class BundleService {
       erc1155Qtties,
       { gasLimit: 4000000 },
     );
+
+    return response;
   }
 
   static async changeStatus(data) {
@@ -1812,11 +1814,13 @@ export default class BundleService {
       signer,
     );
 
-    await contract.updateStatus(
+    const response = await contract.updateStatus(
       data.bundleId,
       data.status,
       { gasLimit: 4000000 },
     );
+
+    return response;
   }
 
   static async delete(id) {
@@ -1836,6 +1840,10 @@ export default class BundleService {
       signer,
     );
 
-    await contract.deleteBundle(id, { gasLimit: 4000000 });
+    const response = await contract.deleteBundle(id, {
+      gasLimit: 4000000,
+    });
+
+    return response;
   }
 }
