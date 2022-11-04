@@ -3,9 +3,9 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Link, useRouteMatch } from 'react-router-dom';
 import { i18n } from 'src/i18n';
 import bundleSelectors from 'src/modules/bundle/bundleSelectors';
-import destroyActions from 'src/modules/bundle/destroy/bundleDestroyActions';
 import actions from 'src/modules/bundle/list/bundleListActions';
 import selectors from 'src/modules/bundle/list/bundleListSelectors';
+import formActions from 'src/modules/bundle/form/bundleFormActions';
 import formSelectors from 'src/modules/bundle/form/bundleFormSelectors';
 import BundleService from 'src/modules/bundle/bundleService';
 import DeleteModal from 'src/view/shared/modals/DeleteModal';
@@ -20,12 +20,11 @@ import MDTypography from 'src/mui/components/MDTypography';
 import ViewModal from 'src/view/bundle/view/ViewModal';
 
 function BundleListTable(props) {
-  const [checked, setChecked] = useState(null);
   const [recordIdToDestroy, setRecordIdToDestroy] =
     useState(null);
   const [bundle, setBundle] = useState(null);
   const [viewModal, setViewModal] = useState(false);
-  const [successModal, setSuccessModal] = useState(true);
+  const [successModal, setSuccessModal] = useState(false);
   const dispatch = useDispatch();
 
   const bundles = useSelector(selectors.selectBundles);
@@ -65,6 +64,7 @@ function BundleListTable(props) {
 
   const doCloseSuccessModal = () => {
     setSuccessModal(false);
+    dispatch(formActions.doReset());
   };
 
   const doCloseViewModal = () => {
@@ -178,7 +178,7 @@ function BundleListTable(props) {
         />
       )}
 
-      {successModal && isCreated && (
+      {successModal && (
         <SuccessModal
           title={i18n('bundle.create.publish')}
           description={i18n('bundle.create.description5')}

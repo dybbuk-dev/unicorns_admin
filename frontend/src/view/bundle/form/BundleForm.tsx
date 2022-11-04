@@ -1,7 +1,7 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { i18n } from 'src/i18n';
 import FormWrapper from 'src/view/shared/styles/FormWrapper';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { useForm, FormProvider } from 'react-hook-form';
 import * as yup from 'yup';
 import yupFormSchemas from 'src/modules/shared/yup/yupFormSchemas';
@@ -9,10 +9,7 @@ import CreateBundle from 'src/view/bundle/form/components/CreateBundle';
 import SelectUnicorns from 'src/view/bundle/form/components/SelectUnicorns';
 import SelectLands from 'src/view/bundle/form/components/SelectLands';
 import ReviewBundle from 'src/view/bundle/form/components/ReviewBundle';
-import selectors from 'src/modules/bundle/form/bundleFormSelectors';
-import actions from 'src/modules/bundle/form/bundleFormActions';
 import formActions from 'src/modules/form/formActions';
-import bundleService from 'src/modules/bundle/bundleService';
 import { yupResolver } from '@hookform/resolvers/yup';
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
@@ -22,16 +19,6 @@ import { Card, Grid } from '@mui/material';
 import Stepper from 'src/view/shared/Stepper';
 import MDTypography from 'src/mui/components/MDTypography';
 import colors from 'src/mui/assets/theme/base/colors';
-import Spinner from 'src/view/shared/Spinner';
-
-function getSteps(): string[] {
-  return [
-    'createBundle',
-    'selectUnicorns',
-    'selectLands',
-    'reviewBundle',
-  ];
-}
 
 interface Bundle {
   UNIM: number;
@@ -40,27 +27,6 @@ interface Bundle {
   lands: number[];
   price: number;
 }
-
-const schema = yup.object().shape({
-  name: yupFormSchemas.string(i18n('bundle.fields.name'), {
-    max: 200,
-    min: 1,
-  }),
-  UNIM: yupFormSchemas.integer(i18n('bundle.fields.UNIM'), {
-    required: true,
-    min: 0,
-    max: 39096,
-  }),
-  RBW: yupFormSchemas.integer(i18n('bundle.fields.RBW'), {
-    required: true,
-    min: 0,
-    max: 456,
-  }),
-  expirationDate: yupFormSchemas.date(
-    i18n('bundle.fields.expiration'),
-    {},
-  ),
-});
 
 function BundleForm(props) {
   const [activeStep, setActiveStep] = useState<number>(0);
@@ -124,10 +90,7 @@ function BundleForm(props) {
   });
 
   const dispatch = useDispatch();
-
-  const steps = getSteps();
-  const isLastStep: boolean =
-    activeStep === steps.length - 1;
+  const isLastStep: boolean = activeStep === 3;
 
   const handleBack = () => setActiveStep(activeStep - 1);
 
@@ -144,6 +107,33 @@ function BundleForm(props) {
   });
 
   const [values, setValues] = useState<any>(initialValues);
+
+  const schema = yup.object().shape({
+    name: yupFormSchemas.string(
+      i18n('bundle.fields.name'),
+      {
+        max: 200,
+        min: 1,
+      },
+    ),
+    UNIM: yupFormSchemas.integer(
+      i18n('bundle.fields.UNIM'),
+      {
+        required: true,
+        min: 0,
+        max: props.tokens?.UNIM,
+      },
+    ),
+    RBW: yupFormSchemas.integer(i18n('bundle.fields.RBW'), {
+      required: true,
+      min: 0,
+      max: props.tokens?.RBW,
+    }),
+    expirationDate: yupFormSchemas.date(
+      i18n('bundle.fields.expiration'),
+      {},
+    ),
+  });
 
   let form = useForm({
     resolver: yupResolver(schema),

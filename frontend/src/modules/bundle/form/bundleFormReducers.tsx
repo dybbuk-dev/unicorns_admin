@@ -10,6 +10,12 @@ const initialData = {
 };
 
 export default (state = initialData, { type, payload }) => {
+  if (type === actions.RESET) {
+    return {
+      ...initialData,
+    };
+  }
+
   if (type === actions.CREATE_STARTED) {
     return {
       ...state,

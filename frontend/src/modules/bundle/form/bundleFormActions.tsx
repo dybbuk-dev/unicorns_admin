@@ -5,6 +5,8 @@ import { getHistory } from 'src/modules/store';
 const prefix = 'BUNDLE_FORM';
 
 const bundleFormActions = {
+  RESET: `${prefix}_RESET`,
+
   CREATE_STARTED: `${prefix}_CREATE_STARTED`,
   CREATE_SUCCESS: `${prefix}_CREATE_SUCCESS`,
   CREATE_ERROR: `${prefix}_CREATE_ERROR`,
@@ -16,6 +18,12 @@ const bundleFormActions = {
   GET_TOKENS_STARTED: `${prefix}_GET_TOKENS_STARTED`,
   GET_TOKENS_SUCCESS: `${prefix}_GET_TOKENS_SUCCESS`,
   GET_TOKENS_ERROR: `${prefix}_GET_TOKENS_ERROR`,
+
+  doReset: () => async (dispatch) => {
+    dispatch({
+      type: bundleFormActions.RESET,
+    });
+  },
 
   doCreate: (values) => async (dispatch) => {
     try {

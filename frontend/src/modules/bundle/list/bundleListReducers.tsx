@@ -39,7 +39,6 @@ export default (state = initialData, { type, payload }) => {
   if (type === actions.CHANGE_STATUS_SUCCESS) {
     return {
       ...state,
-      loading: false,
     };
   }
 
@@ -60,7 +59,6 @@ export default (state = initialData, { type, payload }) => {
   if (type === actions.DESTROY_SUCCESS) {
     return {
       ...state,
-      loading: false,
     };
   }
 
